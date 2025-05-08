@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Barber - Inicio</title>
+    <link rel="stylesheet" href="/WEB/css/style.css"> <!-- Enlace a un archivo CSS externo -->
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Elite Barber</h1>
+            <ul>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#galeria">Galería</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Sección Nosotros -->
+        <section id="nosotros">
+            <h2>Sobre Nosotros</h2>
+            <p>En Elite Barber, combinamos tradición y estilo moderno para ofrecerte la mejor experiencia en cortes de cabello y cuidado personal. Nuestro equipo de profesionales está comprometido con la excelencia y la satisfacción de nuestros clientes.</p>
+            <img src="/WEB/images.jpg" alt="Interior de la barbería">
+        </section>
+
+        <!-- Sección Servicios -->
+        <section id="servicios">
+            <h2>Nuestros Servicios</h2>
+            <ul>
+                <li>Corte de cabello clásico</li>
+                <li>Afeitado tradicional</li>
+                <li>Arreglo de barba</li>
+                <li>Tratamientos capilares</li>
+            </ul>
+        </section>
+
+        <!-- Sección Galería -->
+        <section id="galeria">
+            <h2>Galería</h2>
+            <div class="imagenes">
+                <img src="/WEB/images/cortes-pelo.jpg" alt="Corte de cabello">
+                <img src="/WEB/images/afeitado-tradi.avif" alt="Afeitado">
+                <img src="/WEB/images/afeitados.jpg" alt="Arreglo de barba">
+            </div>
+        </section>
+
+        <!-- Sección Contacto -->
+        <section id="contacto">
+            <h2>Contáctanos</h2>
+            <form action="enviar.php" method="POST">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+                
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="mensaje">Mensaje:</label>
+                <textarea id="mensaje" name="mensaje" required></textarea>
+                
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
