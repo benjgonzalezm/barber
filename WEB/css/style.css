@@ -54,7 +54,7 @@ header ul li a:hover {
     background: url('/WEB/images/wallpaper.jpeg') no-repeat center center/cover;
     color: #fff;
     text-align: center;
-    padding: 4rem 1rem;
+    padding: 13rem 1rem; /* Aumenta la altura del hero */
 }
 
 #hero h2 {
@@ -218,4 +218,32 @@ footer {
 
 footer p {
     font-size: 0.9rem;
+}
+.servicios-lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+}
+
+.servicios-lista li a {
+    display: block;
+    background: #f4a261;
+    color: #fff;
+    text-decoration: none;
+    padding: 2rem 2.5rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: background 0.3s, transform 0.3s;
+    text-align: center;
+}
+
+.servicios-lista li a:hover {
+    background: #e76f51;
+    transform: translateY(-5px) scale(1.05);
 }
