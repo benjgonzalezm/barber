@@ -67,17 +67,60 @@
         </div>
     </section>
 
+
     <section id="testimonios">
         <h2>Testimonios</h2>
-        <blockquote>
-            <p>"El mejor lugar para un corte de cabello. Atención de primera clase."</p>
-            <cite>- Juan Pérez</cite>
-        </blockquote>
-        <blockquote>
-            <p>"Un ambiente relajante y profesionales muy capacitados."</p>
-            <cite>- María López</cite>
-        </blockquote>
+        <div class="testimonios-carrusel">
+            <button class="carrusel-btn" id="prev">&#8592;</button>
+            <div class="testimonio-activo">
+                <blockquote>
+                    <p>"El mejor lugar para un corte de cabello. Atención de primera clase."</p>
+                    <div class="estrellas">★★★★★</div>
+                    <cite>- Juan Pérez</cite>
+                </blockquote>
+            </div>
+            <div class="testimonio-activo" style="display:none;">
+                <blockquote>
+                    <p>"Un ambiente relajante y profesionales muy capacitados."</p>
+                    <div class="estrellas">★★★★★</div>
+                    <cite>- María López</cite>
+                </blockquote>
+            </div>
+            <div class="testimonio-activo" style="display:none;">
+                <blockquote>
+                    <p>"Excelente servicio y resultados impecables. ¡Muy recomendados!"</p>
+                    <div class="estrellas">★★★★★</div>
+                    <cite>- Carlos Ramírez</cite>
+                </blockquote>
+            </div>
+            <div class="testimonio-activo" style="display:none;">
+                <blockquote>
+                    <p>"Siempre salgo satisfecho, el personal es muy amable."</p>
+                    <div class="estrellas">★★★★★</div>
+                    <cite>- Sofía Martínez</cite>
+                </blockquote>
+            </div>
+            <button class="carrusel-btn" id="next">&#8594;</button>
+        </div>
     </section>
+    <script>
+       
+        document.addEventListener('DOMContentLoaded', function() {
+            const testimonios = document.querySelectorAll('.testimonio-activo');
+            let indice = 0;
+            document.getElementById('prev').onclick = function() {
+                testimonios[indice].style.display = 'none';
+                indice = (indice - 1 + testimonios.length) % testimonios.length;
+                testimonios[indice].style.display = '';
+            };
+            document.getElementById('next').onclick = function() {
+                testimonios[indice].style.display = 'none';
+                indice = (indice + 1) % testimonios.length;
+                testimonios[indice].style.display = '';
+            };
+        });
+    </script>
+
 
     <section id="contacto">
         <h2>Contáctanos</h2>

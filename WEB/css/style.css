@@ -247,3 +247,48 @@ footer p {
     background: #e76f51;
     transform: translateY(-5px) scale(1.05);
 }
+/* ...existing code... */
+.testimonios-carrusel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.testimonio-activo {
+    min-width: 300px;
+    max-width: 400px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: box-shadow 0.2s;
+}
+.testimonio-activo blockquote {
+    margin: 0;
+    padding: 0;
+}
+.estrellas {
+    color: #FFD700;
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
+    letter-spacing: 2px;
+}
+.carrusel-btn {
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.carrusel-btn:hover {
+    background: #444;
+}
