@@ -6,6 +6,37 @@
   <link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
+<header>
+        <nav>
+            <a href="../paginas/menu.html">
+                <img src="../images/logo.png" alt="Elite Barber Logo" style="height:80px;">
+            </a>
+            <ul>
+                <li><a href="../paginas/menu.html">Inicio</a></li>
+                <li><a href="../paginas/servicios.html">Servicios</a></li>
+                <li><a href="../paginas/barberos.html">Nosotros</a></li>
+                <li><a href="../paginas/testimonios.html">Testimonios</a></li>
+                 
+                <!-- Cuando este iniciado seccion este boton se deberia de ocultar  -->
+                <li class="iniciar-menu" style="position: relative;">
+                    <button id="btnIniciar" class="btn-iniciar">Iniciar ▼</button>
+                    <div id="submenuIniciar" class="submenu-iniciar" style="display:none; position: absolute; top: 100%; left: 0; background: #333; border-radius: 5px; padding: 0.5rem 0;">
+                        <a href="../paginas/logueate.html" style="display: block; color: white; padding: 0.5rem 1rem; text-decoration: none;">Login</a>
+                        <a href="../paginas/registrate.html" style="display: block; color: white; padding: 0.5rem 1rem; text-decoration: none;">Registro</a>
+                    </div>
+                </li>
+                
+                  <!-- una vez oculto apareceria el siguiente que es de ir al perfil propio tanto de barbero o usuario -->
+                <li><a href="../paginas/citas.html">Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+
+
+
   <div class="container">
     <div class="barberialogin">
       <form id="login1" name="logininicio">
