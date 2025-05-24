@@ -4,46 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro</title>
-  <link rel="stylesheet" href="../css/estilos_A.css">
+  <link rel="stylesheet" href="../css/registro.css">
 </head>
 <body>
+
 <header class="menu-global">
-    <nav>
-        <a href="../paginas/menu.html">
-            <img src="../images/logo.png" alt="Elite Barber Logo" class="menu-logo">
-        </a>
-        <ul>
-            <li><a href="../paginas/menu.html">Inicio</a></li>
-            <li><a href="../paginas/servicios.html">Servicios</a></li>
-            <li><a href="../paginas/barberos.html">Nosotros</a></li>
-            <li><a href="../paginas/testimonios.html">Testimonios</a></li>
-            
-            <li class="menu-iniciar-item">
-                <button id="btnIniciar" class="menu-btn-iniciar">Iniciar ▼</button>
-                <div id="submenuIniciar" class="menu-submenu-iniciar">
-                    <a href="../paginas/logueate.html">Login</a>
-                    <a href="../paginas/registrate.html">Registro</a>
-                </div>
-            </li>
-            
-            <li><a href="../paginas/citas.html">Perfil</a></li>
-        </ul>
-    </nav>
+  <nav>
+    <a href="../paginas/menu.html">
+      <img src="../images/logo.png" alt="Elite Barber Logo" class="menu-logo">
+    </a>
+    <ul>
+      <li><a href="../paginas/menu.html">Inicio</a></li>
+      <li><a href="../paginas/servicios.html">Servicios</a></li>
+      <li><a href="../paginas/barberos.html">Nosotros</a></li>
+      <li><a href="../paginas/testimonios.html">Testimonios</a></li>
+      <li class="menu-iniciar-item">
+        <button id="btnIniciar" class="menu-btn-iniciar">Iniciar ▼</button>
+        <div id="submenuIniciar" class="menu-submenu-iniciar">
+          <a href="../paginas/logueate.html">Login</a>
+          <a href="../paginas/registrate.html">Registro</a>
+        </div>
+      </li>
+      <li><a href="../paginas/citas.html">Perfil</a></li>
+    </ul>
+  </nav>
 </header>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+<main class="container">
   <div class="registro-container">
     <form name="registro1" id="registrof">
       <h2>Formulario de Registro</h2>
@@ -82,7 +69,7 @@
         </div>
         <div class="form-group mitad">
           <label>Tipo de usuario</label>
-          <input type="text" value="Cliente" readonly>
+          <input type="text" value="Barbero" readonly>
         </div>
       </div>
 
@@ -108,10 +95,11 @@
       </div>
     </form>
   </div>
+</main>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="../js/validacionregistro.js"></script>
-  <script src="../js/logn_registro.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../js/validacionregistro.js"></script>
+<script src="../js/logn_registro.js"></script>
 </body>
 </html>
 
