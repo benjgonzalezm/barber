@@ -2,161 +2,93 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Historial de citas</title>
+  <title>Perfil del Barbero</title>
   <link rel="stylesheet" href="../css/citas.css">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="/WEB/css/perfil_barbero.css"> <!-- Nuevo CSS -->
 </head>
 <body>
   <header>
-        <nav>
-            <a href="../paginas/menu.html">
-                <img src="../images/logo.png" alt="Elite Barber Logo" style="height:80px;">
-            </a>
-            <ul>
-                <li><a href="../paginas/menu.html">Inicio</a></li>
-                <li><a href="../paginas/servicios.html">Servicios</a></li>
-                <li><a href="../paginas/barberos.html">Nosotros</a></li>
-                <li><a href="../paginas/testimonios.html">Testimonios</a></li>
-                <li class="iniciar-menu" style="position: relative;">
-                    <button id="btnIniciar" class="btn-iniciar">Iniciar ▼</button>
-                    <div id="submenuIniciar" class="submenu-iniciar" style="display:none; position: absolute; top: 100%; left: 0; background: #333; border-radius: 5px; padding: 0.5rem 0;">
-                        <a href="../paginas/logueate.html" style="display: block; color: white; padding: 0.5rem 1rem; text-decoration: none;">Login</a>
-                        <a href="../paginas/registrate.html" style="display: block; color: white; padding: 0.5rem 1rem; text-decoration: none;">Registro</a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </header>
+    <nav>
+      <a href="../paginas/menu.html">
+        <img src="../images/logo.png" alt="Elite Barber Logo" style="height:80px;">
+      </a>
+      <ul>
+        <li><a href="../paginas/menu.html">Inicio</a></li>
+        <li><a href="../paginas/servicios.html">Servicios</a></li>
+        <li><a href="../paginas/barberos.html">Nosotros</a></li>
+        <li><a href="../paginas/testimonios.html">Testimonios</a></li>
+      </ul>
+    </nav>
+  </header>
 
-
-
-
-
-
-
-
-
-
-
-<!-- Botón para abrir/cerrar perfil -->
-<button id="btnTogglePerfil" class="btn-toggle-perfil">Abrir/Cerrar Perfil</button>
-
-
-
-<nav id="perfilBarbero" style="display: none;">
-  <div class="perfil-caja">
-    <div class="perfil-row">
-      <div>
-        <img src="../images/barberos/barberjo-mujer.avif" alt="Barbero 5" class="perfil-imagen">
+  <!-- SECCION 1: Foto y descripción -->
+  <section class="seccion perfil-barbero">
+    <img src="../images/barberos/ultimo-barbero.avif" alt="Barbero Juan Pérez" class="perfil-foto">
+    <div class="perfil-info">
+      <h2>Juan Pérez</h2>
+      <div class="especialidad">Especialidad: Corte clásico y afeitado tradicional</div>
+      <div class="calificacion">
+        <span class="estrella">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+        <span class="calificacion-num">(4.0)</span>
       </div>
-      <div class="datos-principales">
-        <div class="dato-linea">
-          <span class="etiqueta">Nombre:</span>
-          <span class="valor">Juan</span> 
-        </div>
-        <div class="dato-linea">
-          <span class="etiqueta">Apellido:</span>
-          <span class="valor">Pérez</span>
-        </div>
-        <div class="dato-linea">
-          <span class="etiqueta">Calificación:</span>
-          <span class="valor estrellas">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-        </div>
+      <p>Barbero con 5 años de experiencia. Especialista en cortes modernos y clásicos. Alta valoración por puntualidad y profesionalismo.</p>
+    </div>
+  </section>
+
+  <!-- SECCION 2: Galería de trabajos realizados -->
+  <section class="seccion trabajos-barbero">
+    <h2>Trabajos realizados</h2>
+    <div class="trabajos-galeria">
+      <img src="../images/trabajos/trabajo1.jpg" alt="Corte clásico 1">
+      <img src="../images/trabajos/trabajo2.jpg" alt="Afeitado tradicional 1">
+      <img src="../images/trabajos/trabajo3.jpg" alt="Corte clásico 2">
+      <img src="../images/trabajos/trabajo4.jpg" alt="Afeitado tradicional 2">
+    </div>
+  </section>
+
+  <!-- SECCION 3: Testimonios -->
+  <section class="seccion testimonios-barbero">
+    <h2>Testimonios de clientes</h2>
+    <div class="testimonios-lista">
+      <div class="testimonio">
+        <div class="estrella">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+        <strong>Felipe Rojas</strong>
+        <p>Puntualidad, Higiene</p>
+        <small>Fecha: 23/04/2025</small>
       </div>
-      <div class="descripcion-box">
-        <h5 class="etiqueta">Descripción:</h5>
-        <p class="valor">Barbero con 5 años de experiencia. Especialista en cortes modernos y clásicos. Alta valoración por puntualidad y profesionalismo.</p>
+      <div class="testimonio">
+        <div class="estrella">&#9733;&#9733;&#9734;&#9734;&#9734;</div>
+        <strong>Laura Sánchez</strong>
+        <p>Personalidad, Servicio</p>
+        <small>Fecha: 25/04/2025</small>
+      </div>
+      <div class="testimonio">
+        <div class="estrella">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <strong>Diego Morales</strong>
+        <p>Puntualidad, Atención al detalle</p>
+        <small>Fecha: 28/04/2025</small>
+      </div>
+      <div class="testimonio">
+        <div class="estrella">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+        <strong>Sofía Herrera</strong>
+        <p>Servicio, Higiene</p>
+        <small>Fecha: 30/04/2025</small>
+      </div>
+      <div class="testimonio">
+        <div class="estrella">&#9733;&#9734;&#9734;&#9734;&#9734;</div>
+        <strong>Martín Valenzuela</strong>
+        <p>Comportamiento, Personalidad</p>
+        <small>Fecha: 02/05/2025</small>
+      </div>
+      <div class="testimonio">
+        <div class="estrella">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <strong>Camila Araya</strong>
+        <p>Puntualidad, Atención al detalle, Higiene</p>
+        <small>Fecha: 04/05/2025</small>
       </div>
     </div>
-  </div>
-</nav>
-
-
-
-
-
-
-
-
-
-
-<!--dato para mas adelante: aca van las citas enlazadas al perfil del barbero(con un comando se puede hacer que salga solo las finalizadas)-->
-  <div class="container">
-
-  <div class="cita finalizada">
-    <h3>Fecha: 23/04/2025</h3>
-    <p><strong>Hora:</strong> 10:00</p>
-    <p><strong>Estado:</strong> Finalizado</p>
-    <p><strong>Barbero:</strong> Juan Pérez</p>
-    <p><strong>Usuario:</strong> Felipe Rojas</p>
-    <div class="calificacion">
-      <span class="estrella positiva">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-      <p><strong>Observaciones:</strong> Puntualidad, Higiene</p>
-    </div>
-  </div>
-
-  <div class="cita finalizada">
-    <h3>Fecha: 25/04/2025</h3>
-    <p><strong>Hora:</strong> 11:30</p>
-    <p><strong>Estado:</strong> Finalizado</p>
-    <p><strong>Barbero:</strong> Juan Pérez</p>
-    <p><strong>Usuario:</strong> Laura Sánchez</p>
-    <div class="calificacion">
-      <span class="estrella negativa">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
-      <p><strong>Observaciones:</strong> Personalidad, Servicio</p>
-    </div>
-  </div>
-
-  <div class="cita finalizada">
-    <h3>Fecha: 28/04/2025</h3>
-    <p><strong>Hora:</strong> 14:00</p>
-    <p><strong>Estado:</strong> Finalizado</p>
-    <p><strong>Barbero:</strong> Juan Pérez</p>
-    <p><strong>Usuario:</strong> Diego Morales</p>
-    <div class="calificacion">
-      <span class="estrella positiva">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-      <p><strong>Observaciones:</strong> Puntualidad, Atención al detalle</p>
-    </div>
-  </div>
-
-  <div class="cita finalizada">
-    <h3>Fecha: 30/04/2025</h3>
-    <p><strong>Hora:</strong> 16:15</p>
-    <p><strong>Estado:</strong> Finalizado</p>
-    <p><strong>Barbero:</strong> Juan Pérez</p>
-    <p><strong>Usuario:</strong> Sofía Herrera</p>
-    <div class="calificacion">
-      <span class="estrella positiva">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-      <p><strong>Observaciones:</strong> Servicio, Higiene</p>
-    </div>
-  </div>
-
-  <div class="cita finalizada">
-    <h3>Fecha: 02/05/2025</h3>
-    <p><strong>Hora:</strong> 09:45</p>
-    <p><strong>Estado:</strong> Finalizado</p>
-    <p><strong>Barbero:</strong> Juan Pérez</p>
-    <p><strong>Usuario:</strong> Martín Valenzuela</p>
-    <div class="calificacion">
-      <span class="estrella negativa">&#9733;&#9734;&#9734;&#9734;&#9734;</span>
-      <p><strong>Observaciones:</strong> Comportamiento, Personalidad</p>
-    </div>
-  </div>
-
-  <div class="cita finalizada">
-    <h3>Fecha: 04/05/2025</h3>
-    <p><strong>Hora:</strong> 13:20</p>
-    <p><strong>Estado:</strong> Finalizado</p>
-    <p><strong>Barbero:</strong> Juan Pérez</p>
-    <p><strong>Usuario:</strong> Camila Araya</p>
-    <div class="calificacion">
-      <span class="estrella positiva">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-      <p><strong>Observaciones:</strong> Puntualidad, Atención al detalle, Higiene</p>
-    </div>
-  </div>
-
-</div>
-
+  </section>
 
   <script src="../js/logn_registro.js"></script>
   <script src="../js/cita.js"></script>
