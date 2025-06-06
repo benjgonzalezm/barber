@@ -1,34 +1,39 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro</title>
-  <link rel="stylesheet" href="../css/registro.css">
+  <link rel="stylesheet" href="{% static 'gestion3/css/registro.css' %}">
 </head>
 <body>
 
+
+
 <header class="menu-global">
   <nav>
-    <a href="../paginas/menu.html">
-      <img src="../images/logo.png" alt="Elite Barber Logo" class="menu-logo">
+    <a href="{% url 'menu' %}">
+      <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" class="menu-logo">
     </a>
     <ul>
-      <li><a href="../paginas/menu.html">Inicio</a></li>
-      <li><a href="../paginas/servicios.html">Servicios</a></li>
-      <li><a href="../paginas/nosotros.html">Nosotros</a></li>
-      <li><a href="../paginas/testimonios.html">Testimonios</a></li>
+      <li><a href="{% url 'menu' %}">Inicio</a></li>
+      <li><a href="{% url 'servicios' %}">Servicios</a></li>
+      <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
+      <li><a href="{% url 'testimonios' %}">Testimonios</a></li>
       <li class="menu-iniciar-item">
         <button id="btnIniciar" class="menu-btn-iniciar">Iniciar ▼</button>
         <div id="submenuIniciar" class="menu-submenu-iniciar">
-          <a href="../paginas/logueate.html">Login</a>
-          <a href="../paginas/registrate.html">Registro</a>
+          <a href="{% url 'login' %}">Login</a>
+          <a href="{% url 'registrate' %}">Registro</a>
         </div>
       </li>
-      <li><a href="../paginas/citas.html">Perfil</a></li>
+      <li><a href="{% url 'citas' %}">Perfil</a></li>
     </ul>
   </nav>
 </header>
+
+
 
 <main class="container">
   <div class="registro-container">
@@ -98,8 +103,8 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="../js/validacionregistro.js"></script>
-<script src="../js/logn_registro.js"></script>
+<script src="{% static 'gestion3/js/validacionregistro.js' %}"></script>
+<script src="{% static 'gestion3/js/logn_registro.js' %}"></script>
 </body>
 </html>
 

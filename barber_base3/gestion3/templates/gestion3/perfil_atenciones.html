@@ -1,26 +1,15 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Perfil del Barbero</title>
-  <link rel="stylesheet" href="../css/citas.css">
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="/WEB/css/perfil_barbero.css"> <!-- Nuevo CSS -->
+  <link rel="stylesheet" href="{% static 'gestion3/css/citas.css' %}">
+  <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'gestion3/css/perfil_barbero.css' %}"> <!-- Nuevo CSS -->
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="../paginas/menu.html">
-        <img src="../images/logo.png" alt="Elite Barber Logo" style="height:80px;">
-      </a>
-      <ul>
-        <li><a href="../paginas/menu.html">Inicio</a></li>
-        <li><a href="../paginas/servicios.html">Servicios</a></li>
-        <li><a href="../paginas/nosotros.html">Nosotros</a></li>
-        <li><a href="../paginas/testimonios.html">Testimonios</a></li>
-      </ul>
-    </nav>
-  </header>
+{% include 'gestion3/nav.html' %}
 
   <!-- SECCION 1: Foto y descripción -->
   <section class="seccion perfil-barbero">
@@ -90,7 +79,7 @@
     </div>
   </section>
 
-  <script src="../js/logn_registro.js"></script>
-  <script src="../js/cita.js"></script>
+ 
+  <script src="{% static 'gestion3/js/cita.js' %}"></script>
 </body>
 </html>
