@@ -37,68 +37,74 @@
 
 <main class="container">
   <div class="registro-container">
-    <form name="registro1" id="registrof">
-      <h2>Formulario de Registro</h2>
 
-      <div class="form-group">
-        <label>Imagen de perfil</label>
-        <input type="file" name="imagenperfil" required>
-      </div>
+    <form name="registro1" id="registrof" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <h2>Formulario de Registro</h2>
 
-      <div class="fila">
-        <div class="form-group mitad">
-          <label>Nombre</label>
-          <input type="text" id="nombreregistro" name="nombreregistro" required>
-        </div>
-        <div class="form-group mitad">
-          <label>Apellido</label>
-          <input type="text" id="apellidoregistro" name="apellidoregistro" required>
-        </div>
-      </div>
+  <div class="form-group">
+    <label>Imagen de perfil</label>
+    <input type="file" name="imagenperfil" required>
+  </div>
 
-      <div class="fila">
-        <div class="form-group mitad">
-          <label>Correo electrónico</label>
-          <input type="email" id="registrocorreo" name="correoregistro" required>
-        </div>
-        <div class="form-group mitad">
-          <label>Celular</label>
-          <input type="tel" id="celularregistro" name="celularregistro" required>
-        </div>
-      </div>
+  <div class="fila">
+    <div class="form-group mitad">
+      <label>Nombre</label>
+      <input type="text" id="nombreregistro" name="nombreregistro" required>
+    </div>
+    <div class="form-group mitad">
+      <label>Apellido</label>
+      <input type="text" id="apellidoregistro" name="apellidoregistro" required>
+    </div>
+  </div>
 
-      <div class="fila">
-        <div class="form-group mitad">
-          <label>Fecha de nacimiento</label>
-          <input type="date" id="edad" name="edad" max="2014-01-01" min="1922-01-01" required>
-        </div>
-        <div class="form-group mitad">
-          <label>Tipo de usuario</label>
-          <input type="text" value="Usuario" readonly>
-        </div>
-      </div>
+  <div class="fila">
+    <div class="form-group mitad">
+      <label>Correo electrónico</label>
+      <input type="email" id="registrocorreo" name="correoregistro" required>
+    </div>
+    <div class="form-group mitad">
+      <label>Celular</label>
+      <input type="tel" id="celularregistro" name="celularregistro" required>
+    </div>
+  </div>
 
-      <div class="fila">
-        <div class="form-group mitad">
-          <label>Contraseña</label>
-          <input type="password" id="contraseñaregistro" name="contraseñaregistro" required>
-        </div>
-        <div class="form-group mitad">
-          <label>Confirmar contraseña</label>
-          <input type="password" id="confirmarcontraseñaregistro" name="confirmarcontraseñaregistro" required>
-        </div>
-      </div>
+  <div class="fila">
+    <div class="form-group mitad">
+      <label>Fecha de nacimiento</label>
+      <input type="date" id="edad" name="edad" max="2014-01-01" min="1922-01-01" required>
+    </div>
+    <div class="form-group mitad">
+      <label>Tipo de usuario</label>
+      <input type="text" value="Cliente" readonly>
+    </div>
+  </div>
 
-      <div class="fila">
-        <input type="reset" value="Limpiar">
-        <button type="submit">Confirmar creación de cuenta</button>
-      </div>
+  <div class="fila">
+    <div class="form-group mitad">
+      <label>Contraseña</label>
+      <input type="password" id="contraseñaregistro" name="contraseñaregistro" required>
+    </div>
+    <div class="form-group mitad">
+      <label>Confirmar contraseña</label>
+      <input type="password" id="confirmarcontraseñaregistro" name="confirmarcontraseñaregistro" required>
+    </div>
+  </div>
 
-      <p id="mensajes"></p>
-      <div class="note">
-        PD: El nombre y apellido deben iniciar con mayúscula. No comparta sus datos.
-      </div>
-    </form>
+  <div class="fila">
+    <input type="reset" value="Limpiar">
+    <button type="submit">Confirmar creación de cuenta</button>
+  </div>
+
+  <p id="mensajes"></p>
+  <div class="note">
+    PD: El nombre y apellido deben iniciar con mayúscula. No comparta sus datos.
+  </div>
+</form>
+
+
+
+
   </div>
 </main>
 

@@ -128,3 +128,11 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+
+#AUTH_USER_MODEL = 'Usuario.Usuario' (esta linea la saque del coidgo que tenia junto a lo de arriba pero no se si es necesario pero de momento se ve que no)

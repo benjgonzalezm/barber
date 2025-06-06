@@ -1,7 +1,8 @@
 from django.urls import path
 from gestion3 import views
-
 from .views import *
+from . import views
+
 
 urlpatterns = [
     path('', views.menu, name='menu'),
