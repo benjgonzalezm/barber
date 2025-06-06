@@ -6,6 +6,7 @@ from django.contrib import messages
 import hashlib
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from .models import Cita, ValoracionObservacion
 
 
 
@@ -92,6 +93,41 @@ def registrate(request):
 
 def menu(request):
     return render(request, 'gestion3/menu.html')
+
+
+
+
+
+
+
+def registro_citas(request):
+    citas = Cita.objects.all()
+    citas_con_valoracion = []
+
+    for cita in citas:
+        observaciones = ValoracionObservacion.objects.filter(id_cita=cita)
+
+        if observaciones.exists():
+            valoracion = observaciones.first().valoracion
+          
+            observaciones_list = [obs.id_observacion.nombre_observacion for obs in observaciones]
+        else:
+            valoracion = None
+            observaciones_list = []
+
+        citas_con_valoracion.append({
+            'cita': cita,
+            'valoracion': valoracion,
+            'observaciones': observaciones_list
+        })
+
+    return render(request, 'gestion3/registro_citas.html', {
+        'citas_con_valoracion': citas_con_valoracion
+    })
+
+
+
+
 
 
 
