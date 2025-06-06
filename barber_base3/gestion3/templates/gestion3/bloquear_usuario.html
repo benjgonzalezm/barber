@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <title>Bloquear Usuario</title>
   <link rel="stylesheet" href="{% static 'gestion3/css/bloquear_usuario.css' %}" />
+  <link rel="stylesheet" href="{% static 'gestion3/css/menu.css' %}" />
 </head>
 <body>
 
@@ -20,7 +21,7 @@
       <li><a href="{% url 'testimonios' %}">Testimonios</a></li>
       <li><a href="{% url 'listar_usuarios' %}">Perfiles</a></li> <!-- esto lo dejo aca mientras solo para poder acceder al html-->
       <li class="menu-iniciar-item">
-        <button id="btnIniciar" class="menu-btn-iniciar">Iniciar ▼</button>
+       <button id="btnIniciar" class="btn-iniciar">Iniciar ▼</button>
         <div id="submenuIniciar" class="menu-submenu-iniciar">
           <a href="{% url 'login' %}">Login</a>
           <a href="{% url 'registrate' %}">Registro</a>
