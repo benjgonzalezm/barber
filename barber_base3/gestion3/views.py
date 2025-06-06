@@ -4,6 +4,55 @@ from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 from django.contrib import messages
 import hashlib
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+
+
+
+
+
+@csrf_exempt
+def eliminar_usuario(request, user_id):
+    if request.method == 'POST':
+        try:
+            usuario = Usuario.objects.get(pk=user_id)
+            usuario.delete()
+            return JsonResponse({'success': True})
+        except Usuario.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Usuario no encontrado'})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
+
+
+@csrf_exempt
+def bloquear_usuario(request, user_id):
+    if request.method == "POST":
+        usuario = get_object_or_404(Usuario, id_usuario=user_id)
+        estado_bloqueado = EstadoUsuario.objects.get(estado_usuario='Bloqueado')
+        usuario.id_estado_usuario = estado_bloqueado
+        usuario.save()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
+
+@csrf_exempt
+def activar_usuario(request, user_id):
+    if request.method == "POST":
+        usuario = get_object_or_404(Usuario, id_usuario=user_id)
+        estado_activo = EstadoUsuario.objects.get(estado_usuario='Activo')
+        usuario.id_estado_usuario = estado_activo
+        usuario.save()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
+
+def listar_usuarios(request):
+    usuarios = Usuario.objects.all()
+    return render(request, 'gestion3/bloquear_usuario.html', {'usuarios': usuarios})
+
+
+
+
+
+
 
 def registrate(request):
     if request.method == 'POST':
@@ -45,8 +94,12 @@ def menu(request):
     return render(request, 'gestion3/menu.html')
 
 
-def bloquear_usuario(request):
-    return render(request, 'gestion3/bloquear_usuario.html')
+
+
+
+
+
+
 
 def citas(request):
     return render(request, 'gestion3/citas.html')

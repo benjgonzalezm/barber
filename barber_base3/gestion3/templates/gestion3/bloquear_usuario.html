@@ -2,58 +2,70 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Bloquear Usuario</title>
-  <link rel="stylesheet" href="{% static 'gestion3/css/bloquear_usuario.css' %}">
+  <link rel="stylesheet" href="{% static 'gestion3/css/bloquear_usuario.css' %}" />
 </head>
-{% include 'gestion3/nav.html' %}
-
-
-
-
-
-
-
-
 <body>
 
-  <div class="container">
-    
+<header class="menu-global">
+  <nav>
+    <a href="{% url 'menu' %}">
+      <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" class="menu-logo" />
+    </a>
+    <ul>
+      <li><a href="{% url 'menu' %}">Inicio</a></li>
+      <li><a href="{% url 'servicios' %}">Servicios</a></li>
+      <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
+      <li><a href="{% url 'testimonios' %}">Testimonios</a></li>
+      <li class="menu-iniciar-item">
+        <button id="btnIniciar" class="menu-btn-iniciar">Iniciar ▼</button>
+        <div id="submenuIniciar" class="menu-submenu-iniciar">
+          <a href="{% url 'login' %}">Login</a>
+          <a href="{% url 'registrate' %}">Registro</a>
+        </div>
+      </li>
+      <li><a href="{% url 'citas' %}">Perfil</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="container espaciados1">
+  {% for usuario in usuarios %}
     <div class="usuario">
       <div class="info-usuario">
         <div class="foto">
-          <img src="https://foto_de_vegeta/777" alt="Foto de usuario">
+          {% if usuario.imagen %}
+            <img src="{{ usuario.imagen.url }}" alt="Foto de {{ usuario.nombre }}" />
+          {% else %}
+            <img src="{% static 'gestion3/images/default-user.png' %}" alt="Foto por defecto" />
+          {% endif %}
         </div>
         <div class="detalles">
-          <span class="nombre">Carlos Soto</span>
-          <span class="calificacion">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</span>
+          <span class="nombre">{{ usuario.nombre }} {{ usuario.apellido }}</span>
+          <span class="tipo-usuario">Tipo: {{ usuario.id_tipo_usuario.tipo }}</span><br />
+          <span class="estado-usuario">Estado: {{ usuario.id_estado_usuario.estado_usuario }}</span>
         </div>
       </div>
       <div class="acciones">
-        <button class="boton-bloquear">Bloquear</button>
-        <button class="boton-eliminar">Eliminar</button>
+        {% if usuario.id_estado_usuario.estado_usuario == "Activo" %}
+          <button class="boton-bloquear" data-id="{{ usuario.id_usuario }}">Bloquear</button>
+        {% else %}
+          <button class="boton-activar" data-id="{{ usuario.id_usuario }}">Activar</button>
+        {% endif %}
+        <button class="boton-eliminar" data-id="{{ usuario.id_usuario }}">Eliminar</button>
       </div>
     </div>
+  {% empty %}
+    <p>No hay usuarios registrados.</p>
+  {% endfor %}
+</div>
 
-    <div class="usuario">
-      <div class="info-usuario">
-        <div class="foto">
-          <img src="https://foto_goku/333" alt="Foto de usuario">
-        </div>
-        <div class="detalles">
-          <span class="nombre">Ana Díaz</span>
-          <span class="calificacion">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</span>
-        </div>
-      </div>
-      <div class="acciones">
-        <button class="boton-bloquear">Bloquear</button>
-        <button class="boton-eliminar">Eliminar</button>
-      </div>
-    </div>
-
-  </div>
-
-  <script src="{% static 'gestion3/js/registro_pago.js' %}"></script>
+<script src="{% static 'gestion3/js/estados.js' %}"></script>
+<script src="{% static 'gestion3/js/logn_registro.js' %}"></script>
 </body>
 </html>
+
+
+
 
