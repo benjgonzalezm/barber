@@ -1,12 +1,10 @@
-
-/* Reset básico para elementos que están en el nav */
+/* esto es el nav */
 h1, ul, li, a, button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Header */
 header {
     background-color: #333;
     color: #fff;
@@ -20,19 +18,18 @@ header nav {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
-    height: auto; /* Asegura que el alto no crezca innecesariamente */
-    overflow: hidden; /* Previene que elementos salgan del nav */
+    height: auto;
+    overflow: visible; 
 }
 
-/* Lista de navegación */
 header ul {
     list-style: none;
     display: flex;
     gap: 1rem;
     align-items: center;
+    position: relative;
 }
 
-/* Links de navegación */
 header ul li a {
     color: #fff;
     text-decoration: none;
@@ -44,7 +41,6 @@ header ul li a:hover {
     color: #f4a261;
 }
 
-/* Botón de iniciar sesión */
 .btn-iniciar {
     background: none;
     border: none;
@@ -57,7 +53,10 @@ header ul li a:hover {
     position: relative;
 }
 
-/* Submenú de iniciar sesión */
+.menu-iniciar-item {
+    position: relative;
+}
+
 .menu-submenu-iniciar {
     display: none;
     position: absolute;
@@ -69,10 +68,12 @@ header ul li a:hover {
     min-width: 150px;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 0.2rem;
 }
 
-.menu-iniciar-item {
-    position: relative;
+
+.menu-submenu-iniciar.activo {
+    display: block;
 }
 
 .menu-submenu-iniciar a {
@@ -87,10 +88,4 @@ header ul li a:hover {
     background-color: #f4a261;
     color: #333;
 }
-
-/* Mostrar submenu cuando está activo (esto se hace con JS) */
-.menu-iniciar-item.active .menu-submenu-iniciar {
-    display: block;
-}
-
 

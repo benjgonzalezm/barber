@@ -4,71 +4,74 @@
 <head>
   <meta charset="UTF-8" />
   <title>Bloquear Usuario</title>
+
+
+<link 
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+  rel="stylesheet" 
+  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+  crossorigin="anonymous"
+/>
+
+
+
+
   <link rel="stylesheet" href="{% static 'gestion3/css/bloquear_usuario.css' %}" />
-  <link rel="stylesheet" href="{% static 'gestion3/css/menu.css' %}" />
 </head>
 <body>
 
 <header class="menu-global">
-  <nav>
-    <a href="{% url 'menu' %}">
-      <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" class="menu-logo" />
-    </a>
-    <ul>
-      <li><a href="{% url 'menu' %}">Inicio</a></li>
-      <li><a href="{% url 'servicios' %}">Servicios</a></li>
-      <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
-      <li><a href="{% url 'testimonios' %}">Testimonios</a></li>
-      <li><a href="{% url 'listar_usuarios' %}">Perfiles</a></li> <!-- esto lo dejo aca mientras solo para poder acceder al html-->
-      <li class="menu-iniciar-item">
-       <button id="btnIniciar" class="btn-iniciar">Iniciar ▼</button>
-        <div id="submenuIniciar" class="menu-submenu-iniciar">
-          <a href="{% url 'login' %}">Login</a>
-          <a href="{% url 'registrate' %}">Registro</a>
-        </div>
-      </li>
-      <li><a href="{% url 'citas' %}">Perfil</a></li>
-    </ul>
-  </nav>
+  
+  {% include 'gestion3/nav.html' %}
 </header>
 
-<div class="container espaciados1">
+<div class="container espaciados1 mt-4">
   {% for usuario in usuarios %}
-    <div class="usuario">
-      <div class="info-usuario">
-        <div class="foto">
+    <div class="usuario border rounded p-3 mb-3 shadow-sm">
+      <div class="info-usuario d-flex align-items-center">
+        <div class="foto me-3">
           {% if usuario.imagen %}
-            <img src="{{ usuario.imagen.url }}" alt="Foto de {{ usuario.nombre }}" />
+            <img src="{{ usuario.imagen.url }}" alt="Foto de {{ usuario.nombre }}" class="img-thumbnail" />
           {% else %}
-            <img src="{% static 'gestion3/images/default-user.png' %}" alt="Foto por defecto" />
+            <img src="{% static 'gestion3/images/default-user.png' %}" alt="Foto por defecto" class="img-thumbnail" />
           {% endif %}
         </div>
         <div class="detalles">
-          <span class="nombre">{{ usuario.nombre }} {{ usuario.apellido }}</span>
+          <span class="nombre fw-bold">{{ usuario.nombre }} {{ usuario.apellido }}</span><br />
           <span class="tipo-usuario">Tipo: {{ usuario.id_tipo_usuario.tipo }}</span><br />
-          <span class="estado-usuario">Estado: {{ usuario.id_estado_usuario.estado_usuario }}</span>
-          <span class="estado-usuario">Correo: {{ usuario.correo }}</span>
+          <span class="estado-usuario">Estado: {{ usuario.id_estado_usuario.estado_usuario }}</span><br />
+          <span class="estado-usuario">Correo: {{ usuario.correo }}</span><br />
           <span class="estado-usuario">Celular: {{ usuario.telefono }}</span>
         </div>
       </div>
-      <div class="acciones">
+      <div class="acciones mt-3">
         {% if usuario.id_estado_usuario.estado_usuario == "Activo" %}
-          <button class="boton-bloquear" data-id="{{ usuario.id_usuario }}">Bloquear</button>
+          <button class="boton-bloquear btn btn-warning me-2" data-id="{{ usuario.id_usuario }}">Bloquear</button>
         {% else %}
-          <button class="boton-activar" data-id="{{ usuario.id_usuario }}">Activar</button>
+          <button class="boton-activar btn btn-success me-2" data-id="{{ usuario.id_usuario }}">Activar</button>
         {% endif %}
-        <button class="boton-eliminar" data-id="{{ usuario.id_usuario }}">Eliminar</button>
+        <button class="boton-eliminar btn btn-danger" data-id="{{ usuario.id_usuario }}">Eliminar</button>
       </div>
     </div>
   {% empty %}
-    <p>No hay usuarios registrados.</p>
+    <p class="text-muted">No hay usuarios registrados.</p>
   {% endfor %}
 </div>
 
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+  crossorigin="anonymous"
+></script>
+
+
+
 <script src="{% static 'gestion3/js/estados.js' %}"></script>
-<script src="{% static 'gestion3/js/logn_registro.js' %}"></script>
+
 </body>
 </html>
+
 
 
 

@@ -1,58 +1,58 @@
 {% load static %}
-  
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Historial de citas</title>
+
+
+<link 
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+  rel="stylesheet" 
+  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+  crossorigin="anonymous"
+/>
+
+
+
   <link rel="stylesheet" href="{% static 'gestion3/css/citas.css' %}">
   <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}">
 </head>
 <body>
-{% include 'gestion3/nav.html' %}
+
+  {% include 'gestion3/nav.html' %}
 
 
+  <div class="text-center my-3">
+    <button id="btnTogglePerfil" class="btn btn-primary btn-toggle-perfil">Abrir/Cerrar Perfil</button>
+  </div>
 
-
-
-
-<!-- Botón para abrir/cerrar perfil aaa -->
-<button id="btnTogglePerfil" class="btn-toggle-perfil">Abrir/Cerrar Perfil</button>
-
-
-
-<nav id="perfilBarbero" style="display: none;">
-  <div class="perfil-caja">
-    <div class="perfil-row">
-      <div>
-        <img src="../images/barberos/barberjo-mujer.avif" alt="Barbero 5" class="perfil-imagen">
-      </div>
-      <div class="datos-principales">
-        <div class="dato-linea">
-          <span class="etiqueta">Nombre:</span>
-          <span class="valor">Juan</span> 
+  <nav id="perfilBarbero" style="display: none;">
+    <div class="perfil-caja">
+      <div class="perfil-row d-flex align-items-center">
+        <div>
+          <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Barbero 5" class="perfil-imagen img-thumbnail">
         </div>
-        <div class="dato-linea">
-          <span class="etiqueta">Apellido:</span>
-          <span class="valor">Pérez</span>
+        <div class="datos-principales ms-3">
+          <div class="dato-linea">
+            <span class="etiqueta">Nombre:</span>
+            <span class="valor">Juan</span> 
+          </div>
+          <div class="dato-linea">
+            <span class="etiqueta">Apellido:</span>
+            <span class="valor">Pérez</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
+
+  <h2 class="etiqueta perfil-caja mt-4 text-center">A continuación podrá ver el estado de sus citas</h2>
+
+  <div class="container my-4">
 
 
-
-
-      <h2 class="etiqueta perfil-caja" >A continuación podrá ver el estado de sus citas</h2>
-
-
-  <div class="container">
-
-    <!--luego poner filtro para que solo salga las citas enlazas al perfil correspondiente tanto del barbero y usuario atraves del id-->
-    <!-- y con el rol del usuario se podra hacer que salgan los botones o no-->
-     <!-- como dije arriba si el rol usuari se le ocultaran los botones -->
-  <div class="cita activa">
+    <div class="cita activa border rounded p-3 mb-4 shadow-sm">
       <h3>Fecha: 03/05/2025</h3>
       <p><strong>Hora:</strong> 09:00</p>
       <p><strong>Estado:</strong> Activa</p>
@@ -61,10 +61,7 @@
       <div class="botones"></div>
     </div>
 
-
-
-
-    <div class="cita finalizada">
+    <div class="cita finalizada border rounded p-3 mb-4 shadow-sm">
       <h3>Fecha: 01/05/2025</h3>
       <p><strong>Hora:</strong> 15:30</p>
       <p><strong>Estado:</strong> Finalizado</p>
@@ -77,8 +74,7 @@
       <div class="botones"></div>
     </div>
 
-  
-    <div class="cita finalizada">
+    <div class="cita finalizada border rounded p-3 mb-4 shadow-sm">
       <h3>Fecha: 01/05/2025</h3>
       <p><strong>Hora:</strong> 16:30</p>
       <p><strong>Estado:</strong> Finalizado</p>
@@ -91,8 +87,7 @@
       <div class="botones"></div>
     </div>
 
-
-    <div class="cita rechazado">
+    <div class="cita rechazado border rounded p-3 mb-4 shadow-sm">
       <h3>Fecha: 02/05/2025</h3>
       <p><strong>Hora:</strong> 11:00</p>
       <p><strong>Estado:</strong> Rechazado</p>
@@ -100,14 +95,22 @@
       <p><strong>Usuario:</strong> Pedro Gómez</p>
       <div class="botones"></div>
     </div>
+
   </div>
 
-</div>
+
+<script 
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
+  crossorigin="anonymous"
+></script>
+
 
 
   <script src="{% static 'gestion3/js/cita.js' %}"></script>
 </body>
 </html>
+
 
 
 

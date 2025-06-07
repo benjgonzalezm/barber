@@ -2,63 +2,81 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testimonios</title>
-    <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}"> 
-    <link rel="stylesheet" href="{% static 'gestion3/css/testimonios.css' %}"> 
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Testimonios - Elite Barber</title>
+
+  
+    <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+  crossorigin="anonymous"
+/>
+
+
+
+    <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'gestion3/css/testimonios.css' %}" />
 </head>
 <body>
+
 {% include 'gestion3/nav.html' %}
 
-    <h1>Testimonios de Nuestros Clientes</h1>
-    <div class="testimonios-container">
-        
-        <div class="testimonio">
+<main class="container my-5">
+    <h1 class="mb-4 text-center">Testimonios de Nuestros Clientes</h1>
+
+    <div class="testimonios-container row row-cols-1 row-cols-md-2 g-4">
+        <div class="testimonio col card p-3">
             <h3>Juan Pérez</h3>
-            <div class="estrellas">★★★★★</div>
+            <div class="estrellas fs-4 text-warning">★★★★★</div>
             <p>"El mejor lugar para un corte de cabello. Atención de primera clase y un ambiente muy agradable."</p>
         </div>
-        
-        <div class="testimonio">
+        <div class="testimonio col card p-3">
             <h3>María López</h3>
-            <div class="estrellas">★★★★☆</div>
+            <div class="estrellas fs-4 text-warning">★★★★☆</div>
             <p>"Un ambiente relajante y profesionales muy capacitados. Definitivamente volveré."</p>
         </div>
-        
-        <div class="testimonio">
+        <div class="testimonio col card p-3">
             <h3>Carlos Gómez</h3>
-            <div class="estrellas">★★★★★</div>
+            <div class="estrellas fs-4 text-warning">★★★★★</div>
             <p>"Excelente servicio y productos de alta calidad. Mi barba nunca había lucido mejor."</p>
         </div>
-        
-        <div class="testimonio">
+        <div class="testimonio col card p-3">
             <h3>Lucía Fernández</h3>
-            <div class="estrellas">★★★★☆</div>
+            <div class="estrellas fs-4 text-warning">★★★★☆</div>
             <p>"Muy buen servicio, aunque tuve que esperar un poco. El resultado valió la pena."</p>
         </div>
     </div>
+</main>
 
-
-
-    <script src="../js/logn_registro.js"></script>
-</body>
-<footer>
+<footer class="bg-dark text-white text-center py-4 mt-5">
     <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
-    <div class="footer-links">
-        <a href="https://www.facebook.com" target="_blank">Facebook</a> |
-        <a href="https://www.instagram.com" target="_blank">Instagram</a> |
-        <a href="https://www.twitter.com" target="_blank">Twitter</a>
+    <div class="footer-links mb-2">
+        <a href="https://www.facebook.com" target="_blank" class="text-white text-decoration-none me-2">Facebook</a> |
+        <a href="https://www.instagram.com" target="_blank" class="text-white text-decoration-none mx-2">Instagram</a> |
+        <a href="https://www.twitter.com" target="_blank" class="text-white text-decoration-none ms-2">Twitter</a>
     </div>
     <nav>
-        <ul>
-            <li><a href="../paginas/menu.html">Inicio</a></li>
-            <li><a href="#nosotros">Nosotros</a></li>
-            <li><a href="../paginas/servicios.html">Servicios</a></li>
-            <li><a href="../paginas/testimonios.html">Testimoinios</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+        <ul class="nav justify-content-center">
+            <li class="nav-item"><a href="{% url 'menu' %}" class="nav-link px-2 text-white">Inicio</a></li>
+            <li class="nav-item"><a href="#nosotros" class="nav-link px-2 text-white">Nosotros</a></li>
+            <li class="nav-item"><a href="{% url 'servicios' %}" class="nav-link px-2 text-white">Servicios</a></li>
+            <li class="nav-item"><a href="{% url 'testimonios' %}" class="nav-link px-2 text-white">Testimonios</a></li>
+            <li class="nav-item"><a href="#contacto" class="nav-link px-2 text-white">Contacto</a></li>
         </ul>
     </nav>
-    
 </footer>
+
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+  crossorigin="anonymous"
+></script>
+
+
+
+
+</body>
 </html>

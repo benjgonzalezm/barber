@@ -2,105 +2,122 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios</title>
-    <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'gestion3/css/servicios.css' %}"> 
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Servicios - Elite Barber</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Tus estilos personalizados -->
+    <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'gestion3/css/servicios.css' %}" />
 </head>
 <body>
-    </head>
-{% include 'gestion3/nav.html' %}
 
+    {% include 'gestion3/nav.html' %}
 
-    <h1>Nuestros Servicios</h1>
-    <div class="servicios-container">
-        <!-- Servicio 1 -->
-        <div class="servicio">
-            <img src="../images/servicios/corte clasico.jpg" alt="Corte Clásico">
-            <h3>Corte Clásico</h3>
-            <p>Precio: $15.000</p>
-            <p>Un corte tradicional que nunca pasa de moda, ideal para cualquier ocasión.</p>
-            <a href="../paginas/selecciona-barber.html">
-                    <button>Elegir</button>
-                </a>
+    <main class="container my-5">
+        <h1 class="mb-4 text-center">Nuestros Servicios</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4 servicios-container">
+            <!-- Servicio 1 -->
+            <div class="col servicio">
+                <div class="card h-100 text-center">
+                    <img src="{% static 'gestion3/images/servicios/corte clasico.jpg' %}" class="card-img-top" alt="Corte Clásico" />
+                    <div class="card-body">
+                        <h5 class="card-title">Corte Clásico</h5>
+                        <p class="card-text">Precio: $15.000</p>
+                        <p>Un corte tradicional que nunca pasa de moda, ideal para cualquier ocasión.</p>
+                        <a href="{% url 'selecciona_barber' %}" class="btn btn-primary">Elegir</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Servicio 2 -->
+            <div class="col servicio">
+                <div class="card h-100 text-center">
+                    <img src="{% static 'gestion3/images/servicios/afeitado.jpeg' %}" class="card-img-top" alt="Afeitado Tradicional" />
+                    <div class="card-body">
+                        <h5 class="card-title">Afeitado Tradicional</h5>
+                        <p class="card-text">Precio: $10.000</p>
+                        <p>Disfruta de un afeitado clásico con toallas calientes.</p>
+                        <a href="{% url 'selecciona_barber' %}" class="btn btn-primary">Elegir</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Servicio 3 -->
+            <div class="col servicio">
+                <div class="card h-100 text-center">
+                    <img src="{% static 'gestion3/images/servicios/corte-barba.jpg' %}" class="card-img-top" alt="Arreglo de Barba" />
+                    <div class="card-body">
+                        <h5 class="card-title">Corte y Barba</h5>
+                        <p class="card-text">Precio: $20.000</p>
+                        <p>Paquete completo: corte de cabello y barba en una sola sesión.</p>
+                        <a href="{% url 'selecciona_barber' %}" class="btn btn-primary">Elegir</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Servicio 4 -->
+            <div class="col servicio">
+                <div class="card h-100 text-center">
+                    <img src="{% static 'gestion3/images/servicios/corte-nino.webp' %}" class="card-img-top" alt="Corte de Niño" />
+                    <div class="card-body">
+                        <h5 class="card-title">Corte de Niño</h5>
+                        <p class="card-text">Precio: $10.000</p>
+                        <p>Corte especial para los más pequeños, cómodo, rápido y con mucha paciencia.</p>
+                        <a href="{% url 'selecciona_barber' %}" class="btn btn-primary">Elegir</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Servicio 5 -->
+            <div class="col servicio">
+                <div class="card h-100 text-center">
+                    <img src="{% static 'gestion3/images/servicios/cejas.webp' %}" class="card-img-top" alt="Servicio de Cejas" />
+                    <div class="card-body">
+                        <h5 class="card-title">Servicio de Cejas</h5>
+                        <p class="card-text">Precio: $5.000</p>
+                        <p>Perfilado y diseño de cejas para resaltar tu mirada y armonizar tu rostro.</p>
+                        <a href="{% url 'selecciona_barber' %}" class="btn btn-primary">Elegir</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Servicio 6 -->
+            <div class="col servicio">
+                <div class="card h-100 text-center">
+                    <img src="{% static 'gestion3/images/servicios/corte-cejas.avif' %}" class="card-img-top" alt="Corte y Servicio de Cejas" />
+                    <div class="card-body">
+                        <h5 class="card-title">Corte y Servicio de Cejas</h5>
+                        <p class="card-text">Precio: $15.000</p>
+                        <p>Paquete completo: corte de cabello y perfilado de cejas en una sola sesión.</p>
+                        <a href="{% url 'selecciona_barber' %}" class="btn btn-primary">Elegir</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- Servicio 2 -->
-        <div class="servicio">
-            <img src="../images/servicios/afeitado.jpeg" alt="Afeitado Tradicional">
-            <h3>Afeitado Tradicional</h3>
-            <p>Precio: $10.000</p>
-            <p>Disfruta de un afeitado clásico con toallas calientes.</p>
-            <a href="../paginas/selecciona-barber.html">
-                    <button>Elegir</button>
-                </a>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
+        <div class="footer-links mb-2">
+            <a href="https://www.facebook.com" target="_blank" class="text-white text-decoration-none me-2">Facebook</a> |
+            <a href="https://www.instagram.com" target="_blank" class="text-white text-decoration-none mx-2">Instagram</a> |
+            <a href="https://www.twitter.com" target="_blank" class="text-white text-decoration-none ms-2">Twitter</a>
         </div>
-        <!-- Servicio 3 -->
-        <div class="servicio">
-            <img src="../images/servicios/corte-barba.jpg" alt="Arreglo de Barba">
-            <h3>Corte y Barba</h3>
-            <p>Precio: $20.000</p>
-            <p>Paquete completo: corte de cabello y barba en una sola sesión.</p>
-            <a href="../paginas/selecciona-barber.html">
-                    <button>Elegir</button>
-                </a>
-        </div>
-        <!-- Servicio 4 -->
-<div class="servicio">
-    <img src="../images/servicios/corte-nino.webp" alt="Corte de Niño">
-    <h3>Corte de Niño</h3>
-    <p>Precio: $10.000</p>
-    <p>Corte especial para los más pequeños, cómodo, rápido y con mucha paciencia.</p>
-    <a href="../paginas/selecciona-barber.html">
-                    <button>Elegir</button>
-                </a>
-</div>
-<!-- Servicio 5 -->
-<div class="servicio">
-    <img src="../images/servicios/cejas.webp" alt="Servicio de Cejas">
-    <h3>Servicio de Cejas</h3>
-    <p>Precio: $5.000</p>
-    <p>Perfilado y diseño de cejas para resaltar tu mirada y armonizar tu rostro.</p>
-    <a href="../paginas/selecciona-barber.html">
-                    <button>Elegir</button>
-                </a>
-</div>
-<!-- Servicio 6 -->
-<div class="servicio">
-    <img src="../images/servicios/corte-cejas.avif" alt="Corte y Servicio de Cejas">
-    <h3>Corte y Servicio de Cejas</h3>
-    <p>Precio: $15.000</p>
-    <p>Paquete completo: corte de cabello y perfilado de cejas en una sola sesión.</p>
-    <a href="../paginas/selecciona-barber.html">
-                    <button>Elegir</button>
-                </a>
-</div>
-        
-    </div>
-</body>
-<footer>
-    <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
-    <div class="footer-links">
-        <a href="https://www.facebook.com" target="_blank">Facebook</a> |
-        <a href="https://www.instagram.com" target="_blank">Instagram</a> |
-        <a href="https://www.twitter.com" target="_blank">Twitter</a>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="/WEB/paginas/menu.html">Inicio</a></li>
-            <li><a href="#nosotros">Nosotros</a></li>
-            <li><a href="#servicios">Servicios</a></li>
-            <li><a href="/WEB/paginas/testimonios.html">Testimoinios</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-        </ul>
-    </nav>
-    
-</footer>
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a href="{% url 'menu' %}" class="nav-link px-2 text-white">Inicio</a></li>
+                <li class="nav-item"><a href="#nosotros" class="nav-link px-2 text-white">Nosotros</a></li>
+                <li class="nav-item"><a href="#servicios" class="nav-link px-2 text-white">Servicios</a></li>
+                <li class="nav-item"><a href="{% url 'testimonios' %}" class="nav-link px-2 text-white">Testimonios</a></li>
+                <li class="nav-item"><a href="#contacto" class="nav-link px-2 text-white">Contacto</a></li>
+            </ul>
+        </nav>
+    </footer>
 
-
-
+ 
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+  crossorigin="anonymous"
+></script>
 </body>
 </html>
-
-
-        <!-- prueba para ver si se clono-->

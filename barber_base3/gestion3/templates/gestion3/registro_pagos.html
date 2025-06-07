@@ -2,68 +2,75 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Registrar Pago</title>
-  <link rel="stylesheet" href="{% static 'gestion3/css/estilos_pagos.css' %}">
+
+
+  <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+  crossorigin="anonymous"
+/>
+
+  <link rel="stylesheet" href="{% static 'gestion3/css/estilos_pagos.css' %}" />
 </head>
 <body>
 
 {% include 'gestion3/nav.html' %}
 
+<main class="container my-5">
+  <div class="registro-container mx-auto" style="max-width: 700px;">
+    <form id="formPago" novalidate>
+      <h2 class="mb-4">Registrar Pago</h2>
 
-
-
-
-
-  <div class="registro-container">
-    <form id="formPago">
-      <h2>Registrar Pago</h2>
-
-      <div class="fila">
-        <div class="form-group mitad">
-          <label for="cliente_visible">Cliente</label>
-          <select id="cliente_visible" disabled>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="cliente_visible" class="form-label">Cliente</label>
+          <select id="cliente_visible" class="form-select" disabled>
             <option value="">Seleccione...</option>
           </select>
-          <input type="hidden" id="cliente" name="cliente">
+          <input type="hidden" id="cliente" name="cliente" />
         </div>
 
-        <div class="form-group mitad">
-          <label for="barbero_visible">Barbero</label>
-          <select id="barbero_visible" disabled>
+        <div class="col-md-6">
+          <label for="barbero_visible" class="form-label">Barbero</label>
+          <select id="barbero_visible" class="form-select" disabled>
             <option value="">Seleccione...</option>
           </select>
-          <input type="hidden" id="barbero" name="barbero">
+          <input type="hidden" id="barbero" name="barbero" />
         </div>
       </div>
 
-      <div class="fila">
-        <div class="form-group mitad">
-          <label for="servicio_visible">Servicio</label>
-          <select id="servicio_visible" disabled>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="servicio_visible" class="form-label">Servicio</label>
+          <select id="servicio_visible" class="form-select" disabled>
             <option value="">Seleccione...</option>
           </select>
-          <input type="hidden" id="servicio" name="servicio">
+          <input type="hidden" id="servicio" name="servicio" />
         </div>
 
-        <div class="form-group mitad">
-          <label for="cita_visible">Cita</label>
-          <select id="cita_visible" disabled>
+        <div class="col-md-6">
+          <label for="cita_visible" class="form-label">Cita</label>
+          <select id="cita_visible" class="form-select" disabled>
             <option value="">Seleccione...</option>
           </select>
-          <input type="hidden" id="cita" name="cita">
+          <input type="hidden" id="cita" name="cita" />
         </div>
       </div>
 
-      <div class="fila">
-        <div class="form-group mitad">
-          <label for="fecha_pago">Fecha de Pago</label>
-          <input type="date" id="fecha_pago" name="fecha_pago" required>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="fecha_pago" class="form-label">Fecha de Pago</label>
+          <input type="date" id="fecha_pago" name="fecha_pago" class="form-control" required />
         </div>
 
-        <div class="form-group mitad">
-          <label for="forma_pago">Forma de Pago</label>
-          <select id="forma_pago" name="forma_pago" required>
+        <div class="col-md-6">
+          <label for="forma_pago" class="form-label">Forma de Pago</label>
+          <select id="forma_pago" name="forma_pago" class="form-select" required>
+            <option value="">Seleccione...</option>
             <option value="efectivo">Efectivo</option>
             <option value="tarjeta">Tarjeta</option>
             <option value="transferencia">Transferencia</option>
@@ -71,31 +78,38 @@
         </div>
       </div>
 
-      <div class="fila">
-        <div class="form-group mitad">
-          <label for="monto">Monto Efectivo</label>
-          <input type="number" id="monto" name="monto_efectivo" step="0.01" required>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="monto" class="form-label">Monto Efectivo</label>
+          <input type="number" id="monto" name="monto_efectivo" class="form-control" step="0.01" required />
         </div>
 
-        <div class="form-group mitad">
-          <label for="descuento">Descuento</label>
-          <input type="number" id="descuento" name="descuento" step="0.01" value="0">
+        <div class="col-md-6">
+          <label for="descuento" class="form-label">Descuento</label>
+          <input type="number" id="descuento" name="descuento" class="form-control" step="0.01" value="0" />
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="total">Total Pagado</label>
-        <input type="number" id="total" name="total_pagado" step="0.01" required>
+      <div class="mb-3">
+        <label for="total" class="form-label">Total Pagado</label>
+        <input type="number" id="total" name="total_pagado" class="form-control" step="0.01" required />
       </div>
 
-      <div class="fila">
-        <input type="reset" value="Limpiar">
-        <button type="submit">Registrar Pago</button>
+      <div class="d-flex justify-content-between">
+        <button type="reset" class="btn btn-secondary">Limpiar</button>
+        <button type="submit" class="btn btn-primary">Registrar Pago</button>
       </div>
     </form>
   </div>
+</main>
 
-  <script src="{% static 'gestion3/js/registro_pago.js' %}"></script>
 
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+  crossorigin="anonymous"
+></script>
+
+<script src="{% static 'gestion3/js/registro_pago.js' %}"></script>
 </body>
 </html>

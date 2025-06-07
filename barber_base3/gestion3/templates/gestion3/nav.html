@@ -7,34 +7,45 @@
 <body>
 
 <header>                          
-        <nav>
-            <a href=" {% url 'menu' %}">
-                <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" style="height:80px;">
-            </a>
-            <ul>                   
-                <li><a href="{% url 'menu' %}">Inicio</a></li>
-                <li><a href="{% url 'servicios' %}">Servicios</a></li>
-                <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
-                <li><a href="{% url 'testimonios' %}">Testimonios</a></li>
-                <li><a href="{% url 'listar_usuarios' %}">Perfiles</a></li> <!-- esto lo dejo aca mientras solo para poder acceder al html-->
-                <li><a href="{% url 'registro_citas' %}">Registro citas</a></li> <!-- esto lo dejo aca mientras solo para poder acceder al html-->
-                 
-                <!-- Cuando este iniciado seccion este boton se deberia de ocultar  aaaaa -->
-                <li class="iniciar-menu" style="position: relative;">
-                    <button id="btnIniciar" class="btn-iniciar">Iniciar ▼</button>
-                    <div id="submenuIniciar" class="submenu-iniciar" style="display:none; position: absolute; top: 100%; left: 0; background: #333; border-radius: 5px; padding: 0.5rem 0;">
-                        <a href="{% url 'login' %}" style="display: block; color: white; padding: 0.5rem 1rem; text-decoration: none;">Login</a>
-                        <a href="{% url 'registrate' %}" style="display: block; color: white; padding: 0.5rem 1rem; text-decoration: none;">Registro</a>
-                    </div>
-                </li>
-                
-                  <!-- una vez oculto apareceria el siguiente que es de ir al perfil propio tanto de barbero o usuario -->
-                <li><a href="{% url 'citas' %}">Perfil</a></li>
-            </ul>
-        </nav>
-    </header> 
+  <nav>
+    <a href="{% url 'menu' %}">
+      <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" style="height:80px;">
+    </a>
+    <ul>                   
+      <li><a href="{% url 'menu' %}">Inicio</a></li>
+      <li><a href="{% url 'servicios' %}">Servicios</a></li>
+      <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
+      <li><a href="{% url 'testimonios' %}">Testimonios</a></li>
 
-    
- <script src="{% static 'gestion3/js/logn_registro.js' %}"></script>
-    </body>
+      <!-- Primer menú desplegable -->
+      <li class="menu-iniciar-item">
+        <button id="btnIniciar" class="btn-iniciar">Iniciar ▼</button>
+        <div id="submenuIniciar" class="menu-submenu-iniciar">
+          <a href="{% url 'login' %}">Login</a>
+          <a href="{% url 'registrate' %}">Registro</a>
+        </div>
+      </li>
+
+      <!-- Segundo menú desplegable -->
+      <li class="menu-iniciar-item">
+        <button id="btnOpciones" class="btn-iniciar">Administrar ▼</button> 
+        <div id="submenuOpciones" class="menu-submenu-iniciar">
+          <a href="{% url 'listar_usuarios' %}">Perfiles</a>
+          <a href="{% url 'registro_citas' %}">Registro citas</a>
+          <a href="{% url 'ver_pagos' %}">Ver Pagos</a>
+        </div>
+      </li>
+
+      <li><a href="{% url 'citas' %}">Perfil</a></li>
+    </ul>
+  </nav>
+</header> 
+
+<script src="{% static 'gestion3/js/login_registro.js' %}"></script>
+</body>
 </html>
+
+
+
+
+

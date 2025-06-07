@@ -2,122 +2,156 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nosotros - Elite Barber</title>
-    <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'gestion3/css/nosotros.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosotros - Elite Barber</title>
+
+
+ <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+  crossorigin="anonymous"
+/>
+
+
+
+  <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'gestion3/css/nosotros.css' %}">
 </head>
 <body>
 
-{% include 'gestion3/nav.html' %}
+  {% include 'gestion3/nav.html' %}
 
+  <main class="container my-5">
 
-
-
-
-
-    <main>
-    <section class="nosotros">
-        <img src="../images/nosotross.jpeg" alt="Equipo Elite Barber" class="img-nosotros">
-        <h1>Nuestros Barberos</h1>
-        <p>
-            En Elite Barber, nos apasiona el arte del buen corte y el cuidado personal. Nuestro equipo está formado por barberos profesionales con años de experiencia, dedicados a brindar el mejor servicio y atención a cada cliente. ¡Conócenos!
-        </p>
+    <section class="text-center mb-5">
+      <img src="{% static 'gestion3/images/nosotross.jpeg' %}" alt="Equipo Elite Barber" class="img-fluid rounded mb-4">
+      <h1 class="mb-3">Nuestros Barberos</h1>
+      <p class="lead">
+        En Elite Barber, nos apasiona el arte del buen corte y el cuidado personal. Nuestro equipo está formado por barberos profesionales con años de experiencia, dedicados a brindar el mejor servicio y atención a cada cliente. ¡Conócenos!
+      </p>
     </section>
 
     <section class="barberos">
-    
-        <div class="barberos-container">
-            <div class="barbero">
-                <img src="../images/barberos/6.jpg" alt="Barbero 1">
-                <h3>Andrés Ramírez</h3>
-                <p>Especialidad: Corte clásico y afeitado tradicional</p>
-                <button>Reservar</button>
-                <a href="{% url 'perfil' %}">
-                    <button>Perfil</button>
-                </a>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+        {% comment %} Barbero 1 {% endcomment %}
+        <div class="col">
+          <div class="card h-100 text-center">
+            <img src="{% static 'gestion3/images/barberos/6.jpg' %}" class="card-img-top" alt="Barbero 1">
+            <div class="card-body">
+              <h5 class="card-title">Andrés Ramírez</h5>
+              <p class="card-text">Especialidad: Corte clásico y afeitado tradicional</p>
             </div>
-
-
-            <div class="barbero">
-                <img src="../images/barberos/1.webp" alt="Barbero 2">
-                <h3>Felipe Torres</h3>
-                <p>Especialidad: Arreglo de barba y degradados</p>
-                <button>Reservar</button>
-                <a href="{% url 'perfil' %}">
-                    <button>Perfil</button>
-                </a>
+            <div class="card-footer d-flex justify-content-center gap-2">
+              <button class="btn btn-primary">Reservar</button>
+              <a href="{% url 'perfil' %}" class="btn btn-outline-secondary">Perfil</a>
             </div>
-
-
-            <div class="barbero">
-                <img src="../images/barberos/2.jpg" alt="Barbero 3">
-                <h3>Camilo Soto</h3>
-                <p>Especialidad: Peinados modernos y cortes juveniles</p>
-                <button>Reservar</button>
-                <a href="{% url 'perfil' %}">
-                    <button>Perfil</button>
-                </a>
-
-            </div>
-
-
-            <div class="barbero">
-                <img src="../images/barberos/3-.jpg" alt="Barbero 4">
-                <h3>Javier Morales</h3>
-                <p>Especialidad: Tratamientos capilares y cortes creativos</p>
-                <button>Reservar</button>
-                <a href="{% url 'perfil' %}">
-                    <button>Perfil</button>
-                </a>
-            </div>
-
-
-            <div class="barbero">
-                <img src="../images/barberos/barberjo-mujer.avif" alt="Barbero 5">
-                <h3>Valentina Ríos</h3>
-                <p>Especialidad: Corte infantil y barbería femenina</p>
-                <button>Reservar</button>
-                <a href="{% url 'perfil' %}">
-                    <button>Perfil</button>
-                </a>
-            </div>
-
-
-            <div class="barbero">
-                <img src="../images/barberos/ultimo-barbero.avif" alt="Barbero 6">
-                <h3>Diego Fuentes</h3>
-                <p>Especialidad: Afeitado con navaja y estilos urbanos</p>
-                <button>Reservar</button>
-                <a href="{% url 'perfil' %}">
-                    <button>Perfil</button>
-                </a>
-            </div>
-
-            
+          </div>
         </div>
+
+        {% comment %} Repetir para otros barberos {% endcomment %}
+
+        <div class="col">
+          <div class="card h-100 text-center">
+            <img src="{% static 'gestion3/images/barberos/1.webp' %}" class="card-img-top" alt="Barbero 2">
+            <div class="card-body">
+              <h5 class="card-title">Felipe Torres</h5>
+              <p class="card-text">Especialidad: Arreglo de barba y degradados</p>
+            </div>
+            <div class="card-footer d-flex justify-content-center gap-2">
+              <button class="btn btn-primary">Reservar</button>
+              <a href="{% url 'perfil' %}" class="btn btn-outline-secondary">Perfil</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100 text-center">
+            <img src="{% static 'gestion3/images/barberos/2.jpg' %}" class="card-img-top" alt="Barbero 3">
+            <div class="card-body">
+              <h5 class="card-title">Camilo Soto</h5>
+              <p class="card-text">Especialidad: Peinados modernos y cortes juveniles</p>
+            </div>
+            <div class="card-footer d-flex justify-content-center gap-2">
+              <button class="btn btn-primary">Reservar</button>
+              <a href="{% url 'perfil' %}" class="btn btn-outline-secondary">Perfil</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100 text-center">
+            <img src="{% static 'gestion3/images/barberos/3-.jpg' %}" class="card-img-top" alt="Barbero 4">
+            <div class="card-body">
+              <h5 class="card-title">Javier Morales</h5>
+              <p class="card-text">Especialidad: Tratamientos capilares y cortes creativos</p>
+            </div>
+            <div class="card-footer d-flex justify-content-center gap-2">
+              <button class="btn btn-primary">Reservar</button>
+              <a href="{% url 'perfil' %}" class="btn btn-outline-secondary">Perfil</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100 text-center">
+            <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" class="card-img-top" alt="Barbero 5">
+            <div class="card-body">
+              <h5 class="card-title">Valentina Ríos</h5>
+              <p class="card-text">Especialidad: Corte infantil y barbería femenina</p>
+            </div>
+            <div class="card-footer d-flex justify-content-center gap-2">
+              <button class="btn btn-primary">Reservar</button>
+              <a href="{% url 'perfil' %}" class="btn btn-outline-secondary">Perfil</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100 text-center">
+            <img src="{% static 'gestion3/images/barberos/ultimo-barbero.avif' %}" class="card-img-top" alt="Barbero 6">
+            <div class="card-body">
+              <h5 class="card-title">Diego Fuentes</h5>
+              <p class="card-text">Especialidad: Afeitado con navaja y estilos urbanos</p>
+            </div>
+            <div class="card-footer d-flex justify-content-center gap-2">
+              <button class="btn btn-primary">Reservar</button>
+              <a href="{% url 'perfil' %}" class="btn btn-outline-secondary">Perfil</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
-</main>
-<footer>
+
+  </main>
+
+  <footer class="bg-dark text-white text-center py-4 mt-5">
     <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
-    <div class="footer-links">
-        <a href="https://www.facebook.com" target="_blank">Facebook</a> |
-        <a href="https://www.instagram.com" target="_blank">Instagram</a> |
-        <a href="https://www.twitter.com" target="_blank">Twitter</a>
+    <div class="footer-links mb-2">
+      <a href="https://www.facebook.com" target="_blank" class="text-white me-2">Facebook</a> |
+      <a href="https://www.instagram.com" target="_blank" class="text-white mx-2">Instagram</a> |
+      <a href="https://www.twitter.com" target="_blank" class="text-white ms-2">Twitter</a>
     </div>
     <nav>
-        <ul>
-            <li><a href="../paginas/menu.html">Inicio</a></li>
-            <li><a href="#nosotros">Nosotros</a></li>
-            <li><a href="../paginas/servicios.html">Servicios</a></li>
-            <li><a href="../paginas/testimonios.html">Testimoinios</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-        </ul>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a class="text-white" href="{% url 'menu' %}">Inicio</a></li>
+        <li class="list-inline-item"><a class="text-white" href="{% url 'nosotros' %}">Nosotros</a></li>
+        <li class="list-inline-item"><a class="text-white" href="{% url 'servicios' %}">Servicios</a></li>
+        <li class="list-inline-item"><a class="text-white" href="{% url 'testimonios' %}">Testimonios</a></li>
+        <li class="list-inline-item"><a class="text-white" href="#contacto">Contacto</a></li>
+      </ul>
     </nav>
-    
-</footer>
+  </footer>
 
+ 
+  <script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+  crossorigin="anonymous"
+></script>
 
 </body>
 </html>

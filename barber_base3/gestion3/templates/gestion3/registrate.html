@@ -2,97 +2,107 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Registro</title>
-  <link rel="stylesheet" href="{% static 'gestion3/css/registro.css' %}">
+
+  <!-- Bootstrap CSS -->
+  <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+  crossorigin="anonymous"
+/>
+
+
+  <!-- Tu CSS personalizado -->
+  <link rel="stylesheet" href="{% static 'gestion3/css/registro.css' %}" />
 </head>
 <body>
 
-
-
 {% include 'gestion3/nav.html' %}
 
+<main class="container my-5">
+  <div class="registro-container mx-auto" style="max-width: 600px;">
+    <form name="registro1" id="registrof" method="POST" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      <h2 class="mb-4 text-center">Formulario de Registro</h2>
 
+      <div class="mb-3">
+        <label for="imagenperfil" class="form-label">Imagen de perfil</label>
+        <input type="file" class="form-control" id="imagenperfil" name="imagenperfil" required>
+      </div>
 
-<main class="container">
-  <div class="registro-container">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="nombreregistro" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="nombreregistro" name="nombreregistro" required>
+        </div>
+        <div class="col-md-6">
+          <label for="apellidoregistro" class="form-label">Apellido</label>
+          <input type="text" class="form-control" id="apellidoregistro" name="apellidoregistro" required>
+        </div>
+      </div>
 
-    <form name="registro1" id="registrof" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  <h2>Formulario de Registro</h2>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="registrocorreo" class="form-label">Correo electrónico</label>
+          <input type="email" class="form-control" id="registrocorreo" name="correoregistro" required>
+        </div>
+        <div class="col-md-6">
+          <label for="celularregistro" class="form-label">Celular</label>
+          <input type="tel" class="form-control" id="celularregistro" name="celularregistro" required>
+        </div>
+      </div>
 
-  <div class="form-group">
-    <label>Imagen de perfil</label>
-    <input type="file" name="imagenperfil" required>
-  </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="edad" class="form-label">Fecha de nacimiento</label>
+          <input type="date" class="form-control" id="edad" name="edad" max="2030-01-01" min="1930-01-01" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Tipo de usuario</label>
+          <input type="text" class="form-control" value="Cliente" readonly>
+        </div>
+      </div>
 
-  <div class="fila">
-    <div class="form-group mitad">
-      <label>Nombre</label>
-      <input type="text" id="nombreregistro" name="nombreregistro" required>
-    </div>
-    <div class="form-group mitad">
-      <label>Apellido</label>
-      <input type="text" id="apellidoregistro" name="apellidoregistro" required>
-    </div>
-  </div>
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <label for="contraseñaregistro" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="contraseñaregistro" name="contraseñaregistro" required>
+        </div>
+        <div class="col-md-6">
+          <label for="confirmarcontraseñaregistro" class="form-label">Confirmar contraseña</label>
+          <input type="password" class="form-control" id="confirmarcontraseñaregistro" name="confirmarcontraseñaregistro" required>
+        </div>
+      </div>
 
-  <div class="fila">
-    <div class="form-group mitad">
-      <label>Correo electrónico</label>
-      <input type="email" id="registrocorreo" name="correoregistro" required>
-    </div>
-    <div class="form-group mitad">
-      <label>Celular</label>
-      <input type="tel" id="celularregistro" name="celularregistro" required>
-    </div>
-  </div>
+      <div class="d-flex justify-content-between mb-3">
+        <input type="reset" class="btn btn-secondary" value="Limpiar">
+        <button type="submit" class="btn btn-primary">Confirmar creación de cuenta</button>
+      </div>
 
-  <div class="fila">
-    <div class="form-group mitad">
-      <label>Fecha de nacimiento</label>
-      <input type="date" id="edad" name="edad" max="2030-01-01" min="1930-01-01" required>
-    </div>
-    <div class="form-group mitad">
-      <label>Tipo de usuario</label>
-      <input type="text" value="Cliente" readonly>
-    </div>
-  </div>
-
-  <div class="fila">
-    <div class="form-group mitad">
-      <label>Contraseña</label>
-      <input type="password" id="contraseñaregistro" name="contraseñaregistro" required>
-    </div>
-    <div class="form-group mitad">
-      <label>Confirmar contraseña</label>
-      <input type="password" id="confirmarcontraseñaregistro" name="confirmarcontraseñaregistro" required>
-    </div>
-  </div>
-
-  <div class="fila">
-    <input type="reset" value="Limpiar">
-    <button type="submit">Confirmar creación de cuenta</button>
-  </div>
-
-  <p id="mensajes"></p>
-  <div class="note">
-    PD: El nombre y apellido deben iniciar con mayúscula. No comparta sus datos.
-  </div>
-</form>
-
-
-
-
+      <p id="mensajes" class="text-danger"></p>
+      <div class="note fst-italic text-muted">
+        PD: El nombre y apellido deben iniciar con mayúscula. No comparta sus datos.
+      </div>
+    </form>
   </div>
 </main>
+
+<!-- Bootstrap JS Bundle -->
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+  crossorigin="anonymous"
+></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'gestion3/js/validacionregistro.js' %}"></script>
 
 </body>
 </html>
+
 
 
 
