@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nosotros - Elite Barber</title>
+  <title>Elegir barbero</title>
 
 
  <link
@@ -25,18 +25,12 @@
 
   <main class="container my-5">
 
-    <section class="text-center mb-5">
-      <img src="{% static 'gestion3/images/nosotross.jpeg' %}" alt="Equipo Elite Barber" class="img-fluid rounded mb-4">
-      <h1 class="mb-3">Nuestros Barberos</h1>
-      <p class="lead">
-        En Elite Barber, nos apasiona el arte del buen corte y el cuidado personal. Nuestro equipo está formado por barberos profesionales con años de experiencia, dedicados a brindar el mejor servicio y atención a cada cliente. ¡Conócenos!
-      </p>
-    </section>
+   
 
     <section class="barberos">
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-
+        
         <div class="col">
           <div class="card h-100 text-center">
             <img src="{% static 'gestion3/images/barberos/6.jpg' %}" class="card-img-top" alt="Barbero 1">
@@ -51,7 +45,7 @@
           </div>
         </div>
 
-
+       
 
         <div class="col">
           <div class="card h-100 text-center">
@@ -128,23 +122,7 @@
 
   </main>
 
-  <footer class="bg-dark text-white text-center py-4 mt-5">
-    <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
-    <div class="footer-links mb-2">
-      <a href="https://www.facebook.com" target="_blank" class="text-white me-2">Facebook</a> |
-      <a href="https://www.instagram.com" target="_blank" class="text-white mx-2">Instagram</a> |
-      <a href="https://www.twitter.com" target="_blank" class="text-white ms-2">Twitter</a>
-    </div>
-    <nav>
-      <ul class="list-inline">
-        <li class="list-inline-item"><a class="text-white" href="{% url 'menu' %}">Inicio</a></li>
-        <li class="list-inline-item"><a class="text-white" href="{% url 'nosotros' %}">Nosotros</a></li>
-        <li class="list-inline-item"><a class="text-white" href="{% url 'servicios' %}">Servicios</a></li>
-        <li class="list-inline-item"><a class="text-white" href="{% url 'testimonios' %}">Testimonios</a></li>
-        <li class="list-inline-item"><a class="text-white" href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
-  </footer>
+
 
  
   <script

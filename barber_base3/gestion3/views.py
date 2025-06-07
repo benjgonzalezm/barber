@@ -166,3 +166,7 @@ def testimonios(request):
 
 def ver_pagos(request):
     return render(request, 'gestion3/ver_pagos.html')
+
+
+def barbero(request):
+    return render(request, 'gestion3/barbero.html')

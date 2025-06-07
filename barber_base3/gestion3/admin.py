@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import FormaPago, RegistroPago, Cita, ValoracionObservacion, Descuento, Observacion, EstadoCita, Servicio, Usuario, EstadoUsuario, TipoUsuario, Bitacora
+from .models import FormaPago, RegistroPago, Cita, ValoracionObservacion, Descuento, Observacion, EstadoCita, SubServicio, Servicio, Usuario, EstadoUsuario, TipoUsuario, Bitacora
 
 # Clases para ver en la página de admin las tablas con sus campos
 
@@ -28,7 +28,10 @@ class EstadoCitaAdmin(admin.ModelAdmin):
     list_display = ('id_estado_cita','estado_cita')
     
 class ServicioAdmin(admin.ModelAdmin):
-    list_display = ('id_servicio','nombre_servicio','descripcion','duracion_minutos','precio','id_usuario')
+    list_display = ('id_servicio','id_subservicio','descripcion','duracion_minutos','precio','id_usuario')
+
+class SubservicioAdmin(admin.ModelAdmin):
+    list_display = ('id_subservicio','nombre_servicio','imagenes')
     
 class UsuarioAdmin(admin.ModelAdmin):
     list_display = ('id_usuario','nombre','apellido','telefono','correo','contraseña_hash','descripcion_usuario','imagen','id_estado_usuario','id_tipo_usuario')
@@ -52,6 +55,7 @@ admin.site.register(Descuento, DescuentoAdmin)
 admin.site.register(Observacion, ObservacionAdmin)
 admin.site.register(EstadoCita, EstadoCitaAdmin)
 admin.site.register(Servicio, ServicioAdmin)
+admin.site.register(SubServicio, SubservicioAdmin)
 admin.site.register(Usuario, UsuarioAdmin)
 admin.site.register(EstadoUsuario, EstadoUsuarioAdmin)
 admin.site.register(TipoUsuario, TipoUsuarioAdmin)

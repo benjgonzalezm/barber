@@ -40,16 +40,26 @@ class Usuario(models.Model):
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
 
+class SubServicio(models.Model):
+    id_subservicio = models.AutoField(primary_key=True)
+    nombre_servicio = models.CharField(max_length=100)
+    imagenes = models.ImageField(upload_to='subservicios/', null=True, blank=True)
+
+    def __str__(self):
+        return self.nombre_servicio
+
 class Servicio(models.Model):
     id_servicio = models.AutoField(primary_key=True)
     id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    nombre_servicio = models.CharField(max_length=100)
+    id_subservicio = models.ForeignKey(SubServicio, on_delete=models.CASCADE)  # Aquí estaba el error
     descripcion = models.TextField(null=True, blank=True)
     duracion_minutos = models.PositiveIntegerField()
     precio = models.FloatField()
 
     def __str__(self):
-        return self.nombre_servicio
+        return f"{self.id_subservicio.nombre_servicio} - {self.id_usuario.nombre}"
+
+       
 
 class EstadoCita(models.Model):
     id_estado_cita = models.AutoField(primary_key=True)
