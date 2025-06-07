@@ -7,33 +7,7 @@
   <link rel="stylesheet" href="{% static 'gestion3/css/estilos.css' %}">
 </head>
 <body>
-<header class="menu-global">
-    <nav>
-        <a href=" {% url 'menu' %}">
-            <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" class="menu-logo">
-        </a>
-        <ul>
-            <li><a href="{% url 'menu' %}">Inicio</a></li>
-            <li><a href="{% url 'servicios' %}">Servicios</a></li>
-            <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
-            <li><a href="{% url 'testimonios' %}">Testimonios</a></li>
-            
-            <li class="menu-iniciar-item">
-                <button id="btnIniciar" class="menu-btn-iniciar">Iniciar ▼</button>
-                <div id="submenuIniciar" class="menu-submenu-iniciar">
-                    <a href="{% url 'login' %}">Login</a>
-                    <a href="{% url 'registrate' %}">Registro</a>
-                </div>
-            </li>
-            
-            <li><a href="{% url 'citas' %}">Perfil</a></li>
-        </ul>
-    </nav>
-</header>
-
-
-
-
+{% include 'gestion3/nav.html' %}
 
 
 
@@ -65,6 +39,5 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{% static 'gestion3/js/validacionlogin.js' %}"></script>
-  <script src="{% static 'gestion3/js/logn_registro.js' %}"></script>
 </body>
 </html>
