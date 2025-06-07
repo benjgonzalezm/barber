@@ -1,12 +1,71 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Usuario, TipoUsuario, EstadoUsuario
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 from django.contrib import messages
 import hashlib
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Cita, ValoracionObservacion
+from .models import Servicio, EstadoCita, Usuario, TipoUsuario, EstadoUsuario, Cita, ValoracionObservacion
+
+
+
+
+def servicios(request):
+    servicios_all = Servicio.objects.select_related('id_subservicio', 'id_usuario')
+    servicios_unicos = {}
+    for servicio in servicios_all:
+        key = servicio.id_subservicio.id_subservicio  # id del subservicio
+        if key not in servicios_unicos:
+            servicios_unicos[key] = servicio
+    servicios = servicios_unicos.values()
+    return render(request, 'gestion3/servicios.html', {'servicios': servicios})
+
+
+
+
+def barbero(request, servicio_id):
+    servicio = get_object_or_404(Servicio, id_servicio=servicio_id)
+
+    # Obtengo los barberos y también el servicio de cada barbero relacionado a este subservicio
+    barberos_con_servicio = Servicio.objects.filter(
+        id_subservicio=servicio.id_subservicio,
+        id_usuario__id_tipo_usuario__tipo='Barbero'
+    ).select_related('id_usuario')
+
+    return render(request, 'gestion3/barbero.html', {
+        'servicio': servicio,
+        'barberos_con_servicio': barberos_con_servicio
+    })
+
+
+
+def reservar(request, servicio_id, barbero_id):
+    servicio = get_object_or_404(Servicio, id_servicio=servicio_id)
+    barbero = get_object_or_404(Usuario, id_usuario=barbero_id)
+
+    if request.method == 'POST':
+        fecha = request.POST.get('fecha')
+        hora = request.POST.get('hora')
+
+        estado_cita = EstadoCita.objects.get(estado_cita='En progreso')
+        cliente = Usuario.objects.get(id_usuario=2)  # por ahora fijo como dijiste
+
+        nueva_cita = Cita.objects.create(
+            id_cliente=cliente,
+            id_servicio=servicio,
+            id_estado_cita=estado_cita,
+            fecha_cita=fecha,
+            hora_cita=hora
+        )
+
+        messages.success(request, 'Cita reservada correctamente.')
+        return redirect('menu')
+
+    return render(request, 'gestion3/reservar.html', {
+        'servicio': servicio,
+        'barbero': barbero
+    })
+
 
 
 
@@ -155,11 +214,9 @@ def registro_pagos(request):
 def registro_barbero(request):
     return render(request, 'gestion3/registrobarbero.html')
 
-def selecciona_barber(request):
-    return render(request, 'gestion3/selecciona-barber.html')
 
-def servicios(request):
-    return render(request, 'gestion3/servicios.html')
+
+
 
 def testimonios(request):
     return render(request, 'gestion3/testimonios.html')
@@ -168,5 +225,4 @@ def ver_pagos(request):
     return render(request, 'gestion3/ver_pagos.html')
 
 
-def barbero(request):
-    return render(request, 'gestion3/barbero.html')
+
