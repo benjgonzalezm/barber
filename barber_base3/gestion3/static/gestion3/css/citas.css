@@ -1,146 +1,231 @@
 /* Reset básico */
 body, h1, h2, p, ul, li, a, form, input, textarea, button {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Body y fondo principal */
 body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f9f9f9;
-}
-
-/* Clases usadas en el HTML */
-
-/* Perfil Barbero */
-.perfil-caja {
-    background: white;
-    border-radius: 8px;
-    padding: 1rem;
-    max-width: 600px;
-    margin: 0 auto;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-}
-
-.perfil-row {
-    display: flex;
-    align-items: center;
-}
-
-.perfil-imagen {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-.datos-principales {
-    margin-left: 1rem;
-}
-
-.dato-linea {
-    margin-bottom: 0.5rem;
-}
-
-.etiqueta {
-    font-weight: bold;
-}
-
-.valor {
-    margin-left: 0.25rem;
-}
-
-/* Botón abrir/cerrar perfil */
-.btn-toggle-perfil {
-    /* ya tienes btn btn-primary de Bootstrap */
-    cursor: pointer;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: linear-gradient(135deg, #0f172a, #334155);
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 0;
 }
 
 /* Contenedor general */
 .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 40px 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-
 
 /* Citas */
 .cita {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    background-color: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  color: #333;
+}
+
+.cita h3 {
+  margin: 0 0 0.5rem;
+  font-size: 20px;
+  color: #111;
 }
 
 .cita p {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 16px;
+  line-height: 1.4;
 }
 
-/* Formulario de valoración */
-form label {
-    font-weight: 600;
-    margin-top: 0.5rem;
-    display: block;
+/* Estados especiales para citas */
+.cita.finalizada {
+  background-color: #4CAF50;
+  color: #fff;
 }
 
-.form-select {
-    width: 100%;
-    margin-bottom: 0.75rem;
+.cita.finalizada .calificacion,
+.cita.finalizada .estrella.positiva {
+  color: #FFD700;
 }
 
-.form-check {
-    margin-bottom: 0.3rem;
+.cita.finalizada .estrella.negativa {
+  color: #FF0000;
 }
 
-.form-check-input {
-    margin-right: 0.5rem;
+.cita.rechazado {
+  background-color: #FF5722;
+  color: #fff;
 }
 
-.btn-primary {
-    /* ya incluye Bootstrap */
+.cita.activa {
+  background-color: #2196F3;
+  color: #fff;
+}
+
+/* Estrellas */
+.estrella {
+  font-size: 24px;
+}
+
+/* Botones */
+.btn-registrar {
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 8px;
+  padding: 8px 12px;
+  background-color: #007bff; 
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+}
+
+.btn-registrar:hover {
+  opacity: 0.85;
+}
+
+.btn-toggle-perfil {
+  margin: 20px auto;
+  display: block;
+  padding: 10px 20px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-toggle-perfil:hover {
+  background-color: #222;
+}
+
+/* Perfil */
+.perfil-imagen {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.datos-principales {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  min-width: 180px;
+}
+
+.dato-linea {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  font-weight: bold;
+  color: white;
+}
+
+.etiqueta {
+  min-width: 90px;
+  font-weight: normal;
+  color: #ddd;
+}
+
+.valor {
+  font-weight: bold;
+  color: white;
+}
+
+.estrellas {
+  color: gold;
+  font-size: 1.2em;
+  font-weight: normal;
+}
+
+.perfil-caja {
+  background-color: #555;
+  padding: 20px 30px;
+  border-radius: 12px;
+  max-width: 900px;
+  margin: 20px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.perfil-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .perfil-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .descripcion-box {
+    text-align: center;
+  }
+}
+
+/* Formularios */
+.form-select, .form-check-input, .form-check-label {
+  margin-bottom: 0.5rem;
 }
 
 /* Utilidades */
 .text-center {
-    text-align: center;
+  text-align: center;
 }
 
 .my-3 {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .my-4 {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .mb-2 {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .mb-3 {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .mt-2 {
-    margin-top: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .mt-4 {
-    margin-top: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .ms-3 {
-    margin-left: 1rem;
+  margin-left: 1rem;
 }
-
-/* Bootstrap clases que usas (no hay que duplicar, solo recordatorio)
-.btn, .btn-primary, .btn-toggle-perfil, .img-thumbnail, .d-flex, .align-items-center, .shadow-sm, .border, .rounded, .p-3, .mb-4, .bg-white, .form-label, .form-select, .form-check, .form-check-input, .form-check-label
-*/
-
 
