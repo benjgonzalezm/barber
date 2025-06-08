@@ -51,7 +51,7 @@ class SubServicio(models.Model):
 class Servicio(models.Model):
     id_servicio = models.AutoField(primary_key=True)
     id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    id_subservicio = models.ForeignKey(SubServicio, on_delete=models.CASCADE)  # Aquí estaba el error
+    id_subservicio = models.ForeignKey(SubServicio, on_delete=models.CASCADE)  # Aquí estaba el erroraaa
     descripcion = models.TextField(null=True, blank=True)
     duracion_minutos = models.PositiveIntegerField()
     precio = models.FloatField()
