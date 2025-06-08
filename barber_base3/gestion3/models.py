@@ -43,7 +43,7 @@ class Usuario(models.Model):
 class SubServicio(models.Model):
     id_subservicio = models.AutoField(primary_key=True)
     nombre_servicio = models.CharField(max_length=100)
-    imagenes = models.ImageField(upload_to='subservicios/', null=True, blank=True)
+    imagen = models.ImageField(upload_to='subservicios/', null=True, blank=True)
 
     def __str__(self):
         return self.nombre_servicio

@@ -31,7 +31,7 @@ class ServicioAdmin(admin.ModelAdmin):
     list_display = ('id_servicio','id_subservicio','descripcion','duracion_minutos','precio','id_usuario')
 
 class SubservicioAdmin(admin.ModelAdmin):
-    list_display = ('id_subservicio','nombre_servicio','imagenes')
+    list_display = ('id_subservicio','nombre_servicio','imagen')
     
 class UsuarioAdmin(admin.ModelAdmin):
     list_display = ('id_usuario','nombre','apellido','telefono','correo','contraseña_hash','descripcion_usuario','imagen','id_estado_usuario','id_tipo_usuario')
