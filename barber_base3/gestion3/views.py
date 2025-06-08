@@ -173,7 +173,13 @@ def reservar(request, servicio_id, barbero_id):
         hora = request.POST.get('hora')
 
         estado_cita = EstadoCita.objects.get(estado_cita='En progreso')
-        cliente = Usuario.objects.get(id_usuario=2)  # por ahora fijo 
+
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            messages.error(request, 'Debes iniciar sesión para reservar una cita.')
+            return redirect('login')
+
+        cliente = Usuario.objects.get(id_usuario=usuario_id)
 
         nueva_cita = Cita.objects.create(
             id_cliente=cliente,
@@ -190,6 +196,7 @@ def reservar(request, servicio_id, barbero_id):
         'servicio': servicio,
         'barbero': barbero
     })
+
 
 
 
