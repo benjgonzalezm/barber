@@ -6,6 +6,59 @@ import hashlib
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Servicio, EstadoCita, Usuario, TipoUsuario, EstadoUsuario, Cita, ValoracionObservacion
+from django.contrib.auth.hashers import check_password
+
+
+
+
+
+def login_view(request):
+    if request.method == 'POST':
+        correo = request.POST.get('correorelogin')
+        contraseña = request.POST.get('contraseñalogin')
+
+        try:
+            usuario = Usuario.objects.get(correo=correo)
+            
+            # Usar hashlib.sha256 para comparar la contraseña, no check_password
+            if usuario.contraseña_hash == hashlib.sha256(contraseña.encode()).hexdigest():
+                # Verificar si el usuario está activo
+                if usuario.id_estado_usuario.estado_usuario == 'Activo':
+                    # Login exitoso
+                    request.session['usuario_id'] = usuario.id_usuario
+                    request.session['usuario_nombre'] = f"{usuario.nombre} {usuario.apellido}"
+                    return redirect('gestion3/menu.html')  
+                else:
+                    return render(request, 'gestion3/logueate.html', {'error': 'Usuario bloqueado. Contacte con el administrador.'})
+            else:
+                return render(request, 'gestion3/logueate.html', {'error': 'Contraseña incorrecta'})
+
+        except Usuario.DoesNotExist:
+            return render(request, 'gestion3/logueate.html', {'error': 'Usuario no encontrado'})
+
+    return render(request, 'gestion3/logueate.html')
+
+
+
+
+
+
+def logout_view(request):
+    request.session.flush()  # Elimina todos los datos de la sesión
+    return redirect('gestion3/logueate.html')  # Redirigir a la URL 'login'
+
+
+
+
+def pagina_principal(request):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('gestion3/logueate.html')
+
+    usuario = Usuario.objects.get(id_usuario=usuario_id)
+    return render(request, 'gestion3/menu.html', {'usuario': usuario})
+
+
 
 
 
@@ -150,8 +203,6 @@ def registrate(request):
 
 
 
-def menu(request):
-    return render(request, 'gestion3/menu.html')
 
 
 
@@ -194,13 +245,14 @@ def registro_citas(request):
 
 
 
+def menu(request):
+    return render(request, 'gestion3/menu.html')
 
 
 def citas(request):
     return render(request, 'gestion3/citas.html')
 
-def logueate(request):
-    return render(request, 'gestion3/logueate.html')
+
 
 def nosotros(request):
     return render(request, 'gestion3/nosotros.html')

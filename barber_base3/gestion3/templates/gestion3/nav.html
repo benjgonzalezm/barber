@@ -17,33 +17,37 @@
       <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
       <li><a href="{% url 'testimonios' %}">Testimonios</a></li>
 
-      <!-- Primer menú desplegable -->
-      <li class="menu-iniciar-item">
-        <button id="btnIniciar" class="btn-iniciar">Iniciar ▼</button>
-        <div id="submenuIniciar" class="menu-submenu-iniciar">
-          <a href="{% url 'login' %}">Login</a>
-          <a href="{% url 'registrate' %}">Registro</a>
-        </div>
-      </li>
+      {% if request.session.usuario_id %}
 
-      <!-- Segundo menú desplegable -->
-      <li class="menu-iniciar-item">
-        <button id="btnOpciones" class="btn-iniciar">Administrar ▼</button> 
-        <div id="submenuOpciones" class="menu-submenu-iniciar">
-          <a href="{% url 'listar_usuarios' %}">Perfiles</a>
-          <a href="{% url 'registro_citas' %}">Registro citas</a>
-          <a href="{% url 'ver_pagos' %}">Ver Pagos</a>
-        </div>
-      </li>
+            
 
-      <li><a href="{% url 'citas' %}">Perfil</a></li>
+
+            <!-- cuando este logueado quiero que la opcion de ver usuarios ,registro citas ,ver pagos se vean apretando un boton para que no se vea tan cargado el nav -->
+            <a href="{% url 'listar_usuarios' %}">Ver usuarios</a>
+            <a href="{% url 'registro_citas' %}">Registro citas</a>
+            <a href="{% url 'ver_pagos' %}">Ver Pagos</a>
+
+
+
+            <a href="{% url 'citas' %}">Perfil</a>
+            <a href="{% url 'logout' %}">loguout</a>
+
+
+      {% else %}
+  <!-- cuando no este logueado quiero que la opcion de  login y registro salga al apretar un boton para que no este tan sobrecargado el nav-->
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'registrate' %}">Registro</a>
+
+      {% endif %}
     </ul>
   </nav>
 </header> 
 
-<script src="{% static 'gestion3/js/login_registro.js' %}"></script>
+
 </body>
 </html>
+
+
 
 
 
