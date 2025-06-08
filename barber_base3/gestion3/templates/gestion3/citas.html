@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Historial de citas</title>
+
+
+<link 
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+  rel="stylesheet" 
+  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+  crossorigin="anonymous"
+/>
+
+
+
+  <link rel="stylesheet" href="{% static 'gestion3/css/citas.css' %}">
+  <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}">
+</head>
+<body>
+
+  {% include 'gestion3/nav.html' %}
+
+
+  <div class="text-center my-3">
+    <button id="btnTogglePerfil" class="btn btn-primary btn-toggle-perfil">Abrir/Cerrar Perfil</button>
+  </div>
+
+  <nav id="perfilBarbero" style="display: none;">
+    <div class="perfil-caja">
+      <div class="perfil-row d-flex align-items-center">
+        <div>
+          <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Barbero 5" class="perfil-imagen img-thumbnail">
+        </div>
+        <div class="datos-principales ms-3">
+          <div class="dato-linea">
+            <span class="etiqueta">Nombre:</span>
+            <span class="valor">Juan</span> 
+          </div>
+          <div class="dato-linea">
+            <span class="etiqueta">Apellido:</span>
+            <span class="valor">Pérez</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <h2 class="etiqueta perfil-caja mt-4 text-center">A continuación podrá ver el estado de sus citas</h2>
+
+  <div class="container my-4">
+
+
+    <div class="cita activa border rounded p-3 mb-4 shadow-sm">
+      <h3>Fecha: 03/05/2025</h3>
+      <p><strong>Hora:</strong> 09:00</p>
+      <p><strong>Estado:</strong> Activa</p>
+      <p><strong>Barbero:</strong> Juan Pérez</p>
+      <p><strong>Usuario:</strong> Tomás Núñez</p>
+      <div class="botones"></div>
+    </div>
+
+    <div class="cita finalizada border rounded p-3 mb-4 shadow-sm">
+      <h3>Fecha: 01/05/2025</h3>
+      <p><strong>Hora:</strong> 15:30</p>
+      <p><strong>Estado:</strong> Finalizado</p>
+      <p><strong>Barbero:</strong> Juan Pérez</p>
+      <p><strong>Usuario:</strong> Carlos Soto</p>
+      <div class="calificacion">
+        <span class="estrella positiva">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <p><strong>Observaciones:</strong> Puntualidad, Servicio</p>
+      </div>
+      <div class="botones"></div>
+    </div>
+
+    <div class="cita finalizada border rounded p-3 mb-4 shadow-sm">
+      <h3>Fecha: 01/05/2025</h3>
+      <p><strong>Hora:</strong> 16:30</p>
+      <p><strong>Estado:</strong> Finalizado</p>
+      <p><strong>Barbero:</strong> Juan Pérez</p>
+      <p><strong>Usuario:</strong> Ana Díaz</p>
+      <div class="calificacion">
+        <span class="estrella negativa">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
+        <p><strong>Observaciones:</strong> Servicio, Personalidad</p>
+      </div>
+      <div class="botones"></div>
+    </div>
+
+    <div class="cita rechazado border rounded p-3 mb-4 shadow-sm">
+      <h3>Fecha: 02/05/2025</h3>
+      <p><strong>Hora:</strong> 11:00</p>
+      <p><strong>Estado:</strong> Rechazado</p>
+      <p><strong>Barbero:</strong> Juan Pérez</p>
+      <p><strong>Usuario:</strong> Pedro Gómez</p>
+      <div class="botones"></div>
+    </div>
+
+  </div>
+
+
+<script 
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
+  crossorigin="anonymous"
+></script>
+
+
+
+  <script src="{% static 'gestion3/js/cita.js' %}"></script>
+</body>
+</html>
+
+
+
+
+ <!-- Aaca podremos ver el perfil de uno mismo tanto como barbero o usuario o barberia-->
+     
+<!-- atraves del id y rol se veran las vistas diferente -->
+     
+<!-- si es barbero podra hacer todo lo que sale en este html y si es usuario solo podra ver la cita propia que este en progreso 
+    las citas propias finalizadas(obviamente sin los botones de aceptar ,rechazar ,finalizar o registrar) -->
+
+<!--obviamente el barbero es el unico que podra tener mas de 1 cita en progreso -->

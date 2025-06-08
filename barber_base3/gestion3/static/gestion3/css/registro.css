@@ -1,0 +1,96 @@
+/* Fondo general */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #334155);
+  background-attachment: fixed;
+  background-size: cover;
+  color: #fff;
+}
+
+/* Contenedor principal del contenido */
+main.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 120px;
+  padding-bottom: 40px;
+  min-height: calc(100vh - 120px);
+}
+
+/* Contenedor del formulario */
+.registro-container {
+  background-color: #2c2c2c;
+  border-radius: 20px;
+  padding: 30px 40px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Título del formulario */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Agrupación de campos */
+.form-group {
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="date"],
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  color: #000;
+  box-sizing: border-box;
+  margin-bottom: 10px; /* <-- Se añade separación entre campos */
+}
+
+/* Organización horizontal de dos columnas */
+.fila {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.mitad {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Botones */
+button,
+input[type="reset"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #c40000;
+  color: #fff;
+  transition: 0.3s ease;
+  margin-bottom: 10px;
+}
+
+button:hover,
+input[type="reset"]:hover {
+  background-color: #ff1a1a;
+  cursor: pointer;
+}
+
+/* Nota al pie */
+.note {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #ff7070;
+  text-align: center;
+}

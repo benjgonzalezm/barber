@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle, #3d3d3d, #1a1a1a);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.registro-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  background-color: #2c2c2c;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.8);
+  box-sizing: border-box;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #ffdd57;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #ddd;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"],
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+input[readonly] {
+  background-color: #444;
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+.fila {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mitad {
+  flex: 1 1 48%;
+}
+
+button,
+input[type="reset"] {
+  flex: 1 1 48%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #c40000;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover,
+input[type="reset"]:hover {
+  background-color: #ff1a1a;
+}
+
+#mensajes {
+  margin-top: 10px;
+  color: #ffbaba;
+}
+
+.note {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #ff7070;
+  text-align: center;
+}
+
+
+  

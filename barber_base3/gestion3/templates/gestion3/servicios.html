@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Servicios - Elite Barber</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'gestion3/css/servicios.css' %}" />
+</head>
+<body>
+
+    {% include 'gestion3/nav.html' %}
+
+    <main class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4 servicios-container">
+            {% for servicio in servicios %}
+            <div class="col servicio">
+                <div class="card h-100 text-center">
+                    {% if servicio.id_subservicio.imagenes %}
+                        <img src="{{ servicio.id_subservicio.imagenes.url }}" class="card-img-top" alt="{{ servicio.id_subservicio.nombre_servicio }}" />
+                    {% else %}
+               
+                        <img src="{% static 'gestion3/images/afeitados.jpg' %}" class="card-img-top" alt="Imagen por defecto de servicio" />
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ servicio.id_subservicio.nombre_servicio }}</h5>
+                        <p>Duración: {{ servicio.duracion_minutos }} minutos</p>
+                        <p>{{ servicio.descripcion }}</p>
+                        <a href="{% url 'barbero' servicio.id_servicio %}" class="btn btn-primary">Elegir</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
+        <div class="footer-links mb-2">
+            <a href="https://www.facebook.com" target="_blank" class="text-white text-decoration-none me-2">Facebook</a> |
+            <a href="https://www.instagram.com" target="_blank" class="text-white text-decoration-none mx-2">Instagram</a> |
+            <a href="https://www.twitter.com" target="_blank" class="text-white text-decoration-none ms-2">Twitter</a>
+        </div>
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a href="{% url 'menu' %}" class="nav-link px-2 text-white">Inicio</a></li>
+                <li class="nav-item"><a href="#nosotros" class="nav-link px-2 text-white">Nosotros</a></li>
+                <li class="nav-item"><a href="#servicios" class="nav-link px-2 text-white">Servicios</a></li>
+                <li class="nav-item"><a href="{% url 'testimonios' %}" class="nav-link px-2 text-white">Testimonios</a></li>
+                <li class="nav-item"><a href="#contacto" class="nav-link px-2 text-white">Contacto</a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+</body>
+</html>
+
+
