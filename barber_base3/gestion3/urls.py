@@ -8,9 +8,7 @@ from . import views
 
 urlpatterns = [
     path('', views.menu, name='menu'),
-    path('citas/', views.citas, name='citas'),
     path('nosotros/', views.nosotros, name='nosotros'),
-    path('perfil/', views.perfil_view, name='perfil'),
     path('registrate/', views.registrate, name='registrate'),
     path('registro-pagos/', views.registro_pagos, name='registro_pagos'),
     path('registro-barbero/', views.registro_barbero, name='registro_barbero'),
@@ -27,6 +25,12 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('pagina_principal/', views.pagina_principal, name='pagina_principal'),  
+
+
+    path('perfil/', views.perfil_view, name='perfil'),
+    path('valorar_cita/<int:cita_id>/', views.valorar_cita, name='valorar_cita'),
+    path('finalizar_cita/<int:cita_id>/', views.finalizar_cita, name='finalizar_cita'),
+    path('cancelar_cita/<int:cita_id>/', views.cancelar_cita, name='cancelar_cita'),
 ]
 
 

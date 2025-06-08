@@ -4,43 +4,40 @@
 <head>
   <meta charset="UTF-8">
   <title>Historial de citas</title>
+<!--no se ve el perfil del barbero-->
 
-
-<link 
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
-  rel="stylesheet" 
-  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
-  crossorigin="anonymous"
-/>
-
-
+  <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+    crossorigin="anonymous"
+  />
 
   <link rel="stylesheet" href="{% static 'gestion3/css/citas.css' %}">
-  <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}">
 </head>
-<body>
+<body data-tipo-usuario="{{ tipo_usuario }}">
 
   {% include 'gestion3/nav.html' %}
-
 
   <div class="text-center my-3">
     <button id="btnTogglePerfil" class="btn btn-primary btn-toggle-perfil">Abrir/Cerrar Perfil</button>
   </div>
 
+
   <nav id="perfilBarbero" style="display: none;">
     <div class="perfil-caja">
       <div class="perfil-row d-flex align-items-center">
         <div>
-          <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Barbero 5" class="perfil-imagen img-thumbnail">
+          <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Barbero" class="perfil-imagen img-thumbnail">
         </div>
         <div class="datos-principales ms-3">
           <div class="dato-linea">
             <span class="etiqueta">Nombre:</span>
-            <span class="valor">Juan</span> 
+            <span class="valor">{{ usuario.nombre }}</span> 
           </div>
           <div class="dato-linea">
             <span class="etiqueta">Apellido:</span>
-            <span class="valor">Pérez</span>
+            <span class="valor">{{ usuario.apellido }}</span>
           </div>
         </div>
       </div>
@@ -51,61 +48,74 @@
 
   <div class="container my-4">
 
+    {% if tipo_usuario == "Cliente" %}
+      <h4 class="mb-3">Tus citas</h4>
+      {% for info in citas_info %}
+        <div class="cita border rounded p-3 mb-4 shadow-sm bg-white">
+          <p><strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
+          <p><strong>Barbero:</strong> {{ info.cita.id_servicio.id_usuario.nombre }}</p>
+          <p><strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
 
-    <div class="cita activa border rounded p-3 mb-4 shadow-sm">
-      <h3>Fecha: 03/05/2025</h3>
-      <p><strong>Hora:</strong> 09:00</p>
-      <p><strong>Estado:</strong> Activa</p>
-      <p><strong>Barbero:</strong> Juan Pérez</p>
-      <p><strong>Usuario:</strong> Tomás Núñez</p>
-      <div class="botones"></div>
-    </div>
+          {% if info.cita.id_estado_cita.estado_cita == 'Finalizado' and not info.valoracion %}
+            <form method="post" action="{% url 'valorar_cita' info.cita.id_cita %}">
+              {% csrf_token %}
+              <label class="form-label">Valoración (1 a 5):</label>
+              <select name="valoracion" required class="form-select mb-2">
+                {% for i in "12345" %}
+                  <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+              </select>
 
-    <div class="cita finalizada border rounded p-3 mb-4 shadow-sm">
-      <h3>Fecha: 01/05/2025</h3>
-      <p><strong>Hora:</strong> 15:30</p>
-      <p><strong>Estado:</strong> Finalizado</p>
-      <p><strong>Barbero:</strong> Juan Pérez</p>
-      <p><strong>Usuario:</strong> Carlos Soto</p>
-      <div class="calificacion">
-        <span class="estrella positiva">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <p><strong>Observaciones:</strong> Puntualidad, Servicio</p>
-      </div>
-      <div class="botones"></div>
-    </div>
+              <label class="form-label">Observaciones:</label>
+              {% for obs in observaciones_disponibles %}
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="observaciones" value="{{ obs.id_observacion }}">
+                  <label class="form-check-label">{{ obs.nombre_observacion }}</label>
+                </div>
+              {% endfor %}
 
-    <div class="cita finalizada border rounded p-3 mb-4 shadow-sm">
-      <h3>Fecha: 01/05/2025</h3>
-      <p><strong>Hora:</strong> 16:30</p>
-      <p><strong>Estado:</strong> Finalizado</p>
-      <p><strong>Barbero:</strong> Juan Pérez</p>
-      <p><strong>Usuario:</strong> Ana Díaz</p>
-      <div class="calificacion">
-        <span class="estrella negativa">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
-        <p><strong>Observaciones:</strong> Servicio, Personalidad</p>
-      </div>
-      <div class="botones"></div>
-    </div>
+              <button type="submit" class="btn btn-primary mt-2">Enviar valoración</button>
+            </form>
+          {% elif info.valoracion %}
+            <p><strong>Valoración:</strong> {{ info.valoracion }}</p>
+            <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
 
-    <div class="cita rechazado border rounded p-3 mb-4 shadow-sm">
-      <h3>Fecha: 02/05/2025</h3>
-      <p><strong>Hora:</strong> 11:00</p>
-      <p><strong>Estado:</strong> Rechazado</p>
-      <p><strong>Barbero:</strong> Juan Pérez</p>
-      <p><strong>Usuario:</strong> Pedro Gómez</p>
-      <div class="botones"></div>
-    </div>
+    {% elif tipo_usuario == "Barbero" %}
+      <h4 class="mb-3">Tus citas con clientes</h4>
+      {% for info in citas_info %}
+        <div class="cita border rounded p-3 mb-4 shadow-sm bg-white"
+             data-finalizar="{% url 'finalizar_cita' info.cita.id_cita %}"
+             data-cancelar="{% url 'cancelar_cita' info.cita.id_cita %}">
+          <p><strong>Cliente:</strong> {{ info.cita.id_cliente.nombre }}</p>
+          <p><strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
+          <p><strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
+
+          <div class="botones mt-2">
+            {% if info.cita.id_estado_cita.estado_cita == "En progreso" %}
+        
+            {% endif %}
+          </div>
+
+          {% if info.valoracion %}
+            <p><strong>Valoración:</strong> {{ info.valoracion }}</p>
+            <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
+            <p><strong>Cliente:</strong> {{ info.cita.id_cliente.nombre }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endif %}
 
   </div>
 
 
-<script 
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
-  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
-  crossorigin="anonymous"
-></script>
-
-
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
+    crossorigin="anonymous"
+  ></script>
 
   <script src="{% static 'gestion3/js/cita.js' %}"></script>
 </body>
@@ -114,11 +124,4 @@
 
 
 
- <!-- Aaca podremos ver el perfil de uno mismo tanto como barbero o usuario o barberia-->
-     
-<!-- atraves del id y rol se veran las vistas diferente -->
-     
-<!-- si es barbero podra hacer todo lo que sale en este html y si es usuario solo podra ver la cita propia que este en progreso 
-    las citas propias finalizadas(obviamente sin los botones de aceptar ,rechazar ,finalizar o registrar) -->
 
-<!--obviamente el barbero es el unico que podra tener mas de 1 cita en progreso -->

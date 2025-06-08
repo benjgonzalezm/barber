@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(data => {
         if (data.success) {
           alert(`Usuario ${nuevaAccion} exitosamente.`);
-          location.reload();  // Recarga la página para actualizar estado
+          location.reload();  
         } else {
           alert('Error: ' + data.error);
         }

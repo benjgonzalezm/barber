@@ -22,15 +22,20 @@
             
 
 
-            <!-- cuando este logueado quiero que la opcion de ver usuarios ,registro citas ,ver pagos se vean apretando un boton para que no se vea tan cargado el nav -->
+            <!--(esto sera esclusivo del perfil de la barberia osea solo se le vera al usuario con tipo usuario barberia)
+             cuando este logueado quiero que la opcion de ver usuarios ,registro citas ,ver pagos y registrar barbero se 
+             vean apretando un boton para que no se vea tan cargado el nav -->
             <a href="{% url 'listar_usuarios' %}">Ver usuarios</a>
             <a href="{% url 'registro_citas' %}">Registro citas</a>
             <a href="{% url 'ver_pagos' %}">Ver Pagos</a>
+            <a href="{% url 'registro_barbero' %}">Registrar barbero</a>
 
 
 
-            <a href="{% url 'citas' %}">Perfil</a>
-            <a href="{% url 'logout' %}">loguout</a>
+
+            <a href="{% url 'perfil' %}">Perfil</a>
+            <a href="{% url 'logout' %}">Cerrar sesión</a>
+
 
 
       {% else %}

@@ -5,8 +5,80 @@ from django.contrib import messages
 import hashlib
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Servicio, EstadoCita, Usuario, TipoUsuario, EstadoUsuario, Cita, ValoracionObservacion
+from .models import Servicio, EstadoCita, Usuario, TipoUsuario, EstadoUsuario, Cita, ValoracionObservacion , Observacion
 from django.contrib.auth.hashers import check_password
+
+
+
+
+
+def perfil_view(request):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login')
+
+    usuario = get_object_or_404(Usuario, id_usuario=usuario_id)
+
+    if usuario.id_tipo_usuario.tipo == "Cliente":
+        citas = Cita.objects.filter(id_cliente=usuario).select_related('id_servicio', 'id_estado_cita')
+    else:
+        citas = Cita.objects.filter(id_servicio__id_usuario=usuario).select_related('id_cliente', 'id_estado_cita', 'id_servicio')
+
+    citas_info = []
+    for cita in citas:
+        valoraciones = ValoracionObservacion.objects.filter(id_cita=cita)
+        observaciones = [v.id_observacion.nombre_observacion for v in valoraciones]
+        valoracion = valoraciones.first().valoracion if valoraciones.exists() else None
+
+        citas_info.append({
+            'cita': cita,
+            'valoracion': valoracion,
+            'observaciones': observaciones
+        })
+
+    observaciones_disponibles = Observacion.objects.all()
+
+    return render(request, 'gestion3/citas.html', {
+        'usuario': usuario,
+        'tipo_usuario': usuario.id_tipo_usuario.tipo,
+        'citas_info': citas_info,
+        'observaciones_disponibles': observaciones_disponibles
+    })
+
+def valorar_cita(request, cita_id):
+    if request.method == 'POST':
+        cita = get_object_or_404(Cita, id_cita=cita_id)
+        valor = int(request.POST['valoracion'])
+        observaciones_ids = request.POST.getlist('observaciones')
+
+        for obs_id in observaciones_ids:
+            observacion = get_object_or_404(Observacion, id_observacion=obs_id)
+            ValoracionObservacion.objects.create(
+                valoracion=valor,
+                id_observacion=observacion,
+                id_cita=cita
+            )
+
+        messages.success(request, 'Valoración registrada exitosamente.')
+        return redirect('perfil')
+
+def finalizar_cita(request, cita_id):
+    cita = get_object_or_404(Cita, id_cita=cita_id)
+    estado_finalizado = EstadoCita.objects.get(estado_cita='Finalizado')
+    cita.id_estado_cita = estado_finalizado
+    cita.save()
+    return redirect('perfil')
+
+def cancelar_cita(request, cita_id):
+    cita = get_object_or_404(Cita, id_cita=cita_id)
+    estado_cancelado = EstadoCita.objects.get(estado_cita='Cancelado')
+    cita.id_estado_cita = estado_cancelado
+    cita.save()
+    return redirect('perfil')
+
+
+
+
 
 
 
@@ -20,14 +92,14 @@ def login_view(request):
         try:
             usuario = Usuario.objects.get(correo=correo)
             
-            # Usar hashlib.sha256 para comparar la contraseña, no check_password
+           
             if usuario.contraseña_hash == hashlib.sha256(contraseña.encode()).hexdigest():
-                # Verificar si el usuario está activo
+         
                 if usuario.id_estado_usuario.estado_usuario == 'Activo':
-                    # Login exitoso
+                 
                     request.session['usuario_id'] = usuario.id_usuario
                     request.session['usuario_nombre'] = f"{usuario.nombre} {usuario.apellido}"
-                    return redirect('gestion3/menu.html')  
+                    return redirect('menu')  
                 else:
                     return render(request, 'gestion3/logueate.html', {'error': 'Usuario bloqueado. Contacte con el administrador.'})
             else:
@@ -42,10 +114,10 @@ def login_view(request):
 
 
 
-
 def logout_view(request):
-    request.session.flush()  # Elimina todos los datos de la sesión
-    return redirect('gestion3/logueate.html')  # Redirigir a la URL 'login'
+    request.session.flush() 
+    return redirect('login')  
+
 
 
 
@@ -67,7 +139,7 @@ def servicios(request):
     servicios_all = Servicio.objects.select_related('id_subservicio', 'id_usuario')
     servicios_unicos = {}
     for servicio in servicios_all:
-        key = servicio.id_subservicio.id_subservicio  # id del subservicio
+        key = servicio.id_subservicio.id_subservicio  
         if key not in servicios_unicos:
             servicios_unicos[key] = servicio
     servicios = servicios_unicos.values()
@@ -79,7 +151,7 @@ def servicios(request):
 def barbero(request, servicio_id):
     servicio = get_object_or_404(Servicio, id_servicio=servicio_id)
 
-    # Obtengo los barberos y también el servicio de cada barbero relacionado a este subservicio
+   
     barberos_con_servicio = Servicio.objects.filter(
         id_subservicio=servicio.id_subservicio,
         id_usuario__id_tipo_usuario__tipo='Barbero'
@@ -101,7 +173,7 @@ def reservar(request, servicio_id, barbero_id):
         hora = request.POST.get('hora')
 
         estado_cita = EstadoCita.objects.get(estado_cita='En progreso')
-        cliente = Usuario.objects.get(id_usuario=2)  # por ahora fijo como dijiste
+        cliente = Usuario.objects.get(id_usuario=2)  # por ahora fijo 
 
         nueva_cita = Cita.objects.create(
             id_cliente=cliente,
@@ -176,7 +248,6 @@ def registrate(request):
         contraseña = request.POST.get('contraseñaregistro')
         imagen = request.FILES.get('imagenperfil')
 
-        # aca la contraseña se hace seguro segun dijeron los profes o nos pidieron
         contraseña_hash = hashlib.sha256(contraseña.encode()).hexdigest()
 
 
@@ -200,6 +271,41 @@ def registrate(request):
     return render(request, 'gestion3/registrate.html')
 
 
+
+
+def registro_barbero(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombreregistro')
+        apellido = request.POST.get('apellidoregistro')
+        correo = request.POST.get('correoregistro')
+        telefono = request.POST.get('celularregistro')
+        contraseña = request.POST.get('contraseñaregistro')
+        descripcion = request.POST.get('descripcionregistro')
+        imagen = request.FILES.get('imagenperfil')
+
+
+        contraseña_hash = hashlib.sha256(contraseña.encode()).hexdigest()
+
+        tipo_usuario = TipoUsuario.objects.get(tipo='Barbero')  
+        estado_usuario = EstadoUsuario.objects.get(estado_usuario='Activo')
+
+
+        nuevo_barbero = Usuario.objects.create(
+            id_tipo_usuario=tipo_usuario,
+            nombre=nombre,
+            apellido=apellido,
+            telefono=telefono,
+            correo=correo,
+            contraseña_hash=contraseña_hash,
+            descripcion_usuario=descripcion,
+            imagen=imagen,
+            id_estado_usuario=estado_usuario
+        )
+
+        messages.success(request, 'Barbero registrado correctamente.')
+        return redirect('login')  
+
+    return render(request, 'gestion3/registrobarbero.html')
 
 
 
@@ -249,22 +355,18 @@ def menu(request):
     return render(request, 'gestion3/menu.html')
 
 
-def citas(request):
-    return render(request, 'gestion3/citas.html')
+
 
 
 
 def nosotros(request):
     return render(request, 'gestion3/nosotros.html')
 
-def perfil_view(request):
-    return render(request, 'gestion3/perfil_atenciones.html')
 
 def registro_pagos(request):
     return render(request, 'gestion3/registro_pagos.html')
 
-def registro_barbero(request):
-    return render(request, 'gestion3/registrobarbero.html')
+
 
 
 
