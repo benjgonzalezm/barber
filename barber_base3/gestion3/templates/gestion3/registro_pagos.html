@@ -6,14 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Registrar Pago</title>
 
-
   <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-  rel="stylesheet"
-  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-  crossorigin="anonymous"
-/>
-
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+    crossorigin="anonymous"
+  />
   <link rel="stylesheet" href="{% static 'gestion3/css/estilos_pagos.css' %}" />
 </head>
 <body>
@@ -22,77 +20,75 @@
 
 <main class="container my-5">
   <div class="registro-container mx-auto" style="max-width: 700px;">
-    <form id="formPago" novalidate>
+    <form id="formPago" method="post" action="{% url 'guardar_pago' %}">
+      {% csrf_token %}
       <h2 class="mb-4">Registrar Pago</h2>
 
+      <!-- CLIENTE Y BARBERO -->
       <div class="row mb-3">
         <div class="col-md-6">
-          <label for="cliente_visible" class="form-label">Cliente</label>
-          <select id="cliente_visible" class="form-select" disabled>
-            <option value="">Seleccione...</option>
-          </select>
-          <input type="hidden" id="cliente" name="cliente" />
+          <label class="form-label">Cliente</label>
+          <input type="text" class="form-control" value="{{ cliente.nombre }} {{ cliente.apellido }}" readonly />
+          <input type="hidden" name="cliente" value="{{ cliente.id_usuario }}" />
         </div>
 
         <div class="col-md-6">
-          <label for="barbero_visible" class="form-label">Barbero</label>
-          <select id="barbero_visible" class="form-select" disabled>
-            <option value="">Seleccione...</option>
-          </select>
-          <input type="hidden" id="barbero" name="barbero" />
+          <label class="form-label">Barbero</label>
+          <input type="text" class="form-control" value="{{ barbero.nombre }} {{ barbero.apellido }}" readonly />
+          <input type="hidden" name="barbero" value="{{ barbero.id_usuario }}" />
         </div>
       </div>
 
+      <!-- SERVICIO Y CITA -->
       <div class="row mb-3">
         <div class="col-md-6">
-          <label for="servicio_visible" class="form-label">Servicio</label>
-          <select id="servicio_visible" class="form-select" disabled>
-            <option value="">Seleccione...</option>
-          </select>
-          <input type="hidden" id="servicio" name="servicio" />
+          <label class="form-label">Servicio</label>
+          <input type="text" class="form-control" value="{{ servicio.nombre_servicio }}" readonly />
+          <input type="hidden" name="servicio" value="{{ servicio.id_subservicio }}" />
         </div>
 
         <div class="col-md-6">
-          <label for="cita_visible" class="form-label">Cita</label>
-          <select id="cita_visible" class="form-select" disabled>
-            <option value="">Seleccione...</option>
-          </select>
-          <input type="hidden" id="cita" name="cita" />
+          <label class="form-label">Cita</label>
+          <input type="text" class="form-control" value="Cita {{ cita.id_cita }}" readonly />
+          <input type="hidden" name="cita" value="{{ cita.id_cita }}" />
         </div>
       </div>
 
+      <!-- FECHA DE PAGO Y FORMA DE PAGO -->
       <div class="row mb-3">
         <div class="col-md-6">
-          <label for="fecha_pago" class="form-label">Fecha de Pago</label>
-          <input type="date" id="fecha_pago" name="fecha_pago" class="form-control" required />
+          <label class="form-label">Fecha de Pago</label>
+          <input type="date" name="fecha_pago" class="form-control" value="{{ fecha_pago|date:'Y-m-d' }}" readonly />
         </div>
 
         <div class="col-md-6">
           <label for="forma_pago" class="form-label">Forma de Pago</label>
           <select id="forma_pago" name="forma_pago" class="form-select" required>
             <option value="">Seleccione...</option>
-            <option value="efectivo">Efectivo</option>
-            <option value="tarjeta">Tarjeta</option>
-            <option value="transferencia">Transferencia</option>
+            {% for forma in formas_pago %}
+              <option value="{{ forma.id_forma_pago }}">{{ forma.nombre_forma_pago }}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
 
+      <!-- MONTO ORIGINAL Y DESCUENTO -->
       <div class="row mb-3">
         <div class="col-md-6">
-          <label for="monto" class="form-label">Monto Efectivo</label>
-          <input type="number" id="monto" name="monto_efectivo" class="form-control" step="0.01" required />
+          <label class="form-label">Monto Efectivo</label>
+          <input type="number" id="monto" name="monto_efectivo" class="form-control" value="{{ monto_original }}" step="0.01" readonly />
         </div>
 
         <div class="col-md-6">
-          <label for="descuento" class="form-label">Descuento</label>
-          <input type="number" id="descuento" name="descuento" class="form-control" step="0.01" value="0" />
+          <label for="descuento" class="form-label">Descuento (%)</label>
+          <input type="number" id="descuento" name="descuento" class="form-control" step="0.01" min="0" max="100" value="0" />
         </div>
       </div>
 
+      <!-- TOTAL PAGADO -->
       <div class="mb-3">
-        <label for="total" class="form-label">Total Pagado</label>
-        <input type="number" id="total" name="total_pagado" class="form-control" step="0.01" required />
+        <label class="form-label">Total Pagado</label>
+        <input type="number" id="total" name="total_pagado" class="form-control" value="{{ monto_original }}" step="0.01" readonly />
       </div>
 
       <div class="d-flex justify-content-between">
@@ -103,6 +99,13 @@
   </div>
 </main>
 
+<script>
+  window.pagoData = {
+    montoOriginal: "{{ monto_original }}"
+  };
+</script>
+
+<script src="{% static 'gestion3/js/registrar_pago.js' %}"></script>
 
 <script
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
@@ -110,6 +113,9 @@
   crossorigin="anonymous"
 ></script>
 
-<script src="{% static 'gestion3/js/registro_pago.js' %}"></script>
 </body>
 </html>
+
+
+
+

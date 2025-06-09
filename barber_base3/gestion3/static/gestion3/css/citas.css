@@ -50,32 +50,13 @@ body {
   line-height: 1.4;
 }
 
-/* Estados especiales para citas */
-.cita.finalizada {
-  background-color: #4CAF50;
-  color: #fff;
+.espaciado2 {
+  display: flex;
+  flex-direction: column; /* Ahora los hijos se apilan verticalmente */
 }
 
-.cita.finalizada .calificacion,
-.cita.finalizada .estrella.positiva {
-  color: #FFD700;
-}
 
-.cita.finalizada .estrella.negativa {
-  color: #FF0000;
-}
-
-.cita.rechazado {
-  background-color: #FF5722;
-  color: #fff;
-}
-
-.cita.activa {
-  background-color: #2196F3;
-  color: #fff;
-}
-
-/* Estrellas */
+/* Estrellas (si usas) */
 .estrella {
   font-size: 24px;
 }
@@ -228,4 +209,5 @@ body {
 .ms-3 {
   margin-left: 1rem;
 }
+
 

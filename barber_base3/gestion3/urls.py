@@ -10,7 +10,6 @@ urlpatterns = [
     path('', views.menu, name='menu'),
     path('nosotros/', views.nosotros, name='nosotros'),
     path('registrate/', views.registrate, name='registrate'),
-    path('registro-pagos/', views.registro_pagos, name='registro_pagos'),
     path('registro-barbero/', views.registro_barbero, name='registro_barbero'),
     path('servicios/', views.servicios, name='servicios'),
     path('testimonios/', views.testimonios, name='testimonios'),
@@ -31,6 +30,11 @@ urlpatterns = [
     path('valorar_cita/<int:cita_id>/', views.valorar_cita, name='valorar_cita'),
     path('finalizar_cita/<int:cita_id>/', views.finalizar_cita, name='finalizar_cita'),
     path('cancelar_cita/<int:cita_id>/', views.cancelar_cita, name='cancelar_cita'),
+
+    path('registrar_pago/', views.registrar_pago, name='registrar_pago'),
+    path('guardar_pago/', views.guardar_pago, name='guardar_pago'),
+
+
 ]
 
 

@@ -5,7 +5,8 @@ from django.contrib import messages
 import hashlib
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Servicio, EstadoCita, Usuario, TipoUsuario, EstadoUsuario, Cita, ValoracionObservacion , Observacion
+from .models import Servicio, EstadoCita, Usuario, TipoUsuario, EstadoUsuario, Cita, ValoracionObservacion 
+from .models import RegistroPago, Observacion , FormaPago , Descuento
 from django.contrib.auth.hashers import check_password
 
 
@@ -370,8 +371,7 @@ def nosotros(request):
     return render(request, 'gestion3/nosotros.html')
 
 
-def registro_pagos(request):
-    return render(request, 'gestion3/registro_pagos.html')
+
 
 
 
@@ -382,8 +382,79 @@ def registro_pagos(request):
 def testimonios(request):
     return render(request, 'gestion3/testimonios.html')
 
+
+
+
 def ver_pagos(request):
     return render(request, 'gestion3/ver_pagos.html')
 
+
+
+
+
+
+def registrar_pago(request):
+    cita_id = request.GET.get('cita_id')
+    if not cita_id:
+        messages.error(request, "ID de cita no proporcionado.")
+        return redirect('perfil')
+
+    cita = get_object_or_404(Cita, id_cita=cita_id)
+
+    cliente = cita.id_cliente
+    barbero = cita.id_servicio.id_usuario
+    servicio = cita.id_servicio.id_subservicio
+    monto_original = str(cita.id_servicio.precio).replace(',', '.')  # CORREGIDO
+    fecha_pago = cita.fecha_cita
+
+    formas_pago = FormaPago.objects.all()
+    descuentos = Descuento.objects.filter(id_usuario=barbero)
+
+    return render(request, 'gestion3/registro_pagos.html', {
+        'cita': cita,
+        'cliente': cliente,
+        'barbero': barbero,
+        'servicio': servicio,
+        'monto_original': monto_original,
+        'fecha_pago': fecha_pago,
+        'formas_pago': formas_pago,
+        'descuentos': descuentos
+    })
+
+
+
+
+
+
+
+def guardar_pago(request):
+    if request.method == 'POST':
+        cita_id = request.POST.get('cita')
+        forma_pago_id = request.POST.get('forma_pago')
+        descuento_valor = float(request.POST.get('descuento', 0)) / 100
+        total_pagado = float(request.POST.get('total_pagado'))
+
+        cita = get_object_or_404(Cita, id_cita=cita_id)
+        forma_pago = get_object_or_404(FormaPago, id_forma_pago=forma_pago_id)
+        barbero = cita.id_servicio.id_usuario
+
+        descuento_obj = None
+        if descuento_valor > 0:
+            descuento_obj, _ = Descuento.objects.get_or_create(
+                id_usuario=barbero,
+                descuento=descuento_valor
+            )
+
+        RegistroPago.objects.create(
+            id_cita=cita,
+            id_forma_pago=forma_pago,
+            monto_original=cita.id_servicio.precio,
+            total_pagado=total_pagado,
+            id_descuento=descuento_obj,
+            fecha_pago=cita.fecha_cita  
+        )
+
+        messages.success(request, "Pago registrado correctamente.")
+        return redirect('perfil')
 
 

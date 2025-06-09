@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Historial de citas</title>
-<!--no se ve el perfil del barbero-->
 
   <link 
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
@@ -14,6 +13,30 @@
   />
 
   <link rel="stylesheet" href="{% static 'gestion3/css/citas.css' %}">
+<style>
+.cita.finalizado {
+  background-color: #4CAF50; 
+  color: #ffffff; 
+}
+
+.cita.enprogreso {
+  background-color: #2196F3; 
+  color: #ffffff; 
+}
+
+.cita.cancelado {
+  background-color: #f44336; 
+  color: #ffffff; 
+}
+
+.cita.finalizado a,
+.cita.cancelado a,
+.cita.enprogreso a {
+  color: #ffffff;
+  font-weight: bold;
+}
+</style>
+
 </head>
 <body data-tipo-usuario="{{ tipo_usuario }}">
 
@@ -23,13 +46,16 @@
     <button id="btnTogglePerfil" class="btn btn-primary btn-toggle-perfil">Abrir/Cerrar Perfil</button>
   </div>
 
-
   <nav id="perfilBarbero" style="display: none;">
     <div class="perfil-caja">
       <div class="perfil-row d-flex align-items-center">
         <div>
-          <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Barbero" class="perfil-imagen img-thumbnail">
-        </div>
+        {% if usuario.imagen %}
+          <img src="{{ usuario.imagen.url }}" alt="Barbero" class="perfil-imagen img-thumbnail">
+        {% else %}
+          <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Barbero por defecto" class="perfil-imagen img-thumbnail">
+        {% endif %}
+      </div>
         <div class="datos-principales ms-3">
           <div class="dato-linea">
             <span class="etiqueta">Nombre:</span>
@@ -51,65 +77,69 @@
     {% if tipo_usuario == "Cliente" %}
       <h4 class="mb-3">Tus citas</h4>
       {% for info in citas_info %}
-        <div class="cita border rounded p-3 mb-4 shadow-sm bg-white">
-          <p><strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
-          <p><strong>Barbero:</strong> {{ info.cita.id_servicio.id_usuario.nombre }}</p>
-          <p><strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
+        {% with clase_estado=info.cita.id_estado_cita.estado_cita|lower|cut:" " %}
+          <div class="cita border rounded p-3 mb-4 shadow-sm  {{ clase_estado }}">
+            <p><strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
+            <p><strong>Barbero:</strong> {{ info.cita.id_servicio.id_usuario.nombre }}</p>
+            <p><strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
 
-          {% if info.cita.id_estado_cita.estado_cita == 'Finalizado' and not info.valoracion %}
-            <form method="post" action="{% url 'valorar_cita' info.cita.id_cita %}">
-              {% csrf_token %}
-              <label class="form-label">Valoración (1 a 5):</label>
-              <select name="valoracion" required class="form-select mb-2">
-                {% for i in "12345" %}
-                  <option value="{{ i }}">{{ i }}</option>
+            {% if info.cita.id_estado_cita.estado_cita == 'Finalizado' and not info.valoracion %}
+              <form method="post" action="{% url 'valorar_cita' info.cita.id_cita %}">
+                {% csrf_token %}
+                <label class="form-label">Valoración (1 a 5):</label>
+                <select name="valoracion" required class="form-select mb-2">
+                  {% for i in "12345" %}
+                    <option value="{{ i }}">{{ i }}</option>
+                  {% endfor %}
+                </select>
+
+                <label class="form-label">Observaciones:</label>
+                {% for obs in observaciones_disponibles %}
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="observaciones" value="{{ obs.id_observacion }}">
+                    <label class="form-check-label">{{ obs.nombre_observacion }}</label>
+                  </div>
                 {% endfor %}
-              </select>
 
-              <label class="form-label">Observaciones:</label>
-              {% for obs in observaciones_disponibles %}
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="observaciones" value="{{ obs.id_observacion }}">
-                  <label class="form-check-label">{{ obs.nombre_observacion }}</label>
-                </div>
-              {% endfor %}
-
-              <button type="submit" class="btn btn-primary mt-2">Enviar valoración</button>
-            </form>
-          {% elif info.valoracion %}
-            <p><strong>Valoración:</strong> {{ info.valoracion }}</p>
-            <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
-          {% endif %}
-        </div>
+                <button type="submit" class="btn btn-primary mt-2">Enviar valoración</button>
+              </form>
+            {% elif info.valoracion %}
+              <p><strong>Valoración:</strong> {{ info.valoracion }}</p>
+              <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
+            {% endif %}
+          </div>
+        {% endwith %}
       {% endfor %}
 
     {% elif tipo_usuario == "Barbero" %}
-      <h4 class="mb-3">Tus citas con clientes</h4>
       {% for info in citas_info %}
-        <div class="cita border rounded p-3 mb-4 shadow-sm bg-white"
-             data-finalizar="{% url 'finalizar_cita' info.cita.id_cita %}"
-             data-cancelar="{% url 'cancelar_cita' info.cita.id_cita %}">
-          <p><strong>Cliente:</strong> {{ info.cita.id_cliente.nombre }}</p>
-          <p><strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
-          <p><strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
+        {% with clase_estado=info.cita.id_estado_cita.estado_cita|lower|cut:" " %}
+          <div class="cita border  rounded p-3 mb-4 shadow-sm  {{ clase_estado }}"
+               data-finalizar="{% url 'finalizar_cita' info.cita.id_cita %}"
+               data-cancelar="{% url 'cancelar_cita' info.cita.id_cita %}">
+            <p><strong>Cliente:</strong> {{ info.cita.id_cliente.nombre }}</p>
+            <p><strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
+            <p><strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
 
-          <div class="botones mt-2">
-            {% if info.cita.id_estado_cita.estado_cita == "En progreso" %}
-        
+            <div class="botones mt-2">
+              {% if info.cita.id_estado_cita.estado_cita == "En progreso" %}
+                <!-- mas adelante si quiero agregar algun boton-->
+              {% elif info.cita.id_estado_cita.estado_cita == "Finalizado" %}
+                <a href="{% url 'registrar_pago' %}?cita_id={{ info.cita.id_cita }}" class="btn btn-registrar">Registrar</a>
+              {% endif %}
+            </div>
+
+            {% if info.valoracion %}
+              <p><strong>Valoración:</strong> {{ info.valoracion }}</p>
+              <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
+              <p><strong>Cliente:</strong> {{ info.cita.id_cliente.nombre }}</p>
             {% endif %}
           </div>
-
-          {% if info.valoracion %}
-            <p><strong>Valoración:</strong> {{ info.valoracion }}</p>
-            <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
-            <p><strong>Cliente:</strong> {{ info.cita.id_cliente.nombre }}</p>
-          {% endif %}
-        </div>
+        {% endwith %}
       {% endfor %}
     {% endif %}
 
   </div>
-
 
   <script 
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
@@ -120,6 +150,8 @@
   <script src="{% static 'gestion3/js/cita.js' %}"></script>
 </body>
 </html>
+
+
 
 
 
