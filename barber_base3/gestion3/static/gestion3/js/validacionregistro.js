@@ -22,7 +22,7 @@ $(document).ready(function () {
     
 
 
-    //trim le quita los espacios en blanco//
+    
 
     var letrainicial = nombre.charAt(0);
     if (!esMAYUSCULA(letrainicial)) {

@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tipoUsuario = document.body.dataset.tipoUsuario;
   const citas = document.querySelectorAll(".cita");
 
+
   citas.forEach(cita => {
     const estadoP = Array.from(cita.querySelectorAll("p")).find(p =>
       p.textContent.toLowerCase().includes("estado:")
@@ -9,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!estadoP) return;
 
     const estado = estadoP.textContent.trim().toLowerCase();
-
     const botones = cita.querySelector(".botones");
     if (!botones) return;
 
@@ -21,20 +21,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-
+  
+  const perfil = document.getElementById('perfil');
   const btnTogglePerfil = document.getElementById('btnTogglePerfil');
-  const perfilBarbero = document.getElementById('perfilBarbero');
 
-  if (tipoUsuario === "Barbero" && btnTogglePerfil && perfilBarbero) {
+  if (btnTogglePerfil) {
     btnTogglePerfil.addEventListener('click', () => {
-      if (perfilBarbero.style.display === 'none' || perfilBarbero.style.display === '') {
-        perfilBarbero.style.display = 'flex';
+      if (perfil.style.display === 'none' || perfil.style.display === '') {
+        perfil.style.display = 'flex';
       } else {
-        perfilBarbero.style.display = 'none';
+        perfil.style.display = 'none';
       }
     });
   }
 });
+
+
+
+
 
 
 

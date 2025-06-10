@@ -1,44 +1,34 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const data = window.pagoData;
+document.addEventListener('DOMContentLoaded', function () {
+  const montoInput = document.getElementById('monto');
+  const descuentoInput = document.getElementById('descuento');
+  const totalInput = document.getElementById('total');
 
 
-    const monto = parseFloat(data.montoOriginal.replace(',', '.'));
+  let montoOriginal = parseFloat(montoInput.value) || 0;
 
-    // Cliente
-    document.getElementById('cliente_visible').innerHTML = `<option value="${data.clienteId}" selected>${data.clienteNombre}</option>`;
-    document.getElementById('cliente').value = data.clienteId;
 
-    // Barbero
-    document.getElementById('barbero_visible').innerHTML = `<option value="${data.barberoId}" selected>${data.barberoNombre}</option>`;
-    document.getElementById('barbero').value = data.barberoId;
+  montoInput.addEventListener('input', function () {
+    montoOriginal = parseFloat(montoInput.value) || 0;
+    calcularTotal();
+  });
 
-    // Servicio
-    document.getElementById('servicio_visible').innerHTML = `<option value="${data.servicioId}" selected>${data.servicioNombre}</option>`;
-    document.getElementById('servicio').value = data.servicioId;
 
-    // Cita
-    document.getElementById('cita_visible').innerHTML = `<option value="${data.citaId}" selected>Cita ${data.citaId}</option>`;
-    document.getElementById('cita').value = data.citaId;
+  descuentoInput.addEventListener('input', calcularTotal);
 
-    // Fecha de pago
-    document.getElementById('fecha_pago').value = data.fechaPago;
-    document.getElementById('fecha_pago').readOnly = true;
+  function calcularTotal() {
+    let descuento = parseFloat(descuentoInput.value);
+    if (isNaN(descuento) || descuento < 0) descuento = 0;
+    if (descuento > 100) descuento = 100;
 
-    // Monto
-    document.getElementById('monto').value = monto.toFixed(2);
-    document.getElementById('monto').readOnly = true;
 
-    // Total inicial
-    document.getElementById('total').value = monto.toFixed(2);
-    document.getElementById('total').readOnly = true;
-
-    // Descuento dinámico
-    document.getElementById('descuento').addEventListener('input', function () {
-        const descuento = parseFloat(this.value) || 0;
-        const totalCalculado = monto * (1 - descuento / 100);
-        document.getElementById('total').value = totalCalculado.toFixed(2);
-    });
+    const totalCalculado = montoOriginal * (1 - descuento / 100);
+    totalInput.value = totalCalculado.toFixed(2);
+  }
 });
+
+
+
+
 
 
 

@@ -101,7 +101,7 @@ body {
     object-fit: cover;
     object-position: center center;
     display: block;
-    margin: 0 auto 30px auto; /* Elimina el espacio superior */
+    margin: 0 auto 30px auto; 
     border-radius: 0;
     box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     position: relative;

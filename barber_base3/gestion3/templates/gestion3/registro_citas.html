@@ -5,7 +5,34 @@
   <meta charset="UTF-8">
   <title>Historial de citas</title>
   <link rel="stylesheet" href="{% static 'gestion3/css/citas.css' %}">
+<style>
+.cita.finalizada {
+  background-color: #4CAF50; 
+  color: #ffffff;
+}
+
+.cita.activa {
+  background-color: #2196F3; 
+  color: #ffffff;
+}
+
+.cita.rechazado {
+  background-color: #f44336; 
+  color: #ffffff;
+}
+
+.cita.finalizada a,
+.cita.rechazado a,
+.cita.activa a {
+  color: #ffffff;
+  font-weight: bold;
+}
+</style>
+
+  
 </head>
+
+
 <body>
   {% include 'gestion3/nav.html' %}
 

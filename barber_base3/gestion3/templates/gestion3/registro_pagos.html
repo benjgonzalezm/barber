@@ -24,7 +24,7 @@
       {% csrf_token %}
       <h2 class="mb-4">Registrar Pago</h2>
 
-      <!-- CLIENTE Y BARBERO -->
+    
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">Cliente</label>
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <!-- SERVICIO Y CITA -->
+    
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">Servicio</label>
@@ -54,7 +54,7 @@
         </div>
       </div>
 
-      <!-- FECHA DE PAGO Y FORMA DE PAGO -->
+ 
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">Fecha de Pago</label>
@@ -72,7 +72,7 @@
         </div>
       </div>
 
-      <!-- MONTO ORIGINAL Y DESCUENTO -->
+
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">Monto Efectivo</label>
@@ -85,7 +85,7 @@
         </div>
       </div>
 
-      <!-- TOTAL PAGADO -->
+     
       <div class="mb-3">
         <label class="form-label">Total Pagado</label>
         <input type="number" id="total" name="total_pagado" class="form-control" value="{{ monto_original }}" step="0.01" readonly />
@@ -104,6 +104,7 @@
     montoOriginal: "{{ monto_original }}"
   };
 </script>
+
 
 <script src="{% static 'gestion3/js/registrar_pago.js' %}"></script>
 

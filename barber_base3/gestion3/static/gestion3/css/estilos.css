@@ -2,13 +2,13 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f172a, #334155); /* azul marino oscuro a gris azulado */
+    background: linear-gradient(135deg, #0f172a, #334155);
     background-attachment: fixed;
     background-size: cover;
     color: #fff;
 }
 
-/* Centrado del formulario */
+
 .container {
     display: flex;
     justify-content: center;
@@ -16,7 +16,7 @@ body {
     min-height: 100vh;
 }
 
-/* Contenedor de login o registro */
+
 .barberialogin, .barberiaregistro {
     background-color: #2c2c2c;
     border-radius: 20px;
@@ -26,14 +26,14 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
 }
 
-/* Títulos */
+
 .barberialogin h1, .barberiaregistro h1 {
     text-align: center;
     margin-bottom: 30px;
     text-shadow: 1px 1px 3px #000;
 }
 
-/* Etiquetas de los inputs */
+
 .form-group {
     margin-bottom: 20px;
 }
@@ -44,7 +44,7 @@ body {
     color: #fff;
 }
 
-/* Inputs */
+
 .form-control {
     width: 100%;
     padding: 10px;
@@ -53,13 +53,13 @@ body {
     font-size: 16px;
 }
 
-/* Campo archivo (estilo más neutro) */
+
 input[type="file"] {
     background-color: #fff;
     color: #000;
 }
 
-/* Botones */
+
 button, input[type="reset"] {
     width: 100%;
     padding: 12px;
@@ -77,13 +77,13 @@ button:hover, input[type="reset"]:hover {
     cursor: pointer;
 }
 
-/* Mensaje de validación */
+
 #mensajes {
     margin-top: 10px;
     color: #ffbaba;
 }
 
-/* Nota final */
+
 .note {
     margin-top: 15px;
     font-size: 14px;

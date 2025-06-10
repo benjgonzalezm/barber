@@ -13,29 +13,29 @@
   />
 
   <link rel="stylesheet" href="{% static 'gestion3/css/citas.css' %}">
-<style>
-.cita.finalizado {
-  background-color: #4CAF50; 
-  color: #ffffff; 
-}
+  <style>
+    .cita.finalizado {
+      background-color: #ffeb3b; 
+      color: #000000; 
+    }
 
-.cita.enprogreso {
-  background-color: #2196F3; 
-  color: #ffffff; 
-}
+    .cita.enprogreso {
+      background-color: #4caf50; 
+      color: #000000; 
+    }
 
-.cita.cancelado {
-  background-color: #f44336; 
-  color: #ffffff; 
-}
+    .cita.cancelado {
+      background-color: #ff9800; 
+      color: #000000; 
+    }
 
-.cita.finalizado a,
-.cita.cancelado a,
-.cita.enprogreso a {
-  color: #ffffff;
-  font-weight: bold;
-}
-</style>
+    .cita.finalizado a,
+    .cita.cancelado a,
+    .cita.enprogreso a {
+      color: #000000;
+      font-weight: bold;
+    }
+  </style>
 
 </head>
 <body data-tipo-usuario="{{ tipo_usuario }}">
@@ -46,25 +46,28 @@
     <button id="btnTogglePerfil" class="btn btn-primary btn-toggle-perfil">Abrir/Cerrar Perfil</button>
   </div>
 
-  <nav id="perfilBarbero" style="display: none;">
-    <div class="perfil-caja">
-      <div class="perfil-row d-flex align-items-center">
-        <div>
+  <!-- Perfil Unificado -->
+  <nav id="perfil" style="display: none; flex-direction: column; align-items: center;">
+    <div class="perfil-caja p-3 border rounded shadow-sm d-flex align-items-center">
+      <div>
         {% if usuario.imagen %}
-          <img src="{{ usuario.imagen.url }}" alt="Barbero" class="perfil-imagen img-thumbnail">
+          <img src="{{ usuario.imagen.url }}" alt="Perfil" class="perfil-imagen img-thumbnail" style="max-width:120px;">
         {% else %}
-          <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Barbero por defecto" class="perfil-imagen img-thumbnail">
+          <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Perfil por defecto" class="perfil-imagen img-thumbnail" style="max-width:120px;">
         {% endif %}
       </div>
-        <div class="datos-principales ms-3">
-          <div class="dato-linea">
-            <span class="etiqueta">Nombre:</span>
-            <span class="valor">{{ usuario.nombre }}</span> 
-          </div>
-          <div class="dato-linea">
-            <span class="etiqueta">Apellido:</span>
-            <span class="valor">{{ usuario.apellido }}</span>
-          </div>
+      <div class="datos-principales ms-3">
+        <div class="dato-linea">
+          <span class="etiqueta fw-bold">Nombre:</span>
+          <span class="valor">{{ usuario.nombre }}</span> 
+        </div>
+        <div class="dato-linea">
+          <span class="etiqueta fw-bold">Apellido:</span>
+          <span class="valor">{{ usuario.apellido }}</span>
+        </div>
+        <div class="dato-linea">
+          <span class="etiqueta fw-bold">Tipo usuario:</span>
+          <span class="valor">{{ tipo_usuario }}</span>
         </div>
       </div>
     </div>
@@ -78,7 +81,7 @@
       <h4 class="mb-3">Tus citas</h4>
       {% for info in citas_info %}
         {% with clase_estado=info.cita.id_estado_cita.estado_cita|lower|cut:" " %}
-          <div class="cita border rounded p-3 mb-4 shadow-sm  {{ clase_estado }}">
+          <div class="cita border rounded p-3 mb-4 shadow-sm {{ clase_estado }}">
             <p><strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
             <p><strong>Barbero:</strong> {{ info.cita.id_servicio.id_usuario.nombre }}</p>
             <p><strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
@@ -114,7 +117,7 @@
     {% elif tipo_usuario == "Barbero" %}
       {% for info in citas_info %}
         {% with clase_estado=info.cita.id_estado_cita.estado_cita|lower|cut:" " %}
-          <div class="cita border  rounded p-3 mb-4 shadow-sm  {{ clase_estado }}"
+          <div class="cita border rounded p-3 mb-4 shadow-sm {{ clase_estado }}"
                data-finalizar="{% url 'finalizar_cita' info.cita.id_cita %}"
                data-cancelar="{% url 'cancelar_cita' info.cita.id_cita %}">
             <p><strong>Cliente:</strong> {{ info.cita.id_cliente.nombre }}</p>
@@ -123,8 +126,8 @@
 
             <div class="botones mt-2">
               {% if info.cita.id_estado_cita.estado_cita == "En progreso" %}
-                <!-- mas adelante si quiero agregar algun boton-->
-              {% elif info.cita.id_estado_cita.estado_cita == "Finalizado" %}
+                <!-- Botones serán agregados por JS -->
+              {% elif info.cita.id_estado_cita.estado_cita == "Finalizado" and not info.pago_realizado %}
                 <a href="{% url 'registrar_pago' %}?cita_id={{ info.cita.id_cita }}" class="btn btn-registrar">Registrar</a>
               {% endif %}
             </div>
@@ -150,6 +153,7 @@
   <script src="{% static 'gestion3/js/cita.js' %}"></script>
 </body>
 </html>
+
 
 
 

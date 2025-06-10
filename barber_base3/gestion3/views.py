@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Servicio, EstadoCita, Usuario, TipoUsuario, EstadoUsuario, Cita, ValoracionObservacion 
 from .models import RegistroPago, Observacion , FormaPago , Descuento
 from django.contrib.auth.hashers import check_password
+from datetime import datetime
+
 
 
 
@@ -31,10 +33,13 @@ def perfil_view(request):
         observaciones = [v.id_observacion.nombre_observacion for v in valoraciones]
         valoracion = valoraciones.first().valoracion if valoraciones.exists() else None
 
+        pago_realizado = RegistroPago.objects.filter(id_cita=cita).exists()
+
         citas_info.append({
             'cita': cita,
             'valoracion': valoracion,
-            'observaciones': observaciones
+            'observaciones': observaciones,
+            'pago_realizado': pago_realizado
         })
 
     observaciones_disponibles = Observacion.objects.all()
@@ -45,6 +50,10 @@ def perfil_view(request):
         'citas_info': citas_info,
         'observaciones_disponibles': observaciones_disponibles
     })
+
+
+
+
 
 def valorar_cita(request, cita_id):
     if request.method == 'POST':
@@ -62,6 +71,9 @@ def valorar_cita(request, cita_id):
 
         messages.success(request, 'Valoración registrada exitosamente.')
         return redirect('perfil')
+
+
+
 
 def finalizar_cita(request, cita_id):
     cita = get_object_or_404(Cita, id_cita=cita_id)
@@ -385,8 +397,9 @@ def testimonios(request):
 
 
 
-def ver_pagos(request):
-    return render(request, 'gestion3/ver_pagos.html')
+
+
+
 
 
 
@@ -404,8 +417,10 @@ def registrar_pago(request):
     cliente = cita.id_cliente
     barbero = cita.id_servicio.id_usuario
     servicio = cita.id_servicio.id_subservicio
-    monto_original = str(cita.id_servicio.precio).replace(',', '.')  # CORREGIDO
-    fecha_pago = cita.fecha_cita
+    monto_original = str(cita.id_servicio.precio).replace(',', '.')  
+
+   
+    fecha_pago = datetime.combine(cita.fecha_cita, cita.hora_cita)
 
     formas_pago = FormaPago.objects.all()
     descuentos = Descuento.objects.filter(id_usuario=barbero)
@@ -423,15 +438,11 @@ def registrar_pago(request):
 
 
 
-
-
-
-
 def guardar_pago(request):
     if request.method == 'POST':
         cita_id = request.POST.get('cita')
         forma_pago_id = request.POST.get('forma_pago')
-        descuento_valor = float(request.POST.get('descuento', 0)) / 100
+        descuento_valor = float(request.POST.get('descuento', 0))  
         total_pagado = float(request.POST.get('total_pagado'))
 
         cita = get_object_or_404(Cita, id_cita=cita_id)
@@ -442,8 +453,11 @@ def guardar_pago(request):
         if descuento_valor > 0:
             descuento_obj, _ = Descuento.objects.get_or_create(
                 id_usuario=barbero,
-                descuento=descuento_valor
+                descuento=descuento_valor  
             )
+
+       
+        fecha_pago = datetime.combine(cita.fecha_cita, cita.hora_cita)
 
         RegistroPago.objects.create(
             id_cita=cita,
@@ -451,10 +465,20 @@ def guardar_pago(request):
             monto_original=cita.id_servicio.precio,
             total_pagado=total_pagado,
             id_descuento=descuento_obj,
-            fecha_pago=cita.fecha_cita  
+            fecha_pago=fecha_pago  
         )
 
         messages.success(request, "Pago registrado correctamente.")
         return redirect('perfil')
 
+
+
+
+
+
+def ver_pagos(request):
+    pagos = RegistroPago.objects.select_related(
+        'id_cita', 'id_forma_pago', 'id_descuento'
+    ).all()
+    return render(request, 'gestion3/ver_pagos.html', {'pagos': pagos})
 
