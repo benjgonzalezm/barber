@@ -1,0 +1,53 @@
+/* CSS DEL NAV */
+ul, li, a {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem 0;
+}
+
+
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  overflow: visible;
+}
+
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  position: relative;
+}
+
+
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+header nav ul li a:hover {
+  color: #f4a261;
+}
+
+
+header nav img {
+  height: 80px;
+}
+
+
+

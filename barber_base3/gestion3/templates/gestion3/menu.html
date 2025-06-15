@@ -6,35 +6,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Elite Barber</title>
 
-
   <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-  rel="stylesheet"
-  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-  crossorigin="anonymous"
-/>
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+    crossorigin="anonymous"
+  />
 
-
-
-  <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'gestion3/css/menu.css' %}" />
 </head>
+<style>
+  #hero {
+    background: url("{% static 'gestion3/images/fondo-main.jpeg' %}") no-repeat center center / cover;
+    color: white;
+    padding: 13rem 1rem;
+    text-align: center;
+  }
+</style>
 <body>
 
   {% include 'gestion3/nav.html' %}
 
-  <section id="hero" class="text-center p-5 bg-light">
-    <h2>Bienvenido a Elite Barber</h2>
-    <p>Donde el estilo y la tradición se encuentran.</p>
-    <a href="#contacto" class="btn btn-primary">Reserva tu cita</a>
-  </section>
+<section id="hero" class="text-center p-5">
+  <h2>Bienvenido a Elite Barber</h2>
+  <p>Donde el estilo y la tradición se encuentran.</p>
+  <a href="{% url 'servicios' %}" class="btn btn-primary">Reserva tu cita</a>
+</section>
 
   <section id="servicios" class="container my-5">
     <h2 class="mb-4">Nuestros Servicios</h2>
     <ul class="list-group servicios-lista">
-      <li class="list-group-item"><a href="../paginas/servicios.html">Corte de cabello clásico</a></li>
-      <li class="list-group-item"><a href="../paginas/servicios.html">Afeitado tradicional</a></li>
-      <li class="list-group-item"><a href="../paginas/servicios.html">Arreglo de barba</a></li>
-      <li class="list-group-item"><a href="../paginas/servicios.html">Corte para niños</a></li>
+      <li class="list-group-item"><a href="{% url 'servicios' %}">Corte de cabello clásico</a></li>
+      <li class="list-group-item"><a href="{% url 'servicios' %}">Afeitado tradicional</a></li>
+      <li class="list-group-item"><a href="{% url 'servicios' %}">Arreglo de barba</a></li>
+      <li class="list-group-item"><a href="{% url 'servicios' %}">Corte para niños</a></li>
     </ul>
   </section>
 
@@ -91,12 +96,12 @@
     <form action="enviar.php" method="POST" class="border p-4 rounded shadow">
       <div class="mb-3">
         <label for="nombre" class="form-label">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" class="form-control" required>
+        <input type="text" id="nombre" name="nombre" class="form-control" required />
       </div>
 
       <div class="mb-3">
         <label for="email" class="form-label">Correo Electrónico:</label>
-        <input type="email" id="email" name="email" class="form-control" required>
+        <input type="email" id="email" name="email" class="form-control" required />
       </div>
 
       <div class="mb-3">
@@ -126,15 +131,11 @@
     </nav>
   </footer>
 
-  
-<script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-  crossorigin="anonymous"
-></script>
-
-
-
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"
+  ></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -160,7 +161,6 @@
       mostrarTestimonio(indice);
     });
   </script>
-
 </body>
 </html>
 

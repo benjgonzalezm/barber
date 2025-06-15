@@ -78,7 +78,7 @@
   <div class="container my-4">
 
     {% if tipo_usuario == "Cliente" %}
-      <h4 class="mb-3">Tus citas</h4>
+      
       {% for info in citas_info %}
         {% with clase_estado=info.cita.id_estado_cita.estado_cita|lower|cut:" " %}
           <div class="cita border rounded p-3 mb-4 shadow-sm {{ clase_estado }}">

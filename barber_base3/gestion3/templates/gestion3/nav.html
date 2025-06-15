@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link rel="stylesheet" href="{% static 'gestion3/css/menu.css' %}" />
+  <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}" />
 </head>
 <body>
 
@@ -17,33 +17,37 @@
       <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
       <li><a href="{% url 'testimonios' %}">Testimonios</a></li>
 
-      {% if request.session.usuario_id %}
+    {% if request.session.usuario_id %}
 
-            
-
-
-            <!--(esto sera esclusivo del perfil de la barberia osea solo se le vera al usuario con tipo usuario barberia)
-             cuando este logueado quiero que la opcion de ver usuarios ,registro citas ,ver pagos y registrar barbero se 
-             vean apretando un boton para que no se vea tan cargado el nav -->
-            <a href="{% url 'listar_usuarios' %}">Ver usuarios</a> <!--solo lo podra ver la barberia-->
-            <a href="{% url 'registro_citas' %}">Registro citas</a><!--solo lo podra ver la barberia-->
-            <a href="{% url 'ver_pagos' %}">Ver Pagos</a><!--solo lo podra ver la barberia-->
-            <a href="{% url 'registro_barbero' %}">Registrar barbero</a><!--solo lo podra ver la barberia-->
+  {% if tipo_usuario == "Barbería" %}
+   <li><a href="{% url 'listar_usuarios' %}">Ver usuarios</a> </li><!-- solo lo verá la barbería -->
+   <li><a href="{% url 'registro_citas' %}">Registro citas</a> <!-- solo lo verá la barbería --></li>
+   <li><a href="{% url 'ver_pagos' %}">Ver Pagos</a> <!-- solo lo verá la barbería --></li>
+   <li><a href="{% url 'registro_barbero' %}">Registrar barbero</a> <!-- solo lo verá la barbería --></li>
+  {% endif %}
 
 
+  {% if tipo_usuario == "Barbero" %}
+  <li><a href="{% url 'perfil' %}">Perfil</a> <!-- todos lo verán --></li>
+    <!-- para futuras vistas de barberos si es necesario-->
+  {% endif %}
+
+  {% if tipo_usuario == "Cliente" %}
+  <li><a href="{% url 'perfil' %}">Perfil</a> <!-- todos lo verán --></li>
+    <!-- para futuras vistas de clientes si es necesario-->
+  {% endif %}
+
+<li>  <a href="{% url 'logout' %}">Cerrar sesión</a> <!-- todos lo verán --></li>
+  
 
 
-            <a href="{% url 'perfil' %}">Perfil</a><!--todos lo veran-->
-            <a href="{% url 'logout' %}">Cerrar sesión</a><!--todos lo veran-->
+{% else %}
+<li> <a href="{% url 'login' %}">Login</a> <!-- todos lo verán --></li>
+<li><a href="{% url 'registrate' %}">Registro</a> <!-- todos lo verán --></li>
+ 
+  
 
-
-
-      {% else %}
-  <!-- cuando no este logueado quiero que la opcion de  login y registro salga al apretar un boton para que no este tan sobrecargado el nav-->
-            <a href="{% url 'login' %}">Login</a><!--todos lo veran-->
-            <a href="{% url 'registrate' %}">Registro</a><!--todos lo veran-->
-
-      {% endif %}
+{% endif %}
     </ul>
   </nav>
 </header> 

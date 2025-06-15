@@ -1,52 +1,117 @@
-/* CSS DEL NAV */
-ul, li, a {
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  background-color: #ffffff;
+  color: #333;
 }
 
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 1rem 0;
-}
-
-
-header nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  overflow: visible;
+#hero {
+  background: url('../images/fondo-main.jpeg') no-repeat center center/cover;
+  color: white;
+  padding: 13rem 1rem;
+  text-align: center;
 }
 
 
-header nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  position: relative;
+#servicios {
+  text-align: center;
 }
 
-
-header nav ul li a {
-  color: #fff;
-  text-decoration: none;
+#servicios h2 {
+  font-size: 2rem;
   font-weight: bold;
-  cursor: pointer;
+}
+
+.servicios-lista {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 1.5rem;
+  justify-content: center;
+  padding: 0;
+  margin-top: 2rem;
+}
+
+.servicios-lista li {
+  list-style: none;
+  width: 140px;
+  height: 140px;
+  background-color: #f4a261;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.servicios-lista li:hover {
+  background-color: #e76f51;
+  transform: translateY(-5px) scale(1.05);
+}
+
+.servicios-lista li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
 }
 
 
-header nav ul li a:hover {
-  color: #f4a261;
+#galeria h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+footer {
+  background-color: #f1f1f1;
+  color: #555;
+  padding: 2rem 1rem;
+}
+
+footer .footer-links a {
+  color: #333;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+footer .footer-links a:hover {
+  text-decoration: underline;
+}
+
+footer ul.list-inline {
+  padding: 0;
+  margin: 0.5rem 0 0;
+  list-style: none;
+}
+
+footer ul.list-inline li {
+  display: inline;
+  margin-right: 10px;
 }
 
 
-header nav img {
-  height: 80px;
+@media screen and (max-width: 600px) {
+  .servicios-lista {
+    grid-template-columns: 1fr;
+    justify-content: center;
+  }
+
+  .servicios-lista li {
+    width: 80%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
 }
 
 
