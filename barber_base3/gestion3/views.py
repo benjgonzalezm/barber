@@ -11,10 +11,6 @@ from django.contrib.auth.hashers import check_password
 from datetime import datetime
 
 
-
-
-
-
 def perfil_view(request):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
@@ -52,9 +48,6 @@ def perfil_view(request):
     })
 
 
-
-
-
 def valorar_cita(request, cita_id):
     if request.method == 'POST':
         cita = get_object_or_404(Cita, id_cita=cita_id)
@@ -73,8 +66,6 @@ def valorar_cita(request, cita_id):
         return redirect('perfil')
 
 
-
-
 def finalizar_cita(request, cita_id):
     cita = get_object_or_404(Cita, id_cita=cita_id)
     estado_finalizado = EstadoCita.objects.get(estado_cita='Finalizado')
@@ -88,13 +79,6 @@ def cancelar_cita(request, cita_id):
     cita.id_estado_cita = estado_cancelado
     cita.save()
     return redirect('perfil')
-
-
-
-
-
-
-
 
 
 def login_view(request):
@@ -124,15 +108,9 @@ def login_view(request):
     return render(request, 'gestion3/logueate.html')
 
 
-
-
-
 def logout_view(request):
     request.session.flush() 
     return redirect('login')  
-
-
-
 
 
 def pagina_principal(request):
@@ -142,10 +120,6 @@ def pagina_principal(request):
 
     usuario = Usuario.objects.get(id_usuario=usuario_id)
     return render(request, 'gestion3/menu.html', {'usuario': usuario})
-
-
-
-
 
 
 def servicios(request):
@@ -159,12 +133,9 @@ def servicios(request):
     return render(request, 'gestion3/servicios.html', {'servicios': servicios})
 
 
-
-
 def barbero(request, servicio_id):
     servicio = get_object_or_404(Servicio, id_servicio=servicio_id)
 
-   
     barberos_con_servicio = Servicio.objects.filter(
         id_subservicio=servicio.id_subservicio,
         id_usuario__id_tipo_usuario__tipo='Barbero'
@@ -174,7 +145,6 @@ def barbero(request, servicio_id):
         'servicio': servicio,
         'barberos_con_servicio': barberos_con_servicio
     })
-
 
 
 def reservar(request, servicio_id, barbero_id):
@@ -209,12 +179,6 @@ def reservar(request, servicio_id, barbero_id):
         'servicio': servicio,
         'barbero': barbero
     })
-
-
-
-
-
-
 
 
 @csrf_exempt
@@ -254,11 +218,6 @@ def listar_usuarios(request):
     return render(request, 'gestion3/bloquear_usuario.html', {'usuarios': usuarios})
 
 
-
-
-
-
-
 def registrate(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombreregistro')
@@ -289,8 +248,6 @@ def registrate(request):
         return redirect('login')  
 
     return render(request, 'gestion3/registrate.html')
-
-
 
 
 def registro_barbero(request):
@@ -328,14 +285,6 @@ def registro_barbero(request):
     return render(request, 'gestion3/registrobarbero.html')
 
 
-
-
-
-
-
-
-
-
 def registro_citas(request):
     citas = Cita.objects.all()
     citas_con_valoracion = []
@@ -362,48 +311,16 @@ def registro_citas(request):
     })
 
 
-
-
-
-
-
-
-
-
-
 def menu(request):
     return render(request, 'gestion3/menu.html')
-
-
-
-
 
 
 def nosotros(request):
     return render(request, 'gestion3/nosotros.html')
 
 
-
-
-
-
-
-
-
-
 def testimonios(request):
     return render(request, 'gestion3/testimonios.html')
-
-
-
-
-
-
-
-
-
-
-
 
 
 def registrar_pago(request):
@@ -435,7 +352,6 @@ def registrar_pago(request):
         'formas_pago': formas_pago,
         'descuentos': descuentos
     })
-
 
 
 def guardar_pago(request):
@@ -470,10 +386,6 @@ def guardar_pago(request):
 
         messages.success(request, "Pago registrado correctamente.")
         return redirect('perfil')
-
-
-
-
 
 
 def ver_pagos(request):
