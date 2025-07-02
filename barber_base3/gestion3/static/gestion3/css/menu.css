@@ -3,15 +3,24 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
+  background-color: #33333326;
   color: #333;
 }
 
 #hero {
-  background: url('../images/fondo-main.jpeg') no-repeat center center/cover;
+  background: url('../images/nosotros.png') no-repeat top center/cover;
   color: white;
-  padding: 13rem 1rem;
+  min-height: 100vh;      /* Ocupa toda la altura de la ventana */
+  width: 100vw;           /* Ocupa todo el ancho de la ventana */
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  box-sizing: border-box;
+  padding: 0;
 }
 
 
@@ -116,3 +125,22 @@ footer ul.list-inline li {
 
 
 
+/* Estilo para la sección de ubicación */
+
+
+#ubicacion h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px #f4a26144;
+  text-align: center;
+}
+
+#ubicacion .ratio {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(231,111,81,0.13);
+  background: #fff;
+  margin-bottom: 0;
+}
