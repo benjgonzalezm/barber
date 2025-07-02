@@ -4,6 +4,21 @@
     padding: 0;
     box-sizing: border-box;
 }
+#hero-servicios{
+  background: url('../images/nosotros.png') no-repeat top center/cover;
+  color: white;
+  min-height: 100vh;      /* Ocupa toda la altura de la ventana */
+  width: 100vw;           /* Ocupa todo el ancho de la ventana */
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 0;
+}
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;

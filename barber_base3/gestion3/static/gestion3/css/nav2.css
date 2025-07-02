@@ -1,0 +1,175 @@
+    .logo_menu{
+    width: 100%;
+    max-width: 180px;
+    height: 100%;
+    max-height: 180px;
+
+}
+
+/*los css se colocan dentro de los div , class(como las imagenes) ,img ,h1, p ,etc. (osea se coloca dentor de lo que queramos modificar*/
+.centrado{
+    text-align: center;
+}
+
+.espaciado{
+    padding-top: 16px; /*espacio entre dos cosas*/
+}
+
+
+
+.espaciadoadmi{
+    margin-top: 10px; /*espacio entre dos cosas*/
+}
+
+
+.creepyborderegistro{ /* trata de hacer un borde dependiendo del color del los cuadros del inicio */
+    background: rgba(134, 2, 2, 0.712);
+    border-radius: 70px;
+    padding: 18px;
+    width: auto;
+    height: auto;
+}
+
+.creepybordeloginsubida{
+    /* trata de hacer un borde dependiendo del color del los cuadros del inicio */
+ background: rgba(134, 2, 2, 0.712);
+ border-radius: 30px;
+ 
+}
+
+
+.letrasregistroylogin{
+    color: #fff;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+}
+
+.letrasajustecuenta{
+    color: #fff;
+    text-shadow: 2px 2px 6px red;
+}
+
+.letrasinicio{
+    color: #fff;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+}
+
+
+.creepybordeinicio{
+    border-radius: 20px;       /* trata de hacer un borde dependiendo del color del los cuadros del inicio */
+    background: rgba(107, 17, 17, 0.836);
+    padding: 20px;
+    width: auto;
+    height: auto;
+}
+
+.creepybordermenuinicio{
+    /* trata de hacer un borde dependiendo del color del los cuadros del inicio */
+   background: rgba(107, 17, 17, 0.836);
+   border-radius: 20px;
+}
+
+.creepyborderhistorias{
+    /* trata de hacer un borde dependiendo del color del los cuadros del inicio */
+   background: rgba(107, 17, 17, 0.836);
+   border-radius: 20px;
+}
+
+
+.creepybordetushistorias{
+    border-radius: 20px;       /* trata de hacer un borde dependiendo del color del los cuadros del inicio */
+    background: rgba(39, 34, 34, 0.829);
+    padding: 20px;
+    width: auto;
+    height: auto;
+}
+
+.creepybordeadmi{
+    border-radius: 20px;       /* trata de hacer un borde dependiendo del color del los cuadros del inicio */
+    background: rgba(36, 2, 2, 0.726);
+    padding: 20px;
+  margin-left: 1px;
+}
+
+
+
+
+
+
+
+/* a{
+    color: rgb(0, 0, 0); } /*con esto modifico el color de todos los codigos  A*/
+   
+
+
+
+#img_arre { /*modifica el tamaÃ±o de la imagen en las historias dentro de los cuadros*/
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+    max-height: 300px;
+    
+}
+
+#img_historias { /*modifica el tamaÃ±o de la imagen en las historias dentro de los cuadros*/
+    max-width: 1500px;
+    width: 100%;
+    height: 100%;
+    max-height: 450px;
+    
+}
+
+.body1{
+    background-image: url('../fondo/lost-places-776297__340.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+}
+
+/* Haz que el nav ocupe todo el ancho pero sea menos alto y visualmente liviano 
+.navbar {
+  width: 100vw;
+  min-width: 100vw;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  background: rgba(33, 37, 41, 0.95);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+
+.navbar .navbar-brand img.logo_menu {
+  height: 48px;
+  max-height: 48px;
+}
+
+.navbar-nav {
+  width: 100%;
+  justify-content: center !important;
+  text-align: center;
+}
+
+.navbar-nav .nav-link,
+.navbar-nav .dropdown-item {
+  color: #fff !important;
+  font-size: 1.1rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:focus,
+.navbar-nav .nav-link:hover,
+.navbar-nav .dropdown-item:focus,
+.navbar-nav .dropdown-item:hover {
+  color: #f4a261 !important;
+  background: none;
+}
+
+@media (max-width: 576px) {
+  .navbar .navbar-brand img.logo_menu {
+    height: 36px;
+  }
+}   */

@@ -3,6 +3,93 @@
 <html lang="es">
 <head>
   <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}" />
+  <link rel="stylesheet" href="{% static 'gestion3/css/nav2.css' %}" />
+</head>
+<body>
+
+<header>                          
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark  fixed-top ">
+    <div class="container-fluid">
+      <a class="navbar-brand " href="{% url 'menu' %}"><img src="{% static 'gestion3/images/logo.png' %}" class="logo_menu"
+          alt="Elite Barber Logo"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="navbar-nav me-auto centrado">
+          <li class="nav-item">
+            <a class="nav-link text-danger" href="{% url 'menu' %}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-danger" href="{% url 'servicios' %}">Servicios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-danger" href="{% url 'nosotros' %}">Nosotros</a>
+          </li>
+          {% if request.session.usuario_id %}
+          {% if tipo_usuario == "Barbería" %}
+          <li class="nav-item dropdown d-flex navbar-nav centrado ">
+            <a class="nav-link dropdown-toggle text-danger" href="#" role="button" data-bs-toggle="dropdown">Datos </a>
+            <ul class="dropdown-menu  ">
+              <li><a class="dropdown-item text-danger " href="{% url 'listar_usuarios' %}">Ver usuarios</a></li>
+              <li><a class="dropdown-item text-danger " href="{% url 'registro_citas' %}">Registro citas</a></li>
+              <li><a class="dropdown-item text-danger " href="{% url 'ver_pagos' %}">Ver Pagos</a></li>
+              <li><a class="dropdown-item text-danger " href="{% url 'registro_barbero' %}">Registrar barbero</a></li>
+            </ul>
+          </li>
+          {% endif %}
+          {% if tipo_usuario == "Barbero" %}
+          <li><a class="dropdown-item text-danger " href="{% url 'perfil' %}">Perfil</a></li>
+           {% endif %}
+
+          {% if tipo_usuario == "Cliente" %}
+            <li><a class="dropdown-item text-danger " href="{% url 'perfil' %}">Perfil</a></li>
+          {% endif %}
+          <li><a class="dropdown-item text-danger " href="{% url 'logout' %}">Cerrar sesión</a></li>
+          {% else %}
+          <li><a class="dropdown-item text-danger " href="{% url 'login' %}">Login</a></li>
+            <li><a class="dropdown-item text-danger " href="{% url 'registrate' %}">Registro</a></li>
+          {% endif %}
+            
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+</header> 
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}" />
 </head>
 <body>
 
@@ -20,30 +107,30 @@
     {% if request.session.usuario_id %}
 
   {% if tipo_usuario == "Barbería" %}
-   <li><a href="{% url 'listar_usuarios' %}">Ver usuarios</a> </li><!-- solo lo verá la barbería -->
-   <li><a href="{% url 'registro_citas' %}">Registro citas</a> <!-- solo lo verá la barbería --></li>
-   <li><a href="{% url 'ver_pagos' %}">Ver Pagos</a> <!-- solo lo verá la barbería --></li>
-   <li><a href="{% url 'registro_barbero' %}">Registrar barbero</a> <!-- solo lo verá la barbería --></li>
+   <li><a href="{% url 'listar_usuarios' %}">Ver usuarios</a> </li> 
+   <li><a href="{% url 'registro_citas' %}">Registro citas</a> </li>
+   <li><a href="{% url 'ver_pagos' %}">Ver Pagos</a> </li>
+   <li><a href="{% url 'registro_barbero' %}">Registrar barbero</a> </li>
   {% endif %}
 
 
   {% if tipo_usuario == "Barbero" %}
-  <li><a href="{% url 'perfil' %}">Perfil</a> <!-- todos lo verán --></li>
-    <!-- para futuras vistas de barberos si es necesario-->
+  <li><a href="{% url 'perfil' %}">Perfil</a> </li>
+
   {% endif %}
 
   {% if tipo_usuario == "Cliente" %}
-  <li><a href="{% url 'perfil' %}">Perfil</a> <!-- todos lo verán --></li>
-    <!-- para futuras vistas de clientes si es necesario-->
+  <li><a href="{% url 'perfil' %}">Perfil</a> </li>
+
   {% endif %}
 
-<li>  <a href="{% url 'logout' %}">Cerrar sesión</a> <!-- todos lo verán --></li>
+<li>  <a href="{% url 'logout' %}">Cerrar sesión</a> </li>
   
 
 
 {% else %}
-<li> <a href="{% url 'login' %}">Login</a> <!-- todos lo verán --></li>
-<li><a href="{% url 'registrate' %}">Registro</a> <!-- todos lo verán --></li>
+<li> <a href="{% url 'login' %}">Login</a> </li>
+<li><a href="{% url 'registrate' %}">Registro</a> </li>
  
   
 
@@ -56,9 +143,4 @@
 </body>
 </html>
 
-
-
-
-
-
-
+ -->
