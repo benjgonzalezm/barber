@@ -23,102 +23,44 @@
 
   {% include 'gestion3/nav.html' %}
 
-  <main class="container my-5">
+  <div class="img-nosotros-wrapper position-relative">
+  <img src="{% static 'gestion3/images/fondo-main.jpeg' %}" alt="Equipo Elite Barber" class="img-nosotros">
+  <h1 class="titulo-sobre-imagen">Nuestros Barberos</h1>
+</div>
 
-    <section class="text-center mb-5">
-      <img src="{% static 'gestion3/images/nosotross.jpeg' %}" alt="Equipo Elite Barber" class="img-fluid rounded mb-4">
-      <h1 class="mb-3">Nuestros Barberos</h1>
-      <p class="lead">
-        En Elite Barber, nos apasiona el arte del buen corte y el cuidado personal. Nuestro equipo está formado por barberos profesionales con años de experiencia, dedicados a brindar el mejor servicio y atención a cada cliente. ¡Conócenos!
-      </p>
-    </section>
+<main class="container my-5">
+
+  <section class="text-center mb-5">
+    <p class="texto-sobre-imagen">
+      En Elite Barber, nos apasiona el arte del buen corte y el cuidado personal. Nuestro equipo está formado por barberos profesionales con años de experiencia, dedicados a brindar el mejor servicio y atención a cada cliente. ¡Conócenos!
+    </p>
+  </section>
+
+
 
     <section class="barberos">
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div class="row justify-content-center g-4">
 
-
-        <div class="col">
-          <div class="card h-100 text-center">
-            <img src="{% static 'gestion3/images/barberos/6.jpg' %}" class="card-img-top" alt="Barbero 1">
+        <div class="col-md-6 col-lg-5">
+          <div class="card h-100 text-center barbero-card">
+            <div class="barbero-img-wrapper">
+              <img src="{% static 'gestion3/images/barberos/ultimo-barbero.avif' %}" class="card-img-top" alt="Barbero Juan">
+            </div>
             <div class="card-body">
-              <h5 class="card-title">Andrés Ramírez</h5>
+              <h5 class="card-title">Juan Pérez</h5>
               <p class="card-text">Especialidad: Corte clásico y afeitado tradicional</p>
             </div>
-            <div class="card-footer d-flex justify-content-center gap-2">
-
-            
-            </div>
           </div>
         </div>
 
-
-
-        <div class="col">
-          <div class="card h-100 text-center">
-            <img src="{% static 'gestion3/images/barberos/1.webp' %}" class="card-img-top" alt="Barbero 2">
+        <div class="col-md-6 col-lg-5">
+          <div class="card h-100 text-center barbero-card">
+            <div class="barbero-img-wrapper">
+              <img src="{% static 'gestion3/images/barberos/1.webp' %}" class="card-img-top" alt="Barbero Marco">
+            </div>
             <div class="card-body">
-              <h5 class="card-title">Felipe Torres</h5>
-              <p class="card-text">Especialidad: Arreglo de barba y degradados</p>
-            </div>
-            <div class="card-footer d-flex justify-content-center gap-2">
-
-
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card h-100 text-center">
-            <img src="{% static 'gestion3/images/barberos/2.jpg' %}" class="card-img-top" alt="Barbero 3">
-            <div class="card-body">
-              <h5 class="card-title">Camilo Soto</h5>
-              <p class="card-text">Especialidad: Peinados modernos y cortes juveniles</p>
-            </div>
-            <div class="card-footer d-flex justify-content-center gap-2">
-
-
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card h-100 text-center">
-            <img src="{% static 'gestion3/images/barberos/3-.jpg' %}" class="card-img-top" alt="Barbero 4">
-            <div class="card-body">
-              <h5 class="card-title">Javier Morales</h5>
-              <p class="card-text">Especialidad: Tratamientos capilares y cortes creativos</p>
-            </div>
-            <div class="card-footer d-flex justify-content-center gap-2">
-
-
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card h-100 text-center">
-            <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" class="card-img-top" alt="Barbero 5">
-            <div class="card-body">
-              <h5 class="card-title">Valentina Ríos</h5>
-              <p class="card-text">Especialidad: Corte infantil y barbería femenina</p>
-            </div>
-            <div class="card-footer d-flex justify-content-center gap-2">
-
-
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card h-100 text-center">
-            <img src="{% static 'gestion3/images/barberos/ultimo-barbero.avif' %}" class="card-img-top" alt="Barbero 6">
-            <div class="card-body">
-              <h5 class="card-title">Diego Fuentes</h5>
-              <p class="card-text">Especialidad: Afeitado con navaja y estilos urbanos</p>
-            </div>
-            <div class="card-footer d-flex justify-content-center gap-2">
-
-
+              <h5 class="card-title">Marco Gómez</h5>
+              <p class="card-text">Especialidad: Corte niños y Cortes modernos</p>
             </div>
           </div>
         </div>
