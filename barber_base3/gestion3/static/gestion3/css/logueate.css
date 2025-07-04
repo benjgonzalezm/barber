@@ -1,13 +1,13 @@
 body {
   min-height: 100vh;
-  background: linear-gradient(rgba(20,20,20,0.85), rgba(20,20,20,0.85)),
-    url("/static/gestion3/images/wallpaper.jpeg") no-repeat center center fixed;
+  background: linear-gradient(rgba(30,30,30,0.7), rgba(30,30,30,0.7)),
+    url("/static/gestion3/images/fondo-main.jpeg") no-repeat center center fixed;
   background-size: cover;
   display: flex;
   flex-direction: column;
 }
 
-.registro-container {
+.login-container {
   flex: 1;
   display: flex;
   align-items: center;
@@ -15,14 +15,14 @@ body {
   min-height: 100vh;
 }
 
-#registrof {
+.login-form {
   background: transparent;
   padding: 2.5rem 2rem 2rem 2rem;
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
 }
 
-#registrof h2 {
+.login-form h2 {
   font-weight: 700;
   color: #fff;
   margin-bottom: 1.5rem;
@@ -39,7 +39,7 @@ body {
 .form-control {
   background: rgba(242, 242, 242, 0.646);
   border: none;
-  color: #222 !important;
+  color: #222 !important;      /* Texto oscuro SIEMPRE */
   caret-color: #dc3545;
 }
 
@@ -70,10 +70,11 @@ body {
 }
 
 @media (max-width: 600px) {
-  #registrof {
+  .login-form {
     padding: 1.5rem 0.5rem 1.2rem 0.5rem;
   }
-  #registrof h2 {
+  .login-form h2 {
     margin-top: 1.5rem;
   }
+  
 }

@@ -1,53 +1,89 @@
-/* CSS DEL NAV */
-ul, li, a {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Navbar moderno y responsivo */
+
+.custom-navbar {
+  transition: background 0.3s, box-shadow 0.3s;
+  font-size: 1.08rem;
+  z-index: 1050;
 }
 
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 1rem 0;
-}
-
-
-header nav {
+.custom-navbar .navbar-brand {
+  font-size: 1.3rem;
+  letter-spacing: 1px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  overflow: visible;
 }
 
-
-header nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  position: relative;
+.logo_menu {
+  height: 48px;
+  width: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-right: 8px;
 }
 
+.custom-navbar .nav-link {
+  transition: color 0.2s, background 0.2s;
+  border-radius: 0.4rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
 
-header nav ul li a {
+.custom-navbar .nav-link.active,
+.custom-navbar .nav-link:hover,
+.custom-navbar .dropdown-item:hover {
+  background: #dc3545;
+  color: #fff !important;
+}
+
+.custom-navbar .dropdown-menu {
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  min-width: 180px;
+  background: #232323;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.custom-navbar .dropdown-item {
   color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
 }
 
-
-header nav ul li a:hover {
-  color: #f4a261;
+.custom-navbar .dropdown-item.active,
+.custom-navbar .dropdown-item:active {
+  background: #dc3545;
+  color: #fff;
 }
 
-
-header nav img {
-  height: 80px;
+.navbar-toggler {
+  border: none;
+  outline: none;
+  box-shadow: none !important;
 }
 
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
 
+@media (max-width: 991px) {
+  .custom-navbar .navbar-nav {
+    gap: 0;
+  }
+  .custom-navbar .nav-link {
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  .custom-navbar .navbar-brand {
+    font-size: 1.1rem;
+  }
+}
 
+@media (max-width: 600px) {
+  .logo_menu {
+    height: 38px;
+  }
+  .custom-navbar .navbar-brand {
+    font-size: 1rem;
+  }
+}

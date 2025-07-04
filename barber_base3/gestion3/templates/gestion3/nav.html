@@ -3,59 +3,65 @@
 <html lang="es">
 <head>
   <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}" />
-  <link rel="stylesheet" href="{% static 'gestion3/css/nav2.css' %}" />
 </head>
 <body>
 
 <header>                          
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark  fixed-top ">
-    <div class="container-fluid">
-      <a class="navbar-brand " href="{% url 'menu' %}"><img src="{% static 'gestion3/images/logo.png' %}" class="logo_menu"
-          alt="Elite Barber Logo"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="mynavbar">
-        <ul class="navbar-nav me-auto centrado">
-          <li class="nav-item">
-            <a class="nav-link text-danger" href="{% url 'menu' %}">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-danger" href="{% url 'servicios' %}">Servicios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-danger" href="{% url 'nosotros' %}">Nosotros</a>
-          </li>
-          {% if request.session.usuario_id %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top custom-navbar">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'menu' %}">
+      <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" class="logo_menu me-2" style="height:48px;">
+      <span class="fw-bold">Elite Barber</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+      <ul class="navbar-nav align-items-center gap-2">
+        <li class="nav-item">
+          <a class="nav-link{% if request.resolver_match.url_name == 'menu' %} active{% endif %}" href="{% url 'menu' %}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link{% if request.resolver_match.url_name == 'servicios' %} active{% endif %}" href="{% url 'servicios' %}">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link{% if request.resolver_match.url_name == 'nosotros' %} active{% endif %}" href="{% url 'nosotros' %}">Nosotros</a>
+        </li>
+        
+        {% if request.session.usuario_id %}
           {% if tipo_usuario == "Barbería" %}
-          <li class="nav-item dropdown d-flex navbar-nav centrado ">
-            <a class="nav-link dropdown-toggle text-danger" href="#" role="button" data-bs-toggle="dropdown">Datos </a>
-            <ul class="dropdown-menu  ">
-              <li><a class="dropdown-item text-danger " href="{% url 'listar_usuarios' %}">Ver usuarios</a></li>
-              <li><a class="dropdown-item text-danger " href="{% url 'registro_citas' %}">Registro citas</a></li>
-              <li><a class="dropdown-item text-danger " href="{% url 'ver_pagos' %}">Ver Pagos</a></li>
-              <li><a class="dropdown-item text-danger " href="{% url 'registro_barbero' %}">Registrar barbero</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              Datos
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="{% url 'listar_usuarios' %}">Ver usuarios</a></li>
+              <li><a class="dropdown-item" href="{% url 'registro_citas' %}">Registro citas</a></li>
+              <li><a class="dropdown-item" href="{% url 'ver_pagos' %}">Ver Pagos</a></li>
+              <li><a class="dropdown-item" href="{% url 'registro_barbero' %}">Registrar barbero</a></li>
             </ul>
           </li>
           {% endif %}
-          {% if tipo_usuario == "Barbero" %}
-          <li><a class="dropdown-item text-danger " href="{% url 'perfil' %}">Perfil</a></li>
-           {% endif %}
-
-          {% if tipo_usuario == "Cliente" %}
-            <li><a class="dropdown-item text-danger " href="{% url 'perfil' %}">Perfil</a></li>
+          {% if tipo_usuario == "Barbero" or tipo_usuario == "Cliente" %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'perfil' %}">Perfil</a>
+          </li>
           {% endif %}
-          <li><a class="dropdown-item text-danger " href="{% url 'logout' %}">Cerrar sesión</a></li>
-          {% else %}
-          <li><a class="dropdown-item text-danger " href="{% url 'login' %}">Login</a></li>
-            <li><a class="dropdown-item text-danger " href="{% url 'registrate' %}">Registro</a></li>
-          {% endif %}
-            
-        </ul>
-
-      </div>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'registrate' %}">Registro</a>
+          </li>
+        {% endif %}
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 </header> 
 
 

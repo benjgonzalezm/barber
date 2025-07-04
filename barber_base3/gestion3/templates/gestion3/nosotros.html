@@ -5,95 +5,59 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nosotros - Elite Barber</title>
-
-
- <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-  rel="stylesheet"
-  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-  crossorigin="anonymous"
-/>
-
-
-
-  <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'gestion3/css/nosotros.css' %}">
 </head>
 <body>
 
   {% include 'gestion3/nav.html' %}
 
-  <div class="img-nosotros-wrapper position-relative">
-  <img src="{% static 'gestion3/images/fondo-main.jpeg' %}" alt="Equipo Elite Barber" class="img-nosotros">
-  <h1 class="titulo-sobre-imagen">Nuestros Barberos</h1>
-</div>
+  <header class="nosotros-header">
+    <div class="nosotros-header-content">
+      <h1>Nuestros Barberos</h1>
+      <p>
+        En Elite Barber, nos apasiona el arte del buen corte y el cuidado personal. Nuestro equipo está formado por barberos profesionales con años de experiencia, dedicados a brindar el mejor servicio y atención a cada cliente. ¡Conócenos!
+      </p>
+    </div>
+  </header>
 
-<main class="container my-5">
-
-  <section class="text-center mb-5">
-    <p class="texto-sobre-imagen">
-      En Elite Barber, nos apasiona el arte del buen corte y el cuidado personal. Nuestro equipo está formado por barberos profesionales con años de experiencia, dedicados a brindar el mejor servicio y atención a cada cliente. ¡Conócenos!
-    </p>
-  </section>
-
-
-
+  <main>
     <section class="barberos">
-      <div class="row justify-content-center g-4">
-
-        <div class="col-md-6 col-lg-5">
-          <div class="card h-100 text-center barbero-card">
-            <div class="barbero-img-wrapper">
-              <img src="{% static 'gestion3/images/barberos/ultimo-barbero.avif' %}" class="card-img-top" alt="Barbero Juan">
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Juan Pérez</h5>
-              <p class="card-text">Especialidad: Corte clásico y afeitado tradicional</p>
-            </div>
-          </div>
+      <div class="barbero-card">
+        <div class="barbero-img-wrapper">
+          <img src="{% static 'gestion3/images/barberos/ultimo-barbero.avif' %}" alt="Barbero Juan">
         </div>
-
-        <div class="col-md-6 col-lg-5">
-          <div class="card h-100 text-center barbero-card">
-            <div class="barbero-img-wrapper">
-              <img src="{% static 'gestion3/images/barberos/barbero-profesional.png' %}" class="card-img-top" alt="Barbero Marco">
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Juan Gómez</h5>
-              <p class="card-text">Especialidad: Corte niños y Cortes modernos</p>
-            </div>
-          </div>
+        <h2>Juan Pérez</h2>
+        <p>Especialidad: Corte clásico y afeitado tradicional</p>
+      </div>
+      <div class="barbero-card">
+        <div class="barbero-img-wrapper">
+          <img src="{% static 'gestion3/images/barberos/barbero-profesional.png' %}" alt="Barbero Marco">
         </div>
-
+        <h2>Juan Gómez</h2>
+        <p>Especialidad: Corte niños y Cortes modernos</p>
       </div>
     </section>
-
   </main>
 
-  <footer class="bg-dark text-white text-center py-4 mt-5">
+ <footer class="text-center p-4 bg-light mt-5">
     <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
     <div class="footer-links mb-2">
-      <a href="https://www.facebook.com" target="_blank" class="text-white me-2">Facebook</a> |
-      <a href="https://www.instagram.com" target="_blank" class="text-white mx-2">Instagram</a> |
-      <a href="https://www.twitter.com" target="_blank" class="text-white ms-2">Twitter</a>
+      <a href="https://www.facebook.com" target="_blank">Facebook</a> |
+      <a href="https://www.instagram.com" target="_blank">Instagram</a> |
+      <a href="https://www.twitter.com" target="_blank">Twitter</a>
     </div>
     <nav>
       <ul class="list-inline">
-        <li class="list-inline-item"><a class="text-white" href="{% url 'menu' %}">Inicio</a></li>
-        <li class="list-inline-item"><a class="text-white" href="{% url 'nosotros' %}">Nosotros</a></li>
-        <li class="list-inline-item"><a class="text-white" href="{% url 'servicios' %}">Servicios</a></li>
-        <li class="list-inline-item"><a class="text-white" href="{% url 'testimonios' %}">Testimonios</a></li>
-        <li class="list-inline-item"><a class="text-white" href="#contacto">Contacto</a></li>
+        <li class="list-inline-item"><a href="../paginas/menu.html">Inicio</a></li>
+        <li class="list-inline-item"><a href="../paginas/barberos.html">Nosotros</a></li>
+        <li class="list-inline-item"><a href="../paginas/servicios.html">Servicios</a></li>
+        <li class="list-inline-item"><a href="../paginas/testimonios.html">Testimonios</a></li>
+        <li class="list-inline-item"><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
   </footer>
 
- 
-  <script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-  crossorigin="anonymous"
-></script>
 
 </body>
 </html>
