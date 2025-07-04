@@ -13,28 +13,27 @@
 
     {% include 'gestion3/nav.html' %}
 
-    <main class="container my-5">
-        <div class="row row-cols-1 row-cols-md-3 g-4 servicios-container">
-            {% for servicio in servicios %}
-            <div class="col servicio">
-                <div class="card h-100 text-center">
-                    {% if servicio.id_subservicio.imagenes %}
-                        <img src="{{ servicio.id_subservicio.imagenes.url }}" class="card-img-top" alt="{{ servicio.id_subservicio.nombre_servicio }}" />
-                    {% else %}
-               
-                        <img src="{% static 'gestion3/images/afeitados.jpg' %}" class="card-img-top" alt="Imagen por defecto de servicio" />
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ servicio.id_subservicio.nombre_servicio }}</h5>
-                        <p>Duración: {{ servicio.duracion_minutos }} minutos</p>
-                        <p>{{ servicio.descripcion }}</p>
-                        <a href="{% url 'barbero' servicio.id_servicio %}" class="btn btn-primary">Elegir</a>
-                    </div>
+<main class="container my-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 servicios-container">
+        {% for servicio in servicios %}
+        <div class="col servicio">
+            <div class="card h-100 text-center">
+                {% if servicio.id_subservicio.imagenes %}
+                    <img src="{{ servicio.id_subservicio.imagenes.url }}" class="card-img-top" alt="{{ servicio.id_subservicio.nombre_servicio }}" />
+                {% else %}
+                    <img src="{% static 'gestion3/images/afeitados.jpg' %}" class="card-img-top" alt="Imagen por defecto de servicio" />
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ servicio.id_subservicio.nombre_servicio }}</h5>
+                    <p>Duración: {{ servicio.duracion_minutos }} minutos</p>
+                    <p>{{ servicio.descripcion }}</p>
+                    <a href="{% url 'barbero' servicio.id_servicio %}" class="btn btn-primary">Elegir</a>
                 </div>
             </div>
-            {% endfor %}
         </div>
-    </main>
+        {% endfor %}
+    </div>
+</main>
 
     <footer class="bg-dark text-white text-center py-4 mt-5">
         <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>

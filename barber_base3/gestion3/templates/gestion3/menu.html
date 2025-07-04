@@ -38,7 +38,7 @@
       <div class="card h-100 shadow-sm border-0">
         <img src="{% static 'gestion3/images/cortes-pelo.jpg' %}" class="card-img-top rounded-top" alt="Corte de cabello clásico">
         <div class="card-body text-center">
-          <h5 class="card-title">Corte de cabello clásico</h5>
+          <h5 class="card-title">Corte de cabello</h5>
           <!-- Reemplaza los botones de servicios por este formato -->
 <a href="{% url 'servicios' %}" class="btn btn-primary btn-lg mt-3 px-4 rounded-pill shadow-sm" style="background: linear-gradient(90deg, #f4a261 0%, #e76f51 100%); border: none;">
   <i class="bi bi-scissors"></i> Ver más
@@ -50,7 +50,7 @@
       <div class="card h-100 shadow-sm border-0">
         <img src="{% static 'gestion3/images/afeitado-tradi.avif' %}" class="card-img-top rounded-top" alt="Afeitado tradicional">
         <div class="card-body text-center">
-          <h5 class="card-title">Afeitado tradicional</h5>
+          <h5 class="card-title">Servicio de Barba</h5>
 <!-- Reemplaza los botones de servicios por este formato -->
 <a href="{% url 'servicios' %}" class="btn btn-primary btn-lg mt-3 px-4 rounded-pill shadow-sm" style="background: linear-gradient(90deg, #f4a261 0%, #e76f51 100%); border: none;">
   <i class="bi bi-scissors"></i> Ver más
@@ -59,9 +59,9 @@
     </div>
     <div class="col-md-3 mb-4">
       <div class="card h-100 shadow-sm border-0">
-        <img src="{% static 'gestion3/images/afeitados.jpg' %}" class="card-img-top rounded-top" alt="Arreglo de barba">
+        <img src="{% static 'gestion3/images/corte-cabello-barba.jpg' %}" class="card-img-top rounded-top" alt="Arreglo de barba">
         <div class="card-body text-center">
-          <h5 class="card-title">Arreglo de barba</h5>
+          <h5 class="card-title">Corte de cabello y Servicio de barba</h5>
 <a href="{% url 'servicios' %}" class="btn btn-primary btn-lg mt-3 px-4 rounded-pill shadow-sm" style="background: linear-gradient(90deg, #f4a261 0%, #e76f51 100%); border: none;">
   <i class="bi bi-scissors"></i> Ver más
 </a>
@@ -70,7 +70,7 @@
     </div>
     <div class="col-md-3 mb-4">
       <div class="card h-100 shadow-sm border-0">
-        <img src="{% static 'gestion3/images/cortes-pelo.jpg' %}" class="card-img-top rounded-top" alt="Corte para niños">
+        <img src="{% static 'gestion3/images/corte-ninos.jpg' %}" class="card-img-top rounded-top" alt="Corte para niños">
         <div class="card-body text-center">
           <h5 class="card-title">Corte para niños</h5>
 <a href="{% url 'servicios' %}" class="btn btn-primary btn-lg mt-3 px-4 rounded-pill shadow-sm" style="background: linear-gradient(90deg, #f4a261 0%, #e76f51 100%); border: none;">
@@ -82,27 +82,33 @@
   </div>
 </section>
 
-  <section id="galeria" class="container my-5">
+  <section id="galeria" class="container-fluid my-5">
   <h2>Galería</h2>
-  <div id="galeriaCarousel" class="carousel slide mx-auto" data-bs-ride="carousel" style="max-width:600px;">
+  <div id="galeriaCarousel" class="carousel slide mx-auto" data-bs-ride="carousel" style="max-width:80vw;">
     <div class="carousel-inner rounded shadow">
       <div class="carousel-item active">
-        <div class="row">
-          <div class="col-6">
-            <img src="{% static 'gestion3/images/cortes-pelo.jpg' %}" class="d-block w-100" alt="Corte de cabello" style="object-fit:cover; height:180px;">
+        <div class="row g-2 justify-content-center">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <img src="{% static 'gestion3/images/galeria-1.webp' %}" class="d-block w-100" alt="Corte de cabello" style="object-fit:cover; height:260px;">
           </div>
-          <div class="col-6">
-            <img src="{% static 'gestion3/images/afeitado-tradi.avif' %}" class="d-block w-100" alt="Afeitado" style="object-fit:cover; height:180px;">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <img src="{% static 'gestion3/images/galeria-2.webp' %}" class="d-block w-100" alt="Afeitado" style="object-fit:cover; height:260px;">
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <img src="{% static 'gestion3/images/galeria-3.webp' %}" class="d-block w-100" alt="Arreglo de barba" style="object-fit:cover; height:260px;">
           </div>
         </div>
       </div>
       <div class="carousel-item">
-        <div class="row">
-          <div class="col-6">
-            <img src="{% static 'gestion3/images/afeitados.jpg' %}" class="d-block w-100" alt="Arreglo de barba" style="object-fit:cover; height:180px;">
+        <div class="row g-2 justify-content-center">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <img src="{% static 'gestion3/images/galeria-4.jpg' %}" class="d-block w-100" alt="Corte de cabello clásico" style="object-fit:cover; height:260px;">
           </div>
-          <div class="col-6">
-            <img src="{% static 'gestion3/images/cortes-pelo.jpg' %}" class="d-block w-100" alt="Corte de cabello clásico" style="object-fit:cover; height:180px;">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <img src="{% static 'gestion3/images/galeria-5.jpg' %}" class="d-block w-100" alt="Peinado moderno" style="object-fit:cover; height:260px;">
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <img src="{% static 'gestion3/images/galeria-6.webp' %}" class="d-block w-100" alt="Barba perfilada" style="object-fit:cover; height:260px;">
           </div>
         </div>
       </div>
@@ -117,7 +123,6 @@
     </button>
   </div>
 </section>
-
 
 
   <section id="ubicacion" class="container my-5">
