@@ -24,9 +24,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('pagina_principal/', views.pagina_principal, name='pagina_principal'),  
-
-
-
+    path('reporte/', views.reporte, name='reporte'),
     path('perfil/', views.perfil_view, name='perfil'),
     path('valorar_cita/<int:cita_id>/', views.valorar_cita, name='valorar_cita'),
     path('finalizar_cita/<int:cita_id>/', views.finalizar_cita, name='finalizar_cita'),

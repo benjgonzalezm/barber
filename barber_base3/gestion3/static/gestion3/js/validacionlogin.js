@@ -23,7 +23,7 @@ $(document).ready(function () {
       $("#mensajes").html(mensajesMostrar);
       e.preventDefault();
     } else {
-      $("#mensajes").html("formulario enviado");
+      $("#mensajes").html("Formulario enviado");
     }
   });
 

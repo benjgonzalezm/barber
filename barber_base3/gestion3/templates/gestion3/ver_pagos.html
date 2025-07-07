@@ -12,19 +12,25 @@
 {% include 'gestion3/nav.html' %}
 
 <div class="container my-5 registro-container">
-  <h2 class="mb-4">Registros de Pagos</h2>
+  <h2 class="mb-4">
+    <div class="mb-3">
+      <a href="{% url 'reporte' %}" class="btn btn-success">Ver Reporte</a> 
+    </div>
+    Registros de Pagos
+    </h2>
   <div class="table-responsive">
-    <table class="table table-striped tabla-registros">
+    <table class="table table-striped tabla-registros"> <!-- ver como arreglar la tabla para que se vea todo el contenido sin la barra de scroll horizontal -->
       <thead class="table-dark">
         <tr>
           <th>ID Pago</th>
           <th>Cliente</th>
           <th>Barbero</th>
           <th>Servicio</th>
-          <th>Monto Original</th>
+          <th>Monto original</th>
           <th>Descuento</th>
-          <th>Total Pagado</th>
-          <th>Fecha Pago</th>
+          <th>Total pagado</th>
+          <th>Fecha pago</th>
+          <th>Hora pago</th>
           <th>Cita</th>
           <th>Forma de Pago</th>
         </tr>
@@ -38,16 +44,17 @@
             <td>{{ pago.id_cita.id_cliente.nombre }} {{ pago.id_cita.id_cliente.apellido }}</td>
             <td>{{ pago.id_cita.id_servicio.id_usuario.nombre }} {{ pago.id_cita.id_servicio.id_usuario.apellido }}</td>
             <td>{{ pago.id_cita.id_servicio.id_subservicio.nombre_servicio }}</td>
-            <td>${{ pago.monto_original|floatformat:2 }}</td>
+            <td>${{ pago.monto_original|floatformat:0 }}</td>
             <td>
               {% if pago.id_descuento and pago.id_descuento.descuento > 0 %}
-                {{ pago.id_descuento.descuento|floatformat:0 }}%
+                {{ pago.id_descuento.descuento|floatformat:1 }}%
               {% else %}
                 Sin descuento
               {% endif %}
             </td>
-            <td>${{ pago.total_pagado|floatformat:2 }}</td>
-            <td>{{ pago.fecha_pago|date:"d/m/Y \\a \\l\\a\\s H:i" }}</td>
+            <td>${{ pago.total_pagado|floatformat:0 }}</td>
+            <td>{{ pago.fecha_pago|date:"d/m/Y" }}</td>
+            <td>{{ pago.fecha_pago|date:"H:i" }}</td>
             <td>Cita {{ pago.id_cita.id_cita }}</td>
             <td>{{ pago.id_forma_pago.nombre_forma_pago }}</td>
           </tr>

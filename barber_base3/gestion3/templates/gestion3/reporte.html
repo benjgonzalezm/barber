@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Estadísticas de Pagos</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+{% include 'gestion3/nav.html' %}
+
+<br><br> <!-- Esta br's permiten que el navbar no oculte la mitad del título de "Estadísticas Generales" -->
+<div class="container my-5">
+  <h2><b>Estadísticas Generales</b></h2>
+
+  <p><strong>Total pagado:</strong> ${{ total_pagado }}</p>
+  <p><strong>Citas completadas:</strong> {{ numero_citas }}</p>
+  <p><strong>Forma de pago popular:</strong> {{ forma_pago_mas_usada.id_forma_pago__nombre_forma_pago }}</p>
+  <p><strong>Mes con más ingresos:</strong> {{ mes_nombre }}</p>
+  <p><strong>Barbero más popular:</strong> {{ barbero_popular.id_cita__id_servicio__id_usuario__nombre }} {{ barbero_popular.id_cita__id_servicio__id_usuario__apellido }}</p>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h5><b>Clientes frecuentes</b></h5>
+      <ul>
+        {% for c in clientes_frecuentes %}
+          <li>{{ c.id_cita__id_cliente__nombre }} ({{ c.total }} citas)</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h5><b>Servicios más solicitados</b></h5>
+      <ul>
+        {% for s in servicios_mas_solicitados %}
+          <li>{{ s.id_cita__id_servicio__id_subservicio__nombre_servicio }} ({{ s.total }} veces)</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

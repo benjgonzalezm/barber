@@ -87,7 +87,7 @@ $(document).ready(function () {
       $("#mensajes").html(mensajesMostrar);
     } else {
       console.log("else");
-      $("#mensajes").html("formulario enviado");
+      $("#mensajes").html("Formulario enviado");
     }
   });
 

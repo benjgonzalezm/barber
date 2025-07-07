@@ -9,7 +9,12 @@ from .models import Servicio, EstadoCita, Usuario, TipoUsuario, EstadoUsuario, C
 from .models import RegistroPago, Observacion , FormaPago , Descuento
 from django.contrib.auth.hashers import check_password
 from datetime import datetime
+from django.db.models import Count, Sum
+from django.db.models.functions import ExtractMonth
+import locale
+import calendar
 
+locale.setlocale(locale.LC_ALL, 'es_CL.UTF-8') # Permite establecer la configuración regional, para así trabajar con la moneda chilena 
 
 def perfil_view(request):
     usuario_id = request.session.get('usuario_id')
@@ -394,3 +399,43 @@ def ver_pagos(request):
     ).all()
     return render(request, 'gestion3/ver_pagos.html', {'pagos': pagos})
 
+def reporte(request):
+    pagos = RegistroPago.objects.all()
+
+    total_pagado = pagos.aggregate(Sum('total_pagado'))['total_pagado__sum'] or 0
+    numero_citas = pagos.count()
+    forma_pago_mas_usada = pagos.values('id_forma_pago__nombre_forma_pago') \
+                                 .annotate(total=Count('id_forma_pago')) \
+                                 .order_by('-total').first()
+
+    mes_mas_ingresos = pagos.annotate(mes=ExtractMonth('fecha_pago')) \
+                            .values('mes') \
+                            .annotate(total=Sum('total_pagado')) \
+                            .order_by('-total').first()
+
+    barbero_popular = pagos.values('id_cita__id_servicio__id_usuario__nombre',
+                                'id_cita__id_servicio__id_usuario__apellido') \
+                           .annotate(total=Count('id_cita__id_servicio__id_usuario')) \
+                           .order_by('-total').first()
+
+    clientes_frecuentes = pagos.values('id_cita__id_cliente__nombre') \
+                               .annotate(total=Count('id_cita__id_cliente')) \
+                               .order_by('-total')[:5]
+
+    servicios_mas_solicitados = pagos.values('id_cita__id_servicio__id_subservicio__nombre_servicio') \
+                                     .annotate(total=Count('id_cita__id_servicio')) \
+                                     .order_by('-total')[:5]
+
+    total_pagado_formateado = locale.format_string("%d", total_pagado, grouping=True)
+    mes_nombre = calendar.month_name[mes_mas_ingresos['mes']].capitalize()
+    context = {
+        'total_pagado': total_pagado_formateado,
+        'numero_citas': numero_citas,
+        'forma_pago_mas_usada': forma_pago_mas_usada,
+        'mes_nombre': mes_nombre,
+        'barbero_popular': barbero_popular,
+        'clientes_frecuentes': clientes_frecuentes,
+        'servicios_mas_solicitados': servicios_mas_solicitados,
+    }
+
+    return render(request, 'gestion3/reporte.html', context)
