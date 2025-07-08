@@ -427,7 +427,7 @@ def ver_pagos(request):
 def reporte(request):
     pagos = RegistroPago.objects.all()
 
-    # Formas de pago
+   
     formas_pago = pagos.values('id_forma_pago__nombre_forma_pago') \
                        .annotate(total=Count('id_forma_pago')) \
                        .order_by('-total')
