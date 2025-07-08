@@ -39,25 +39,31 @@
               <li><a class="dropdown-item" href="{% url 'registro_citas' %}">Registro citas</a></li>
               <li><a class="dropdown-item" href="{% url 'ver_pagos' %}">Ver Pagos</a></li>
               <li><a class="dropdown-item" href="{% url 'registro_barbero' %}">Registrar barbero</a></li>
+              <li><a class="dropdown-item" href="{% url 'agregar_subservicio' %}">Agregar subservicio</a></li>
             </ul>
           </li>
           {% endif %}
-          {% if tipo_usuario == "Barbero" or tipo_usuario == "Cliente" %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'perfil' %}">Perfil</a>
-          </li>
+           {% if tipo_usuario == "Barbero" %}
+           <li><a class="dropdown-item" href="{% url 'agregar_servicios' %}">Agregar</a></li>
+           <li><a href="{% url 'perfil' %}">Perfil</a> </li>
           {% endif %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
-          </li>
-        {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'registrate' %}">Registro</a>
-          </li>
-        {% endif %}
+
+  {% if tipo_usuario == "Cliente" %}
+  <li><a href="{% url 'perfil' %}">Perfil</a> </li>
+
+  {% endif %}
+
+<li>  <a href="{% url 'logout' %}">Cerrar sesión</a> </li>
+  
+
+
+{% else %}
+<li> <a href="{% url 'login' %}">Login</a> </li>
+<li><a href="{% url 'registrate' %}">Registro</a> </li>
+ 
+  
+
+{% endif %}
       </ul>
     </div>
   </div>

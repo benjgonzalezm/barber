@@ -23,10 +23,11 @@
 
 <main class="container my-5">
 
-  <h2 class="mb-4 text-center">Barberos para {{ servicio.id_subservicio.nombre_servicio }}</h2>
+  <h2 class="mb-4 text-center">Barberos para {{ subservicio.nombre_servicio }}</h2>
+
 
   <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
-    {% for servicio_barbero in barberos_con_servicio %}
+  {% for servicio_barbero in barberos_con_servicio %}
     <div class="col d-flex justify-content-center">
       <div class="card shadow rounded-4 text-center" style="width: 100%; max-width: 340px;">
         {% if servicio_barbero.id_usuario.imagen %}
@@ -38,12 +39,13 @@
           <img src="{% static 'gestion3/images/nosotross.jpeg' %}"
                class="card-img-top"
                alt="Imagen por defecto"
-               style="height:4000px; object-fit:cover; object-position: top; border-top-left-radius:1rem; border-top-right-radius:1rem;">
+               style="height:400px; object-fit:cover; object-position: top; border-top-left-radius:1rem; border-top-right-radius:1rem;">
         {% endif %}
         <div class="card-body d-flex flex-column justify-content-between">
           <h5 class="card-title mb-2">{{ servicio_barbero.id_usuario.nombre }} {{ servicio_barbero.id_usuario.apellido }}</h5>
-          <p class="card-text mb-2">Descripción: {{ servicio_barbero.id_usuario.descripcion_usuario }}</p>
+          <p class="card-text mb-2">Descripción del barbero: {{ servicio_barbero.id_usuario.descripcion_usuario }}</p>
           <p class="card-text fw-bold text-primary mb-2">Precio del servicio: ${{ servicio_barbero.precio }}</p>
+          <p class="card-text mb-2">Descripción del servicio: {{ servicio_barbero.descripcion }}</p>
         </div>
         <div class="card-footer d-flex flex-column align-items-center gap-2 bg-light border-0">
           <h6 class="mb-2">Reservar cita con {{ servicio_barbero.id_usuario.nombre }}</h6>
@@ -62,8 +64,12 @@
         </div>
       </div>
     </div>
-{% endfor %}
-  </div>
+  {% empty %}
+    <div class="col-12 text-center my-5">
+      <h3 class="text-muted display-4">De momento no tenemos servicios relacionados a esto</h3><!-- benja si quieres puede agregar una imagen con ese texto aca -->
+    </div>
+  {% endfor %}
+</div>
 
 </main>
 

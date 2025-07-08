@@ -6,7 +6,7 @@ import hashlib
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Servicio, EstadoCita, Usuario, TipoUsuario, EstadoUsuario, Cita, ValoracionObservacion 
-from .models import RegistroPago, Observacion , FormaPago , Descuento
+from .models import RegistroPago, Observacion , FormaPago , Descuento,SubServicio
 from django.contrib.auth.hashers import check_password
 from datetime import datetime
 from django.db.models import Count, Sum, Avg
@@ -128,28 +128,24 @@ def pagina_principal(request):
 
 
 def servicios(request):
-    servicios_all = Servicio.objects.select_related('id_subservicio', 'id_usuario')
-    servicios_unicos = {}
-    for servicio in servicios_all:
-        key = servicio.id_subservicio.id_subservicio  
-        if key not in servicios_unicos:
-            servicios_unicos[key] = servicio
-    servicios = servicios_unicos.values()
-    return render(request, 'gestion3/servicios.html', {'servicios': servicios})
+    subservicios = SubServicio.objects.all()
+    return render(request, 'gestion3/servicios.html', {'subservicios': subservicios})
 
 
-def barbero(request, servicio_id):
-    servicio = get_object_or_404(Servicio, id_servicio=servicio_id)
+
+def barbero(request, subservicio_id):
+    subservicio = get_object_or_404(SubServicio, id_subservicio=subservicio_id)
 
     barberos_con_servicio = Servicio.objects.filter(
-        id_subservicio=servicio.id_subservicio,
+        id_subservicio=subservicio,
         id_usuario__id_tipo_usuario__tipo='Barbero'
     ).select_related('id_usuario')
 
     return render(request, 'gestion3/barbero.html', {
-        'servicio': servicio,
+        'subservicio': subservicio,
         'barberos_con_servicio': barberos_con_servicio
     })
+
 
 
 def reservar(request, servicio_id, barbero_id):
@@ -474,3 +470,57 @@ def reporte(request):
     }
 
     return render(request, 'gestion3/reporte.html', context)
+
+
+
+def agregar_servicio(request):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login')
+
+    subservicios = SubServicio.objects.all()
+
+    if request.method == 'POST':
+        id_subservicio = request.POST.get('subservicio')
+        descripcion = request.POST.get('descripcion')
+        duracion = int(request.POST.get('duracion'))
+        precio = float(request.POST.get('precio'))
+
+        usuario = get_object_or_404(Usuario, id_usuario=usuario_id)
+        subservicio = get_object_or_404(SubServicio, id_subservicio=id_subservicio)
+
+        Servicio.objects.create(
+            id_usuario=usuario,
+            id_subservicio=subservicio,
+            descripcion=descripcion,
+            duracion_minutos=duracion,
+            precio=precio
+        )
+
+        messages.success(request, 'Servicio agregado correctamente.')
+        return redirect('perfil')
+
+    return render(request, 'gestion3/agregar_servicios.html', {'subservicios': subservicios})
+
+
+
+
+
+
+def agregar_subservicio(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        imagen = request.FILES.get('imagen')
+
+        if not nombre:
+            messages.error(request, "El nombre es obligatorio.")
+            return render(request, 'gestion3/agregar_subservicio.html')
+
+        nuevo_subservicio = SubServicio.objects.create(
+            nombre_servicio=nombre,
+            imagenes=imagen
+        )
+        messages.success(request, "Subservicio agregado correctamente.")
+        return redirect('perfil')  # O adonde quieras volver
+
+    return render(request, 'gestion3/agregar_subservicio.html')
