@@ -9,6 +9,7 @@ from . import views
 urlpatterns = [
     path('', views.menu, name='menu'),
     path('nosotros/', views.nosotros, name='nosotros'),
+
     path('registrate/', views.registrate, name='registrate'),
     path('registro-barbero/', views.registro_barbero, name='registro_barbero'),
     path('servicios/', views.servicios, name='servicios'),

@@ -50,23 +50,22 @@
     </div>
 </main>
 
-<footer class="bg-dark text-white text-center py-4 mt-5">
+  <footer class="text-center p-4 bg-light mt-5">
     <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
     <div class="footer-links mb-2">
-        <a href="https://www.facebook.com" target="_blank" class="text-white text-decoration-none me-2">Facebook</a> |
-        <a href="https://www.instagram.com" target="_blank" class="text-white text-decoration-none mx-2">Instagram</a> |
-        <a href="https://www.twitter.com" target="_blank" class="text-white text-decoration-none ms-2">Twitter</a>
+      <a href="https://www.facebook.com" target="_blank">Facebook</a> |
+      <a href="https://www.instagram.com" target="_blank">Instagram</a> |
+      <a href="https://www.twitter.com" target="_blank">Twitter</a>
     </div>
     <nav>
-        <ul class="nav justify-content-center">
-            <li class="nav-item"><a href="{% url 'menu' %}" class="nav-link px-2 text-white">Inicio</a></li>
-            <li class="nav-item"><a href="#nosotros" class="nav-link px-2 text-white">Nosotros</a></li>
-            <li class="nav-item"><a href="{% url 'servicios' %}" class="nav-link px-2 text-white">Servicios</a></li>
-            <li class="nav-item"><a href="{% url 'testimonios' %}" class="nav-link px-2 text-white">Testimonios</a></li>
-            <li class="nav-item"><a href="#contacto" class="nav-link px-2 text-white">Contacto</a></li>
-        </ul>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="{% url 'menu' %}">Inicio</a></li>
+        <li class="list-inline-item"><a href="{% url 'nosotros' %}">Nosotros</a></li>
+        <li class="list-inline-item"><a href="{% url 'servicios' %}">Servicios</a></li>
+        <li class="list-inline-item"><a href="#contacto">Contacto</a></li>
+      </ul>
     </nav>
-</footer>
+  </footer>
 
 
 <script

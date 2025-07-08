@@ -324,7 +324,29 @@ def menu(request):
 
 
 def nosotros(request):
-    return render(request, 'gestion3/nosotros.html')
+    barberos = Usuario.objects.filter(
+        id_tipo_usuario__tipo__in=['Barbero', 'Barbería'],
+        id_estado_usuario__estado_usuario='Activo'
+    )
+
+    barberos_info = []
+    for barbero in barberos:
+        servicios = Servicio.objects.filter(id_usuario=barbero)
+        especialidades = [serv.id_subservicio.nombre_servicio for serv in servicios]
+
+        barberos_info.append({
+            'nombre': barbero.nombre,
+            'apellido': barbero.apellido,
+            'tipo_usuario': barbero.id_tipo_usuario.tipo, 
+            'imagen': barbero.imagen.url if barbero.imagen else None,
+            'especialidades': especialidades,
+        })
+
+    return render(request, 'gestion3/nosotros.html', {
+        'barberos_info': barberos_info
+    })
+
+
 
 
 def testimonios(request):

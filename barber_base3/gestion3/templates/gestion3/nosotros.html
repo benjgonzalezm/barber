@@ -21,26 +21,32 @@
     </div>
   </header>
 
-  <main>
-    <section class="barberos">
-      <div class="barbero-card">
-        <div class="barbero-img-wrapper">
-          <img src="{% static 'gestion3/images/barberos/ultimo-barbero.avif' %}" alt="Barbero Juan">
-        </div>
-        <h2>Juan Pérez</h2>
-        <p>Especialidad: Corte clásico y afeitado tradicional</p>
-      </div>
-      <div class="barbero-card">
-        <div class="barbero-img-wrapper">
-          <img src="{% static 'gestion3/images/barberos/barbero-profesional.png' %}" alt="Barbero Marco">
-        </div>
-        <h2>Juan Gómez</h2>
-        <p>Especialidad: Corte niños y Cortes modernos</p>
-      </div>
-    </section>
-  </main>
+ <section class="barberos">
+  {% for barbero in barberos_info %}
+    <div class="barbero-card">
+  <div class="barbero-img-wrapper">
+    {% if barbero.imagen %}
+      <img src="{{ barbero.imagen }}" alt="Foto de {{ barbero.nombre }}">
+    {% else %}
+      <img src="{% static 'gestion3/images/default_barbero.jpg' %}" alt="Sin imagen">
+    {% endif %}
+  </div>
+  <h2>{{ barbero.nombre }} {{ barbero.apellido }}</h2>
+  <p><strong>Rol:</strong> {{ barbero.tipo_usuario }}</p>
+  <p>Especialidades:
+    {% if barbero.especialidades %}
+      {{ barbero.especialidades|join:", " }}
+    {% else %}
+      Dueño de la barberia
+    {% endif %}
+  </p>
+</div>
 
- <footer class="text-center p-4 bg-light mt-5">
+  {% endfor %}
+</section>
+
+
+   <footer class="text-center p-4 bg-light mt-5">
     <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
     <div class="footer-links mb-2">
       <a href="https://www.facebook.com" target="_blank">Facebook</a> |
@@ -49,10 +55,9 @@
     </div>
     <nav>
       <ul class="list-inline">
-        <li class="list-inline-item"><a href="../paginas/menu.html">Inicio</a></li>
-        <li class="list-inline-item"><a href="../paginas/barberos.html">Nosotros</a></li>
-        <li class="list-inline-item"><a href="../paginas/servicios.html">Servicios</a></li>
-        <li class="list-inline-item"><a href="../paginas/testimonios.html">Testimonios</a></li>
+        <li class="list-inline-item"><a href="{% url 'menu' %}">Inicio</a></li>
+        <li class="list-inline-item"><a href="{% url 'nosotros' %}">Nosotros</a></li>
+        <li class="list-inline-item"><a href="{% url 'servicios' %}">Servicios</a></li>
         <li class="list-inline-item"><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
