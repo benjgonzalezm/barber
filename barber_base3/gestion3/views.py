@@ -137,14 +137,21 @@ def barbero(request, subservicio_id):
     subservicio = get_object_or_404(SubServicio, id_subservicio=subservicio_id)
 
     barberos_con_servicio = Servicio.objects.filter(
-        id_subservicio=subservicio,
-        id_usuario__id_tipo_usuario__tipo='Barbero'
-    ).select_related('id_usuario')
+    id_subservicio=subservicio,
+    id_usuario__id_tipo_usuario__tipo='Barbero',
+    id_usuario__id_estado_usuario__estado_usuario='Activo'
+).select_related('id_usuario')
 
     return render(request, 'gestion3/barbero.html', {
         'subservicio': subservicio,
         'barberos_con_servicio': barberos_con_servicio
     })
+
+
+
+
+
+
 
 
 
