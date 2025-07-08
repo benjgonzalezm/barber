@@ -8,11 +8,13 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Servicio, EstadoCita, Usuario, TipoUsuario, EstadoUsuario, Cita, ValoracionObservacion 
 from .models import RegistroPago, Observacion , FormaPago , Descuento,SubServicio
 from django.contrib.auth.hashers import check_password
-from datetime import datetime
+from datetime import datetime,date, timedelta,time
 from django.db.models import Count, Sum, Avg
 from django.db.models.functions import ExtractMonth
 import locale
 import calendar
+
+
 
 locale.setlocale(locale.LC_ALL, 'es_CL.UTF-8') # Permite establecer la configuración regional, para así trabajar con la moneda chilena 
 
@@ -137,14 +139,18 @@ def barbero(request, subservicio_id):
     subservicio = get_object_or_404(SubServicio, id_subservicio=subservicio_id)
 
     barberos_con_servicio = Servicio.objects.filter(
-    id_subservicio=subservicio,
-    id_usuario__id_tipo_usuario__tipo='Barbero',
-    id_usuario__id_estado_usuario__estado_usuario='Activo'
-).select_related('id_usuario')
+        id_subservicio=subservicio,
+        id_usuario__isnull=False,
+        id_usuario__id_tipo_usuario__tipo='Barbero',
+        id_usuario__id_estado_usuario__estado_usuario='Activo'
+    ).select_related('id_usuario')
+
+    fecha_minima = (date.today() + timedelta(days=1)).isoformat()
 
     return render(request, 'gestion3/barbero.html', {
         'subservicio': subservicio,
-        'barberos_con_servicio': barberos_con_servicio
+        'barberos_con_servicio': barberos_con_servicio,
+        'fecha_minima': fecha_minima
     })
 
 
@@ -157,27 +163,61 @@ def barbero(request, subservicio_id):
 
 def reservar(request, servicio_id, barbero_id):
     servicio = get_object_or_404(Servicio, id_servicio=servicio_id)
+    subservicio = servicio.id_subservicio
     barbero = get_object_or_404(Usuario, id_usuario=barbero_id)
 
     if request.method == 'POST':
         fecha = request.POST.get('fecha')
         hora = request.POST.get('hora')
 
-        estado_cita = EstadoCita.objects.get(estado_cita='En progreso')
+        try:
+            fecha_obj = datetime.strptime(fecha, "%Y-%m-%d").date()
+            hora_obj = datetime.strptime(hora, "%H:%M").time()
+        except ValueError:
+            messages.error(request, "Formato de fecha u hora inválido.")
+            return redirect('barbero', subservicio_id=subservicio.id_subservicio)
 
+        if fecha_obj <= date.today():
+            messages.error(request, 'Solo puedes agendar desde mañana en adelante.')
+            return redirect('barbero', subservicio_id=subservicio.id_subservicio)
+
+        if hora_obj < time(7, 0) or hora_obj > time(20, 0):
+            messages.error(request, 'La hora debe estar entre 07:00 y 20:00.')
+            return redirect('barbero', subservicio_id=subservicio.id_subservicio)
+
+        # Calcular hora de fin para la nueva cita
+        hora_inicio_nueva = datetime.combine(date.today(), hora_obj)
+        hora_fin_nueva = hora_inicio_nueva + timedelta(minutes=servicio.duracion_minutos)
+
+        # Verificar solapamiento con otras citas del mismo barbero ese día
+        citas_existentes = Cita.objects.filter(
+            id_servicio__id_usuario=barbero,
+            fecha_cita=fecha_obj
+        ).select_related('id_servicio')
+
+        for cita in citas_existentes:
+            hora_inicio_existente = datetime.combine(date.today(), cita.hora_cita)
+            hora_fin_existente = hora_inicio_existente + timedelta(minutes=cita.id_servicio.duracion_minutos)
+
+            if hora_inicio_nueva < hora_fin_existente and hora_inicio_existente < hora_fin_nueva:
+                messages.error(request, "Ese rango horario ya está ocupado. Por favor elige otro.")
+                return redirect('barbero', subservicio_id=subservicio.id_subservicio)
+
+        # Confirmar sesión
         usuario_id = request.session.get('usuario_id')
         if not usuario_id:
             messages.error(request, 'Debes iniciar sesión para reservar una cita.')
             return redirect('login')
 
         cliente = Usuario.objects.get(id_usuario=usuario_id)
+        estado_cita = EstadoCita.objects.get(estado_cita='En progreso')
 
-        nueva_cita = Cita.objects.create(
+        Cita.objects.create(
             id_cliente=cliente,
             id_servicio=servicio,
             id_estado_cita=estado_cita,
-            fecha_cita=fecha,
-            hora_cita=hora
+            fecha_cita=fecha_obj,
+            hora_cita=hora_obj
         )
 
         messages.success(request, 'Cita reservada correctamente.')
@@ -187,6 +227,13 @@ def reservar(request, servicio_id, barbero_id):
         'servicio': servicio,
         'barbero': barbero
     })
+
+
+
+
+
+
+
 
 
 @csrf_exempt
@@ -553,3 +600,6 @@ def agregar_subservicio(request):
         return redirect('perfil')  # O adonde quieras volver
 
     return render(request, 'gestion3/agregar_subservicio.html')
+
+
+
