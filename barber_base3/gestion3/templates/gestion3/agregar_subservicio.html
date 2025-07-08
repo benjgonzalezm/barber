@@ -15,7 +15,7 @@
   <div class="registro-container mx-auto" style="max-width: 600px;">
     <form method="POST" enctype="multipart/form-data" novalidate>
       {% csrf_token %}
-      <h2 class="mb-4 text-center">Agregar Subservicio</h2>
+      <h2 class="mb-4 text-center form-label">Agregar Subservicio</h2>
 
       {% if messages %}
         {% for message in messages %}
