@@ -9,7 +9,7 @@ from .models import Servicio, EstadoCita, Usuario, TipoUsuario, EstadoUsuario, C
 from .models import RegistroPago, Observacion , FormaPago , Descuento
 from django.contrib.auth.hashers import check_password
 from datetime import datetime
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, Avg
 from django.db.models.functions import ExtractMonth
 import locale
 import calendar
@@ -402,40 +402,75 @@ def ver_pagos(request):
 def reporte(request):
     pagos = RegistroPago.objects.all()
 
-    total_pagado = pagos.aggregate(Sum('total_pagado'))['total_pagado__sum'] or 0
-    numero_citas = pagos.count()
-    forma_pago_mas_usada = pagos.values('id_forma_pago__nombre_forma_pago') \
-                                 .annotate(total=Count('id_forma_pago')) \
-                                 .order_by('-total').first()
+    # Formas de pago
+    formas_pago = pagos.values('id_forma_pago__nombre_forma_pago') \
+                       .annotate(total=Count('id_forma_pago')) \
+                       .order_by('-total')
 
-    mes_mas_ingresos = pagos.annotate(mes=ExtractMonth('fecha_pago')) \
-                            .values('mes') \
-                            .annotate(total=Sum('total_pagado')) \
-                            .order_by('-total').first()
+    labels_fp = [fp['id_forma_pago__nombre_forma_pago'] for fp in formas_pago]
+    data_fp = [fp['total'] for fp in formas_pago]
 
-    barbero_popular = pagos.values('id_cita__id_servicio__id_usuario__nombre',
-                                'id_cita__id_servicio__id_usuario__apellido') \
-                           .annotate(total=Count('id_cita__id_servicio__id_usuario')) \
-                           .order_by('-total').first()
+    # Mes con más ingresos
+    ingresos_por_mes = pagos.annotate(mes=ExtractMonth('fecha_pago')) \
+                        .values('mes') \
+                        .annotate(total=Sum('total_pagado')) \
+                        .order_by('-total')
 
-    clientes_frecuentes = pagos.values('id_cita__id_cliente__nombre') \
-                               .annotate(total=Count('id_cita__id_cliente')) \
-                               .order_by('-total')[:5]
+    labels_meses = [calendar.month_name[item['mes']].capitalize() for item in ingresos_por_mes]
+    data_meses = [float(item['total']) for item in ingresos_por_mes]
 
-    servicios_mas_solicitados = pagos.values('id_cita__id_servicio__id_subservicio__nombre_servicio') \
-                                     .annotate(total=Count('id_cita__id_servicio')) \
-                                     .order_by('-total')[:5]
+    # Barbero populares (por citas)
+    barberos_por_cita = pagos.values(
+        'id_cita__id_servicio__id_usuario__nombre',
+        'id_cita__id_servicio__id_usuario__apellido'
+    ).annotate(total=Count('id_cita__id_servicio__id_usuario')) \
+     .order_by('-total')[:5]
 
-    total_pagado_formateado = locale.format_string("%d", total_pagado, grouping=True)
-    mes_nombre = calendar.month_name[mes_mas_ingresos['mes']].capitalize()
+    labels_barberos_citas = [f"{b['id_cita__id_servicio__id_usuario__nombre']} {b['id_cita__id_servicio__id_usuario__apellido']}" for b in barberos_por_cita]
+    data_barberos_citas = [b['total'] for b in barberos_por_cita]
+
+    # Barbero con mejores calificaciones
+    valoraciones_prom = ValoracionObservacion.objects.values(
+    'id_cita__id_servicio__id_usuario__nombre',
+    'id_cita__id_servicio__id_usuario__apellido'
+    ).annotate(promedio=Avg('valoracion')).order_by('-promedio')[:5]
+
+    labels_barberos_val = [
+        f"{v['id_cita__id_servicio__id_usuario__nombre']} {v['id_cita__id_servicio__id_usuario__apellido']}"
+        for v in valoraciones_prom
+    ]
+    data_barberos_val = [round(v['promedio'], 2) for v in valoraciones_prom]
+
+    # Servicios más escogidos
+    servicios = pagos.values('id_cita__id_servicio__id_subservicio__nombre_servicio') \
+                     .annotate(total=Count('id_cita__id_servicio')) \
+                     .order_by('-total')[:5]
+
+    labels_servicios = [s['id_cita__id_servicio__id_subservicio__nombre_servicio'] for s in servicios]
+    data_servicios = [s['total'] for s in servicios]
+
+    # Barbero que más ingresos generó
+    ingresos_por_barbero = pagos.values(
+        'id_cita__id_servicio__id_usuario__nombre',
+        'id_cita__id_servicio__id_usuario__apellido'
+    ).annotate(total=Sum('total_pagado')).order_by('-total')[:5]
+
+    labels_barberos_ingresos = [f"{b['id_cita__id_servicio__id_usuario__nombre']} {b['id_cita__id_servicio__id_usuario__apellido']}" for b in ingresos_por_barbero]
+    data_barberos_ingresos = [float(b['total']) for b in ingresos_por_barbero]
+
     context = {
-        'total_pagado': total_pagado_formateado,
-        'numero_citas': numero_citas,
-        'forma_pago_mas_usada': forma_pago_mas_usada,
-        'mes_nombre': mes_nombre,
-        'barbero_popular': barbero_popular,
-        'clientes_frecuentes': clientes_frecuentes,
-        'servicios_mas_solicitados': servicios_mas_solicitados,
+        'labels_fp': labels_fp,
+        'data_fp': data_fp,
+        'labels_meses': labels_meses,
+        'data_meses': data_meses,
+        'labels_barberos_citas': labels_barberos_citas,
+        'data_barberos_citas': data_barberos_citas,
+        'labels_barberos_val': labels_barberos_val,
+        'data_barberos_val': data_barberos_val,
+        'labels_servicios': labels_servicios,
+        'data_servicios': data_servicios,
+        'labels_barberos_ingresos': labels_barberos_ingresos,
+        'data_barberos_ingresos': data_barberos_ingresos,
     }
 
     return render(request, 'gestion3/reporte.html', context)

@@ -3,43 +3,183 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Estadísticas de Pagos</title>
+  <title>Reporte de Estadísticas</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style> /* tamaño de los gráficos*/
+  canvas {
+    width: 100% !important;
+    max-width: 500px; 
+    height: auto !important;
+    transform: scale(0.9);
+    transform-origin: top left;
+  }
+  </style>
+
 </head>
 <body>
-
 {% include 'gestion3/nav.html' %}
 
-<br><br> <!-- Esta br's permiten que el navbar no oculte la mitad del título de "Estadísticas Generales" -->
 <div class="container my-5">
-  <h2><b>Estadísticas Generales</b></h2>
-
-  <p><strong>Total pagado:</strong> ${{ total_pagado }}</p>
-  <p><strong>Citas completadas:</strong> {{ numero_citas }}</p>
-  <p><strong>Forma de pago popular:</strong> {{ forma_pago_mas_usada.id_forma_pago__nombre_forma_pago }}</p>
-  <p><strong>Mes con más ingresos:</strong> {{ mes_nombre }}</p>
-  <p><strong>Barbero más popular:</strong> {{ barbero_popular.id_cita__id_servicio__id_usuario__nombre }} {{ barbero_popular.id_cita__id_servicio__id_usuario__apellido }}</p>
+  <br><br>
+  <h2 class="mb-4">Estadísticas Generales</h2>
 
   <div class="row">
+    <!-- Formas de Pago -->
     <div class="col-md-6">
-      <h5><b>Clientes frecuentes</b></h5>
-      <ul>
-        {% for c in clientes_frecuentes %}
-          <li>{{ c.id_cita__id_cliente__nombre }} ({{ c.total }} citas)</li>
-        {% endfor %}
-      </ul>
+      <h5>Formas de Pago</h5>
+      <canvas id="formasPagoChart"></canvas>
     </div>
+
+    <!-- Ingresos por Mes -->
     <div class="col-md-6">
-      <h5><b>Servicios más solicitados</b></h5>
-      <ul>
-        {% for s in servicios_mas_solicitados %}
-          <li>{{ s.id_cita__id_servicio__id_subservicio__nombre_servicio }} ({{ s.total }} veces)</li>
-        {% endfor %}
-      </ul>
+      <h5>Ingresos por mes</h5>
+      <canvas id="ingresosMesChart"></canvas>
+    </div>
+
+    <!-- Barberos por citas -->
+    <div class="col-md-6 mt-4">
+      <h5>Barberos populares</h5>
+      <canvas id="barberosCitasChart"></canvas>
+    </div>
+
+    <!-- Barberos más calificados -->
+    <div class="col-md-6 mt-4">
+      <h5>Barberos mejores calificados</h5>
+      <canvas id="barberosValChart"></canvas>
+    </div>
+
+    <!-- Servicios más solicitados -->
+    <div class="col-md-6 mt-4">
+      <h5>Servicios más solicitados</h5>
+      <canvas id="serviciosChart"></canvas>
+    </div>
+
+    <!-- Barbero con más ingresos -->
+    <div class="col-md-6 mt-4">
+      <h5>Barberos con más ingresos generados</h5>
+      <canvas id="barberosIngresosChart"></canvas>
     </div>
   </div>
-
 </div>
+
+<script> /* código que muestran los gráficos */
+const formasPagoChart = new Chart(document.getElementById('formasPagoChart'), {
+    type: 'pie',
+    data: {
+        labels: {{ labels_fp|safe }},
+        datasets: [{
+            data: {{ data_fp|safe }},
+            backgroundColor: ['#36a2eb', '#ff6384', '#ffce56', '#4bc0c0']
+        }]
+    }
+});
+
+const ingresosMesChart = new Chart(document.getElementById('ingresosMesChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ labels_meses|safe }},
+        datasets: [{
+            label: 'Ingresos',
+            data: {{ data_meses|safe }},
+            backgroundColor: '#36a2eb'
+        }]
+    },
+    options: {
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let value = context.raw;
+                        return '$' + value.toLocaleString();
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                ticks: {
+                    callback: function(value) {
+                        return '$' + value.toLocaleString();
+                    }
+                }
+            }
+        }
+    }
+});
+
+const barberosCitasChart = new Chart(document.getElementById('barberosCitasChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ labels_barberos_citas|safe }},
+        datasets: [{
+            label: 'Citas finalizadas',
+            data: {{ data_barberos_citas|safe }},
+            backgroundColor: '#4bc0c0'
+        }]
+    },
+    options: { indexAxis: 'y' }
+});
+
+const barberosValChart = new Chart(document.getElementById('barberosValChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ labels_barberos_val|safe }},
+        datasets: [{
+            label: 'Calificaciones',
+            data: {{ data_barberos_val|safe }},
+            backgroundColor: '#9966ff'
+        }]
+    },
+    options: { indexAxis: 'y' }
+});
+
+const serviciosChart = new Chart(document.getElementById('serviciosChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ labels_servicios|safe }},
+        datasets: [{
+            label: 'Servicios',
+            data: {{ data_servicios|safe }},
+            backgroundColor: '#ff9f40'
+        }]
+    }
+});
+
+const barberosIngresosChart = new Chart(document.getElementById('barberosIngresosChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ labels_barberos_ingresos|safe }},
+        datasets: [{
+            label: 'Ingresos',
+            data: {{ data_barberos_ingresos|safe }},
+            backgroundColor: '#ff6384'
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let value = context.raw;
+                        return '$' + value.toLocaleString();
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    callback: function(value) {
+                        return '$' + value.toLocaleString();
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
 </body>
 </html>
