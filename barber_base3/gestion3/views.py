@@ -16,7 +16,7 @@ import calendar
 
 
 
-locale.setlocale(locale.LC_ALL, 'es_CL.UTF-8') # Permite establecer la configuración regional, para así trabajar con la moneda chilena 
+#locale.setlocale(locale.LC_ALL, 'es_CL.UTF-8') # Permite establecer la configuración regional, para así trabajar con la moneda chilena 
 
 def perfil_view(request):
     usuario_id = request.session.get('usuario_id')
@@ -181,8 +181,8 @@ def reservar(request, servicio_id, barbero_id):
             messages.error(request, 'Solo puedes agendar desde mañana en adelante.')
             return redirect('barbero', subservicio_id=subservicio.id_subservicio)
 
-        if hora_obj < time(7, 0) or hora_obj > time(20, 0):
-            messages.error(request, 'La hora debe estar entre 07:00 y 20:00.')
+        if hora_obj < time(10, 0) or hora_obj > time(21, 0):
+            messages.error(request, 'La hora debe estar entre 10:00 y 21:00.')
             return redirect('barbero', subservicio_id=subservicio.id_subservicio)
 
         # Calcular hora de fin para la nueva cita
