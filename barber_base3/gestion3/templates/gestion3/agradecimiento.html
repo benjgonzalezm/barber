@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reserva Confirmada</title>
+    <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}">
+</head>
+<body>
+    {% include 'gestion3/nav.html' %}
+
+    <main class="container text-center my-5">
+        <h2>¡Gracias por tu reserva!</h2>
+        <p class="fs-4">Tu servicio <strong>{{ servicio }}</strong> está reservado para el <strong>{{ fecha }}</strong> a las <strong>{{ hora }}</strong>.</p>
+        <a href="{% url 'menu' %}" class="btn btn-primary mt-4">Volver al menú principal</a>
+    </main>
+</body>
+</html>

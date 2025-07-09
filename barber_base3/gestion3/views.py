@@ -13,12 +13,15 @@ from django.db.models import Count, Sum, Avg
 from django.db.models.functions import ExtractMonth
 from django.contrib.auth.decorators import login_required
 
-import locale
+#import locale
 import calendar
+from django.utils.dateformat import DateFormat
+from django.utils.translation import gettext as _
+from django.urls import reverse
 
 
 
-#locale.setlocale(locale.LC_ALL, 'es_CL.UTF-8') # Permite establecer la configuración regional, para así trabajar con la moneda chilena 
+#locale.setlocale(locale.LC_ALL, 'es_CL.UTF-8') # Permite establecer la configuración regional, para así trabajar con la moneda chilena - Ya no es necesario
 
 def perfil_view(request):
     usuario_id = request.session.get('usuario_id')
@@ -223,7 +226,7 @@ def reservar(request, servicio_id, barbero_id):
         )
 
         messages.success(request, 'Cita reservada correctamente.')
-        return redirect('menu')
+        return redirect(reverse('agradecimiento') + f"?servicio={subservicio.nombre_servicio}&fecha={fecha}&hora={hora}")
 
     return render(request, 'gestion3/reservar.html', {
         'servicio': servicio,
@@ -604,4 +607,26 @@ def agregar_subservicio(request):
     return render(request, 'gestion3/agregar_subservicio.html')
 
 
+def agradecimiento(request):
+    servicio = request.GET.get('servicio')
+    fecha_str = request.GET.get('fecha')
+    hora = request.GET.get('hora')
 
+    # Convertir formato fecha [día] de [nombre mes] del [año]
+    try:
+        fecha_obj = datetime.strptime(fecha_str, "%Y-%m-%d").date()
+        meses = {
+            1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo",
+            6: "junio", 7: "julio", 8: "agosto", 9: "septiembre",
+            10: "octubre", 11: "noviembre", 12: "diciembre"
+        }
+        fecha_formateada = f"{fecha_obj.day} de {meses[fecha_obj.month]} de {fecha_obj.year}"
+    except:
+        fecha_formateada = fecha_str
+
+    contexto = {
+        'servicio': servicio,
+        'fecha': fecha_formateada,
+        'hora': hora
+    }
+    return render(request, 'gestion3/agradecimiento.html', contexto)

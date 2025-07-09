@@ -37,6 +37,7 @@ urlpatterns = [
     path('agregar_servicios/', views.agregar_servicio, name='agregar_servicios'),
     path('agregar-subservicio/', views.agregar_subservicio, name='agregar_subservicio'),
 
+    path('agradecimiento/', views.agradecimiento, name='agradecimiento'),
 
 ]
 
