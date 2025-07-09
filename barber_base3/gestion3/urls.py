@@ -38,6 +38,7 @@ urlpatterns = [
     path('agregar-subservicio/', views.agregar_subservicio, name='agregar_subservicio'),
 
     path('agradecimiento/', views.agradecimiento, name='agradecimiento'),
+    path('404/', views.pagina404, name='404')
 
 ]
 

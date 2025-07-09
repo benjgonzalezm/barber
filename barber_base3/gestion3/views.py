@@ -12,16 +12,11 @@ from datetime import datetime,date, timedelta,time
 from django.db.models import Count, Sum, Avg
 from django.db.models.functions import ExtractMonth
 from django.contrib.auth.decorators import login_required
-
-#import locale
 import calendar
 from django.utils.dateformat import DateFormat
 from django.utils.translation import gettext as _
 from django.urls import reverse
-
-
-
-#locale.setlocale(locale.LC_ALL, 'es_CL.UTF-8') # Permite establecer la configuración regional, para así trabajar con la moneda chilena - Ya no es necesario
+from .decorators import tipo_usuario_requerido
 
 def perfil_view(request):
     usuario_id = request.session.get('usuario_id')
@@ -59,7 +54,7 @@ def perfil_view(request):
         'observaciones_disponibles': observaciones_disponibles
     })
 
-
+@tipo_usuario_requerido(['Cliente'])
 def valorar_cita(request, cita_id):
     if request.method == 'POST':
         cita = get_object_or_404(Cita, id_cita=cita_id)
@@ -77,7 +72,7 @@ def valorar_cita(request, cita_id):
         messages.success(request, 'Valoración registrada exitosamente.')
         return redirect('perfil')
 
-
+@tipo_usuario_requerido(['Barbero'])
 def finalizar_cita(request, cita_id):
     cita = get_object_or_404(Cita, id_cita=cita_id)
     estado_finalizado = EstadoCita.objects.get(estado_cita='Finalizado')
@@ -85,6 +80,7 @@ def finalizar_cita(request, cita_id):
     cita.save()
     return redirect('perfil')
 
+@tipo_usuario_requerido(['Barbero'])
 def cancelar_cita(request, cita_id):
     cita = get_object_or_404(Cita, id_cita=cita_id)
     estado_cancelado = EstadoCita.objects.get(estado_cita='Cancelado')
@@ -107,6 +103,7 @@ def login_view(request):
                 if usuario.id_estado_usuario.estado_usuario == 'Activo':
                  
                     request.session['usuario_id'] = usuario.id_usuario
+                    request.session['tipo_usuario'] = usuario.id_tipo_usuario.tipo
                     request.session['usuario_nombre'] = f"{usuario.nombre} {usuario.apellido}"
                     return redirect('menu')  
                 else:
@@ -139,7 +136,7 @@ def servicios(request):
     return render(request, 'gestion3/servicios.html', {'subservicios': subservicios})
 
 
-
+@tipo_usuario_requerido(['Cliente','Barbero'])
 def barbero(request, subservicio_id):
     subservicio = get_object_or_404(SubServicio, id_subservicio=subservicio_id)
 
@@ -170,15 +167,10 @@ def barbero(request, subservicio_id):
 
 
 
-
-
-
-
-
-
 from django.http import JsonResponse
 from datetime import datetime, time, timedelta
 
+@tipo_usuario_requerido(['Cliente','Barbero'])
 def reservar(request, servicio_id, barbero_id):
     servicio = get_object_or_404(Servicio, id_servicio=servicio_id)
     subservicio = servicio.id_subservicio
@@ -270,12 +262,6 @@ def reservar(request, servicio_id, barbero_id):
 
 
 
-
-
-
-
-
-
 @csrf_exempt
 def eliminar_usuario(request, user_id):
     if request.method == 'POST':
@@ -308,6 +294,7 @@ def activar_usuario(request, user_id):
         return JsonResponse({'success': True})
     return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
 
+@tipo_usuario_requerido(['Barbería'])
 def listar_usuarios(request):
     usuarios = Usuario.objects.all()
     return render(request, 'gestion3/bloquear_usuario.html', {'usuarios': usuarios})
@@ -344,6 +331,7 @@ def registrate(request):
 
     return render(request, 'gestion3/registrate.html')
 
+@tipo_usuario_requerido(['Barbería'])
 def registro_barbero(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombreregistro')
@@ -378,7 +366,7 @@ def registro_barbero(request):
 
     return render(request, 'gestion3/registrobarbero.html')
 
-
+@tipo_usuario_requerido(['Barbería'])
 def registro_citas(request):
     citas = Cita.objects.all()
     citas_con_valoracion = []
@@ -433,11 +421,10 @@ def nosotros(request):
     })
 
 
-
-
 def testimonios(request):
     return render(request, 'gestion3/testimonios.html')
 
+@tipo_usuario_requerido(['Barbero'])
 def registrar_pago(request):
     cita_id = request.GET.get('cita_id')
     if not cita_id:
@@ -468,6 +455,7 @@ def registrar_pago(request):
         'descuentos': descuentos
     })
 
+@tipo_usuario_requerido(['Barbero'])
 def guardar_pago(request):
     if request.method == 'POST':
         cita_id = request.POST.get('cita')
@@ -501,13 +489,14 @@ def guardar_pago(request):
         messages.success(request, "Pago registrado correctamente.")
         return redirect('perfil')
 
-
+@tipo_usuario_requerido(['Barbería'])
 def ver_pagos(request):
     pagos = RegistroPago.objects.select_related(
         'id_cita', 'id_forma_pago', 'id_descuento'
     ).all()
     return render(request, 'gestion3/ver_pagos.html', {'pagos': pagos})
 
+@tipo_usuario_requerido(['Barbería'])
 def reporte(request):
     pagos = RegistroPago.objects.all()
 
@@ -585,7 +574,7 @@ def reporte(request):
     return render(request, 'gestion3/reporte.html', context)
 
 
-
+@tipo_usuario_requerido(['Barbero'])
 def agregar_servicio(request):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
@@ -616,10 +605,7 @@ def agregar_servicio(request):
     return render(request, 'gestion3/agregar_servicios.html', {'subservicios': subservicios})
 
 
-
-
-
-
+@tipo_usuario_requerido(['Barbería'])
 def agregar_subservicio(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
@@ -638,7 +624,7 @@ def agregar_subservicio(request):
 
     return render(request, 'gestion3/agregar_subservicio.html')
 
-
+@tipo_usuario_requerido(['Cliente','Barbero'])
 def agradecimiento(request):
     servicio = request.GET.get('servicio')
     fecha_str = request.GET.get('fecha')
@@ -677,3 +663,7 @@ def agradecimiento(request):
     }
 
     return render(request, 'gestion3/agradecimiento.html', contexto)
+
+def pagina404(request):
+    return render(request, 'gestion3/404.html')
+
