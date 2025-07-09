@@ -152,10 +152,19 @@ def barbero(request, subservicio_id):
 
     fecha_minima = (date.today() + timedelta(days=1)).isoformat()
 
+    # Lista de horarios posibles cada 30 minutos entre 10:00 y 20:30
+    horarios_disponibles = []
+    hora = time(10, 0)
+    while hora <= time(20, 30):
+        horarios_disponibles.append(hora.strftime('%H:%M'))
+        hora_dt = datetime.combine(date.today(), hora) + timedelta(minutes=30)
+        hora = hora_dt.time()
+
     return render(request, 'gestion3/barbero.html', {
         'subservicio': subservicio,
         'barberos_con_servicio': barberos_con_servicio,
-        'fecha_minima': fecha_minima
+        'fecha_minima': fecha_minima,
+        'horarios': horarios_disponibles
     })
 
 
@@ -165,6 +174,10 @@ def barbero(request, subservicio_id):
 
 
 
+
+
+from django.http import JsonResponse
+from datetime import datetime, time, timedelta
 
 def reservar(request, servicio_id, barbero_id):
     servicio = get_object_or_404(Servicio, id_servicio=servicio_id)
@@ -182,19 +195,20 @@ def reservar(request, servicio_id, barbero_id):
             messages.error(request, "Formato de fecha u hora inválido.")
             return redirect('barbero', subservicio_id=subservicio.id_subservicio)
 
+        # Validaciones de fecha y hora
         if fecha_obj <= date.today():
             messages.error(request, 'Solo puedes agendar desde mañana en adelante.')
             return redirect('barbero', subservicio_id=subservicio.id_subservicio)
 
-        if hora_obj < time(10, 0) or hora_obj > time(21, 0):
-            messages.error(request, 'La hora debe estar entre 10:00 y 21:00.')
+        if hora_obj < time(10, 0) or hora_obj > time(20, 30):
+            messages.error(request, 'La hora debe estar entre 10:00 y 20:30.')
             return redirect('barbero', subservicio_id=subservicio.id_subservicio)
 
-        # Calcular hora de fin para la nueva cita
+        # Rango nuevo a reservar
         hora_inicio_nueva = datetime.combine(date.today(), hora_obj)
         hora_fin_nueva = hora_inicio_nueva + timedelta(minutes=servicio.duracion_minutos)
 
-        # Verificar solapamiento con otras citas del mismo barbero ese día
+        # Citas del barbero en esa fecha
         citas_existentes = Cita.objects.filter(
             id_servicio__id_usuario=barbero,
             fecha_cita=fecha_obj
@@ -205,13 +219,32 @@ def reservar(request, servicio_id, barbero_id):
             hora_fin_existente = hora_inicio_existente + timedelta(minutes=cita.id_servicio.duracion_minutos)
 
             if hora_inicio_nueva < hora_fin_existente and hora_inicio_existente < hora_fin_nueva:
-                messages.error(request, "Ese rango horario ya está ocupado. Por favor elige otro.")
+                # Generar lista de horarios disponibles
+                hora = time(10, 0)
+                horarios_disponibles = []
+                while hora <= time(20, 30):
+                    ocupado = False
+                    nueva_inicio = datetime.combine(date.today(), hora)
+                    nueva_fin = nueva_inicio + timedelta(minutes=servicio.duracion_minutos)
+                    for c in citas_existentes:
+                        inicio = datetime.combine(date.today(), c.hora_cita)
+                        fin = inicio + timedelta(minutes=c.id_servicio.duracion_minutos)
+                        if nueva_inicio < fin and inicio < nueva_fin:
+                            ocupado = True
+                            break
+                    if not ocupado:
+                        horarios_disponibles.append(hora.strftime('%H:%M'))
+                    hora_dt = datetime.combine(date.today(), hora) + timedelta(minutes=30)
+                    hora = hora_dt.time()
+
+                # Mostrar mensaje con horarios sugeridos
+                messages.error(request, f"Esa hora no está disponible. Horarios sugeridos: {', '.join(horarios_disponibles)}")
                 return redirect('barbero', subservicio_id=subservicio.id_subservicio)
 
         # Confirmar sesión
         usuario_id = request.session.get('usuario_id')
         if not usuario_id:
-            messages.error(request, 'Debes iniciar sesión para reservar una cita.')
+            messages.error(request, 'Debes iniciar sesión para reservar.')
             return redirect('login')
 
         cliente = Usuario.objects.get(id_usuario=usuario_id)
@@ -225,12 +258,10 @@ def reservar(request, servicio_id, barbero_id):
             hora_cita=hora_obj
         )
 
-        messages.success(request, 'Cita reservada correctamente.')
         return redirect(
-    reverse('agradecimiento') +
-    f"?servicio={subservicio.nombre_servicio}&fecha={fecha}&hora={hora}&barbero={barbero.nombre} {barbero.apellido}"
-)
-
+            reverse('agradecimiento') +
+            f"?servicio={subservicio.nombre_servicio}&fecha={fecha}&hora={hora}&barbero={barbero.nombre} {barbero.apellido}"
+        )
 
     return render(request, 'gestion3/reservar.html', {
         'servicio': servicio,

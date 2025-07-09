@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Elegir Barbero - Elite Barber</title>
 
-  <!-- Bootstrap + Estilos base -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <!-- Bootstrap y estilos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}" />
   <link rel="stylesheet" href="{% static 'gestion3/css/barberos.css' %}" />
 </head>
@@ -17,13 +17,27 @@
   {% include 'gestion3/nav.html' %}
 
   <main class="main-content pt-5">
-    <section class="hero text-white text-center">
+    <!-- Hero -->
+    <section class="hero text-white text-center py-5 bg-dark">
       <div class="container z-1">
         <h1 class="display-5 fw-bold">Elige tu Barbero</h1>
         <p class="lead">Reserva fácilmente con el profesional que más confianza te dé.</p>
       </div>
     </section>
 
+    <!-- Mensajes -->
+    {% if messages %}
+      <div class="container mt-4">
+        {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Cartas de barberos -->
     <section class="container py-5">
       <div class="row justify-content-center">
         {% for servicio_barbero in barberos_con_servicio %}
@@ -32,7 +46,7 @@
               <img src="{% if servicio_barbero.id_usuario.imagen %}{{ servicio_barbero.id_usuario.imagen.url }}{% else %}{% static 'gestion3/images/nosotross.jpeg' %}{% endif %}"
                    class="card-img-top rounded-top"
                    alt="{{ servicio_barbero.id_usuario.nombre }} {{ servicio_barbero.id_usuario.apellido }}"
-                   style="object-fit:cover;">
+                   style="object-fit:cover; height:250px;">
 
               <div class="card-body">
                 <h5 class="card-title">{{ servicio_barbero.id_usuario.nombre }} {{ servicio_barbero.id_usuario.apellido }}</h5>
@@ -51,7 +65,12 @@
                   </div>
                   <div class="mb-2">
                     <label class="form-label">Hora:</label>
-                    <input type="time" name="hora" class="form-control" required min="07:00" max="20:00">
+                    <select name="hora" class="form-select" required>
+                      <option disabled selected value="">Selecciona una hora</option>
+                      {% for hora in horarios %}
+                        <option value="{{ hora }}">{{ hora }}</option>
+                      {% endfor %}
+                    </select>
                   </div>
                   <button type="submit" class="btn btn-success w-100">Reservar</button>
                 </form>
@@ -67,9 +86,9 @@
     </section>
   </main>
 
-  <!-- Footer -->
   {% include 'gestion3/footer.html' %}
 
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
