@@ -2,74 +2,73 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <meta charset="UTF-8" />
   <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body>
 
 <header>                          
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top custom-navbar">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="{% url 'menu' %}">
-      <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" class="logo_menu me-2" style="height:48px;">
-      
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-      <ul class="navbar-nav align-items-center gap-2">
-        <li class="nav-item">
-          <a class="nav-link{% if request.resolver_match.url_name == 'menu' %} active{% endif %}" href="{% url 'menu' %}">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link{% if request.resolver_match.url_name == 'servicios' %} active{% endif %}" href="{% url 'servicios' %}">Servicios</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link{% if request.resolver_match.url_name == 'nosotros' %} active{% endif %}" href="{% url 'nosotros' %}">Nosotros</a>
-        </li>
-        
-        {% if request.session.usuario_id %}
-          {% if tipo_usuario == "Barbería" %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-              Datos
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="{% url 'listar_usuarios' %}">Ver usuarios</a></li>
-              <li><a class="dropdown-item" href="{% url 'registro_citas' %}">Registro citas</a></li>
-              <li><a class="dropdown-item" href="{% url 'ver_pagos' %}">Ver Pagos</a></li>
-              <li><a class="dropdown-item" href="{% url 'registro_barbero' %}">Registrar barbero</a></li>
-              <li><a class="dropdown-item" href="{% url 'agregar_subservicio' %}">Agregar subservicio</a></li>
-            </ul>
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'menu' %}">
+        <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" class="logo_menu me-2" style="height:48px;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+        <ul class="navbar-nav align-items-center gap-2">
+          <li class="nav-item">
+            <a class="nav-link{% if request.resolver_match.url_name == 'menu' %} active{% endif %}" href="{% url 'menu' %}">Inicio</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link{% if request.resolver_match.url_name == 'servicios' %} active{% endif %}" href="{% url 'servicios' %}">Servicios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{% if request.resolver_match.url_name == 'nosotros' %} active{% endif %}" href="{% url 'nosotros' %}">Nosotros</a>
+          </li>
+
+          {% if request.session.usuario_id %}
+            {% if tipo_usuario == "Barbería" %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                  Datos
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" href="{% url 'listar_usuarios' %}">Ver usuarios</a></li>
+                  <li><a class="dropdown-item" href="{% url 'registro_citas' %}">Registro citas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'ver_pagos' %}">Ver Pagos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'registro_barbero' %}">Registrar barbero</a></li>
+                  <li><a class="dropdown-item" href="{% url 'agregar_subservicio' %}">Agregar subservicio</a></li>
+                </ul>
+              </li>
+            {% endif %}
+            {% if tipo_usuario == "Barbero" %}
+              <li><a class="dropdown-item" href="{% url 'agregar_servicios' %}">Agregar</a></li>
+              <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a></li>
+            {% endif %}
+            {% if tipo_usuario == "Cliente" %}
+              <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a></li>
+            {% endif %}
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
+          {% else %}
+            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+            <li><a class="dropdown-item" href="{% url 'registrate' %}">Registro</a></li>
           {% endif %}
-           {% if tipo_usuario == "Barbero" %}
-           <li><a class="dropdown-item" href="{% url 'agregar_servicios' %}">Agregar</a></li>
-           <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a> </li>
-          {% endif %}
+        </ul>
 
-  {% if tipo_usuario == "Cliente" %}
-  <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a> </li>
-
-  {% endif %}
-
-<li>  <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a> </li>
-  
-
-
-{% else %}
-<li> <a class="dropdown-item" href="{% url 'login' %}">Login</a> </li>
-<li><a class="dropdown-item" href="{% url 'registrate' %}">Registro</a> </li>
- 
-  
-
-{% endif %}
-      </ul>
+        <!-- WhatsApp Button -->
+        <div class="d-flex ms-3">
+          <a href="https://wa.me/56979459711" target="_blank" class="btn btn-success d-flex align-items-center">
+            <i class="bi bi-whatsapp me-1"></i> WhatsApp
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-</nav>
-</header> 
-
+  </nav>
+</header>
 
 </body>
 </html>
