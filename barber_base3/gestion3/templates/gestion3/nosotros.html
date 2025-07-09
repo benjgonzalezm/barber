@@ -48,22 +48,7 @@
     </div>
   </section>
 
-  <footer class="text-center p-4 bg-dark text-white">
-    <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
-    <div class="footer-links mb-2">
-      <a href="https://www.facebook.com" target="_blank" class="text-white">Facebook</a> |
-      <a href="https://www.instagram.com" target="_blank" class="text-white">Instagram</a> |
-      <a href="https://www.twitter.com" target="_blank" class="text-white">Twitter</a>
-    </div>
-    <nav>
-      <ul class="list-inline">
-        <li class="list-inline-item"><a href="{% url 'menu' %}" class="text-white">Inicio</a></li>
-        <li class="list-inline-item"><a href="{% url 'nosotros' %}" class="text-white">Nosotros</a></li>
-        <li class="list-inline-item"><a href="{% url 'servicios' %}" class="text-white">Servicios</a></li>
-        <li class="list-inline-item"><a href="#contacto" class="text-white">Contacto</a></li>
-      </ul>
-    </nav>
-  </footer>
+  {% include 'gestion3/footer.html' %}
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
