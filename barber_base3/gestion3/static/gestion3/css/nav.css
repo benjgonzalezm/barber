@@ -1,57 +1,56 @@
-/* Navbar moderno y responsivo */
-
+/* NAVBAR MODERNO Y RESPONSIVO */
 .custom-navbar {
   transition: background 0.3s, box-shadow 0.3s;
   font-size: 1.08rem;
   z-index: 1050;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
 }
 
 .custom-navbar .navbar-brand {
-  font-size: 1.3rem;
-  letter-spacing: 1px;
+  font-size: 1.35rem;
   display: flex;
   align-items: center;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+  color: #f8f9fa;
 }
 
 .logo_menu {
-  height: 48px;
+  height: 44px;
   width: auto;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
-.custom-navbar .nav-link {
-  transition: color 0.2s, background 0.2s;
-  border-radius: 0.4rem;
-  padding: 0.5rem 1rem;
+.navbar-nav .nav-link {
+  color: #e0e0e0;
   font-weight: 500;
-  letter-spacing: 0.5px;
+  padding: 0.6rem 1rem;
+  border-radius: 0.4rem;
+  transition: all 0.2s;
 }
 
-.custom-navbar .nav-link.active,
-.custom-navbar .nav-link:hover,
-.custom-navbar .dropdown-item:hover {
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
   background: #dc3545;
   color: #fff !important;
 }
 
-.custom-navbar .dropdown-menu {
+.navbar-nav .dropdown-menu {
   border-radius: 0.5rem;
   margin-top: 0.5rem;
-  min-width: 180px;
-  background: #232323;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  background-color: #2c2c2c;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
-.custom-navbar .dropdown-item {
+.dropdown-item {
   color: #fff;
-  transition: background 0.2s, color 0.2s;
+  padding: 10px 16px;
 }
 
-.custom-navbar .dropdown-item.active,
-.custom-navbar .dropdown-item:active {
-  background: #dc3545;
+.dropdown-item:hover {
+  background-color: #dc3545;
   color: #fff;
 }
 
@@ -61,39 +60,34 @@
   box-shadow: none !important;
 }
 
-.navbar-toggler:focus {
-  outline: none;
-  box-shadow: none;
-}
-
+/* RESPONSIVE */
 @media (max-width: 991px) {
-  .custom-navbar .navbar-nav {
-    gap: 0;
-  }
-  .custom-navbar .nav-link {
-    margin-bottom: 0.5rem;
+  .navbar-nav .nav-link {
+    padding: 0.8rem 1rem;
     text-align: center;
   }
-  .custom-navbar .navbar-brand {
-    font-size: 1.1rem;
+  .navbar-nav {
+    gap: 0.3rem;
   }
 }
 
-@media (max-width: 600px) {
-  .logo_menu {
-    height: 38px;
-  }
+@media (max-width: 576px) {
   .custom-navbar .navbar-brand {
     font-size: 1rem;
   }
+  .logo_menu {
+    height: 36px;
+  }
 }
+
+/* FOOTER */
 footer {
   background-color: #111;
   color: #fff;
   text-align: center;
   padding: 1.5rem 1rem;
   font-size: 0.95rem;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.4);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.4);
 }
 
 footer a {
@@ -105,4 +99,38 @@ footer a {
 
 footer a:hover {
   color: #f4a261;
+}
+.whatsapp-contact {
+  margin-left: 1rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.whatsapp-contact i {
+  font-size: 1.2rem;
+  color: #25d366;
+}
+
+@media (max-width: 991px) {
+  .whatsapp-contact {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .whatsapp-contact span {
+    display: none;
+  }
+}
+/* Espaciado general y estilos para la zona derecha */
+.navbar-nav.gap-3 {
+  gap: 1.25rem !important;
+}
+
+.whatsapp-link {
+  color: #25D366;
+  font-weight: 600;
+}
+
+.whatsapp-link:hover {
+  color: #1ebe57;
+  background: none;
 }
