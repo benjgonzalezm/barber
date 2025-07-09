@@ -11,45 +11,84 @@
 </head>
 <body>
 
-  {% include 'gestion3/nav.html' %}
+{% include 'gestion3/nav.html' %}
 
-  <main class="container py-5">
-    <h1 class="text-white text-center mb-5">Administración de Usuarios</h1>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-      {% for usuario in usuarios %}
-        <div class="col">
-          <div class="card user-card text-white bg-dark h-100">
-            <div class="card-body text-center">
-              <div class="user-photo mb-3">
-                {% if usuario.imagen %}
-                  <img src="{{ usuario.imagen.url }}" alt="Foto de {{ usuario.nombre }}" class="rounded-circle shadow" />
-                {% else %}
-                  <img src="{% static 'gestion3/images/default-user.png' %}" alt="Foto por defecto" class="rounded-circle shadow" />
-                {% endif %}
-              </div>
-              <h5 class="card-title text-warning">{{ usuario.nombre }} {{ usuario.apellido }}</h5>
-              <p class="mb-1"><strong>Tipo:</strong> {{ usuario.id_tipo_usuario.tipo }}</p>
-              <p class="mb-1"><strong>Estado:</strong> {{ usuario.id_estado_usuario.estado_usuario }}</p>
-              <p class="mb-1"><strong>Correo:</strong> {{ usuario.correo }}</p>
-              <p class="mb-3"><strong>Celular:</strong> {{ usuario.telefono }}</p>
-            </div>
-            <div class="card-footer d-flex justify-content-around">
-              {% if usuario.id_estado_usuario.estado_usuario == "Activo" %}
-                <button class="btn btn-warning btn-sm boton-bloquear" data-id="{{ usuario.id_usuario }}">Bloquear</button>
+<main class="container py-5">
+  <h1 class="text-white text-center mb-4">Administración de Usuarios</h1>
+
+  <!-- Filtro por tipo de usuario -->
+  <div class="text-center mb-4">
+    <label for="filtroTipo" class="form-label">Filtrar por tipo:</label>
+    <select id="filtroTipo" class="form-select w-auto d-inline-block">
+      <option value="Todos">Todos</option>
+      <option value="Cliente">Cliente</option>
+      <option value="Barbero">Barbero</option>
+      <option value="Barbería">Barbería</option>
+    </select>
+  </div>
+
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    {% for usuario in usuarios %}
+      <div class="col user-card-container" data-tipo="{{ usuario.id_tipo_usuario.tipo }}">
+        <div class="card user-card text-white bg-dark h-100">
+          <div class="card-body text-center">
+            <div class="user-photo mb-3">
+              {% if usuario.imagen %}
+                <img src="{{ usuario.imagen.url }}" alt="Foto de {{ usuario.nombre }}" class="rounded-circle shadow" />
               {% else %}
-                <button class="btn btn-success btn-sm boton-activar" data-id="{{ usuario.id_usuario }}">Activar</button>
+                <img src="{% static 'gestion3/images/default-user.png' %}" alt="Foto por defecto" class="rounded-circle shadow" />
               {% endif %}
-              <button class="btn btn-danger btn-sm boton-eliminar" data-id="{{ usuario.id_usuario }}">Eliminar</button>
             </div>
+            <h5 class="card-title text-warning">{{ usuario.nombre }} {{ usuario.apellido }}</h5>
+            <p class="mb-1"><strong>Tipo:</strong> {{ usuario.id_tipo_usuario.tipo }}</p>
+            <p class="mb-1"><strong>Estado:</strong> {{ usuario.id_estado_usuario.estado_usuario }}</p>
+            <p class="mb-1"><strong>Correo:</strong> {{ usuario.correo }}</p>
+            <p class="mb-3"><strong>Celular:</strong> {{ usuario.telefono }}</p>
+          </div>
+          <div class="card-footer d-flex justify-content-around flex-wrap gap-2">
+            {% if usuario.id_estado_usuario.estado_usuario == "Activo" %}
+              <button class="btn btn-warning btn-sm boton-bloquear" data-id="{{ usuario.id_usuario }}">Bloquear</button>
+            {% else %}
+              <button class="btn btn-success btn-sm boton-activar" data-id="{{ usuario.id_usuario }}">Activar</button>
+            {% endif %}
+            <button class="btn btn-danger btn-sm boton-eliminar" data-id="{{ usuario.id_usuario }}">Eliminar</button>
+
+            {% if usuario.telefono %}
+              <a href="https://wa.me/56{{ usuario.telefono }}" target="_blank" class="btn btn-success btn-sm">
+                <i class="bi bi-whatsapp"></i> Contactar
+              </a>
+            {% endif %}
           </div>
         </div>
-      {% empty %}
-        <p class="text-muted text-center">No hay usuarios registrados.</p>
-      {% endfor %}
-    </div>
-  </main>
+      </div>
+    {% empty %}
+      <p class="text-muted text-center">No hay usuarios registrados.</p>
+    {% endfor %}
+  </div>
+</main>
+
 {% include 'gestion3/footer.html' %}
-  <script src="{% static 'gestion3/js/estados.js' %}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="{% static 'gestion3/js/estados.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script para filtrar tarjetas -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const filtro = document.getElementById('filtroTipo');
+    const tarjetas = document.querySelectorAll('.user-card-container');
+
+    filtro.addEventListener('change', function () {
+      const seleccionado = this.value;
+      tarjetas.forEach(card => {
+        if (seleccionado === 'Todos' || card.dataset.tipo === seleccionado) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>

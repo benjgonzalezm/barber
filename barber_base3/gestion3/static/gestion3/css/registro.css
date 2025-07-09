@@ -77,3 +77,11 @@ body {
     margin-top: 1.5rem;
   }
 }
+.alert {
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.alert i {
+  margin-right: 0.4rem;
+}

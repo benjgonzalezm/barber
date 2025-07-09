@@ -307,7 +307,7 @@ def activar_usuario(request, user_id):
         usuario.save()
         return JsonResponse({'success': True})
     return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
-@login_required
+
 def listar_usuarios(request):
     usuarios = Usuario.objects.all()
     return render(request, 'gestion3/bloquear_usuario.html', {'usuarios': usuarios})
@@ -344,7 +344,6 @@ def registrate(request):
 
     return render(request, 'gestion3/registrate.html')
 
-@login_required
 def registro_barbero(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombreregistro')
@@ -379,7 +378,7 @@ def registro_barbero(request):
 
     return render(request, 'gestion3/registrobarbero.html')
 
-@login_required
+
 def registro_citas(request):
     citas = Cita.objects.all()
     citas_con_valoracion = []
@@ -439,7 +438,6 @@ def nosotros(request):
 def testimonios(request):
     return render(request, 'gestion3/testimonios.html')
 
-@login_required
 def registrar_pago(request):
     cita_id = request.GET.get('cita_id')
     if not cita_id:
@@ -470,7 +468,6 @@ def registrar_pago(request):
         'descuentos': descuentos
     })
 
-@login_required
 def guardar_pago(request):
     if request.method == 'POST':
         cita_id = request.POST.get('cita')
@@ -504,13 +501,13 @@ def guardar_pago(request):
         messages.success(request, "Pago registrado correctamente.")
         return redirect('perfil')
 
-@login_required
+
 def ver_pagos(request):
     pagos = RegistroPago.objects.select_related(
         'id_cita', 'id_forma_pago', 'id_descuento'
     ).all()
     return render(request, 'gestion3/ver_pagos.html', {'pagos': pagos})
-@login_required
+
 def reporte(request):
     pagos = RegistroPago.objects.all()
 
@@ -588,7 +585,7 @@ def reporte(request):
     return render(request, 'gestion3/reporte.html', context)
 
 
-@login_required
+
 def agregar_servicio(request):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
@@ -622,7 +619,7 @@ def agregar_servicio(request):
 
 
 
-@login_required
+
 def agregar_subservicio(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
@@ -641,7 +638,7 @@ def agregar_subservicio(request):
 
     return render(request, 'gestion3/agregar_subservicio.html')
 
-@login_required
+
 def agradecimiento(request):
     servicio = request.GET.get('servicio')
     fecha_str = request.GET.get('fecha')

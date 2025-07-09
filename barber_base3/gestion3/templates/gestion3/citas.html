@@ -11,124 +11,132 @@
   <link rel="stylesheet" href="{% static 'gestion3/css/citas.css' %}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-<body data-tipo-usuario="{{ tipo_usuario }}">
+<body class="d-flex flex-column min-vh-100" data-tipo-usuario="{{ tipo_usuario }}">
 
   {% include 'gestion3/nav.html' %}
 
-  <!-- Botón para mostrar/ocultar perfil -->
-  <div class="text-center mt-5 mb-3">
-    <button id="btnTogglePerfil" class="btn btn-outline-light btn-toggle-perfil">Abrir/Cerrar Perfil</button>
-  </div>
-
-  <!-- Perfil -->
-  <nav id="perfil" class="d-none">
-
-    <div class="perfil-caja">
-      <div class="d-flex align-items-center">
-        <div>
-          {% if usuario.imagen %}
-            <img src="{{ usuario.imagen.url }}" alt="Perfil" class="perfil-imagen img-thumbnail">
-          {% else %}
-            <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Perfil por defecto" class="perfil-imagen img-thumbnail">
-          {% endif %}
-        </div>
-        <div class="ms-3 datos-principales">
-          <div><span class="etiqueta">Nombre:</span> <span class="valor">{{ usuario.nombre }}</span></div>
-          <div><span class="etiqueta">Apellido:</span> <span class="valor">{{ usuario.apellido }}</span></div>
-          <div><span class="etiqueta">Tipo usuario:</span> <span class="valor">{{ tipo_usuario }}</span></div>
-        </div>
-      </div>
+  <main class="flex-grow-1">
+    <div class="text-center mt-5 mb-3">
+      <button id="btnTogglePerfil" class="btn btn-outline-light btn-toggle-perfil">Abrir/Cerrar Perfil</button>
     </div>
-  </nav>
 
-  <h2 class="text-center text-white mt-4">A continuación podrá ver el estado de sus citas</h2>
-
-  <div class="container mt-4">
-
-    <div class="row g-4 justify-content-center">
-    {% for info in citas_info %}
-      {% with clase_estado=info.cita.id_estado_cita.estado_cita|lower|cut:" " %}
-        <div class="col-md-6 col-lg-4">
-          <div class="cita shadow-sm {{ clase_estado }}">
-            <p><i class="bi bi-calendar-event"></i> <strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
-            <p><i class="bi bi-person-fill"></i> <strong>{% if tipo_usuario == "Cliente" %}Barbero{% else %}Cliente{% endif %}:</strong> 
-              {% if tipo_usuario == "Cliente" %}
-                {{ info.cita.id_servicio.id_usuario.nombre }}
-              {% else %}
-                {{ info.cita.id_cliente.nombre }}
-              {% endif %}
-            </p>
-            <p><i class="bi bi-info-circle-fill"></i> <strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
-
-            {% if tipo_usuario == "Cliente" %}
-              {% if info.cita.id_estado_cita.estado_cita == 'Finalizado' and not info.valoracion %}
-                <form method="post" action="{% url 'valorar_cita' info.cita.id_cita %}">
-                  {% csrf_token %}
-                  <label class="form-label text-white">Valoración:</label>
-                  <div class="rating">
-                    {% for i in "54321" %}
-                      <input type="radio" name="valoracion" value="{{ i }}" id="estrella{{ i }}-{{ info.cita.id_cita }}">
-                      <label for="estrella{{ i }}-{{ info.cita.id_cita }}">★</label>
-                    {% endfor %}
-                  </div>
-
-                  <label class="form-label text-white mt-2">Observaciones:</label>
-                  {% for obs in observaciones_disponibles %}
-                    <div class="form-check text-white">
-                      <input class="form-check-input" type="checkbox" name="observaciones" value="{{ obs.id_observacion }}">
-                      <label class="form-check-label">{{ obs.nombre_observacion }}</label>
-                    </div>
-                  {% endfor %}
-                  <button type="submit" class="btn btn-sm btn-outline-light mt-2">Enviar valoración</button>
-                </form>
-              {% elif info.valoracion %}
-                <p><strong>Valoración:</strong> <span class="estrellas">{% for i in "12345" %}
-                  {% if forloop.counter <= info.valoracion %}★{% else %}<span class="text-muted">★</span>{% endif %}
-                {% endfor %}</span></p>
-                <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
-              {% endif %}
+    <nav id="perfil" class="d-none">
+      <div class="perfil-caja">
+        <div class="d-flex align-items-center">
+          <div>
+            {% if usuario.imagen %}
+              <img src="{{ usuario.imagen.url }}" alt="Perfil" class="perfil-imagen img-thumbnail">
             {% else %}
-              {% if info.cita.id_estado_cita.estado_cita == "En progreso" %}
-                <div class="d-flex gap-2">
-                  <a href="{% url 'finalizar_cita' info.cita.id_cita %}" class="btn btn-outline-success btn-sm">Finalizar</a>
-                  <a href="{% url 'cancelar_cita' info.cita.id_cita %}" class="btn btn-outline-warning btn-sm">Cancelar</a>
-                </div>
-              {% elif info.cita.id_estado_cita.estado_cita == "Finalizado" and not info.pago_realizado %}
-                <a href="{% url 'registrar_pago' %}?cita_id={{ info.cita.id_cita }}" class="btn btn-outline-primary btn-sm mt-2">Registrar pago</a>
-              {% endif %}
-              {% if info.valoracion %}
-                <p><strong>Valoración:</strong> 
-                  <span class="estrellas">{% for i in "12345" %}
-                    {% if forloop.counter <= info.valoracion %}★{% else %}<span class="text-muted">★</span>{% endif %}
-                  {% endfor %}</span>
-                </p>
-                <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
-              {% endif %}
+              <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Perfil por defecto" class="perfil-imagen img-thumbnail">
             {% endif %}
           </div>
+          <div class="ms-3 datos-principales">
+            <div><span class="etiqueta">Nombre:</span> <span class="valor">{{ usuario.nombre }}</span></div>
+            <div><span class="etiqueta">Apellido:</span> <span class="valor">{{ usuario.apellido }}</span></div>
+            <div><span class="etiqueta">Tipo usuario:</span> <span class="valor">{{ tipo_usuario }}</span></div>
+          </div>
         </div>
-      {% endwith %}
-    {% endfor %}
+      </div>
+    </nav>
+
+    <h2 class="text-center text-white mt-4">A continuación podrá ver el estado de sus citas</h2>
+
+    <div class="container mt-4">
+      <div class="row g-4 justify-content-center">
+      {% for info in citas_info %}
+        {% with clase_estado=info.cita.id_estado_cita.estado_cita|lower|cut:" " %}
+          <div class="col-md-6 col-lg-4">
+            <div class="cita shadow-sm {{ clase_estado }}">
+              <p><i class="bi bi-calendar-event"></i> <strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
+              <p><i class="bi bi-person-fill"></i> <strong>{% if tipo_usuario == "Cliente" %}Barbero{% else %}Cliente{% endif %}:</strong> 
+                {% if tipo_usuario == "Cliente" %}
+                  {{ info.cita.id_servicio.id_usuario.nombre }} {{ info.cita.id_servicio.id_usuario.apellido }}
+                {% else %}
+                  {{ info.cita.id_cliente.nombre }} {{ info.cita.id_cliente.apellido }}
+                {% endif %}
+              </p>
+              <p><i class="bi bi-info-circle-fill"></i> <strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
+
+              {% if tipo_usuario == "Cliente" %}
+                {% if info.cita.id_estado_cita.estado_cita == 'En progreso' %}
+                  <a href="https://wa.me/56979459711" target="_blank" class="btn btn-outline-success btn-sm mt-2">
+                    <i class="bi bi-whatsapp"></i> Cancelar por WhatsApp
+                  </a>
+                {% endif %}
+                {% if info.cita.id_estado_cita.estado_cita == 'Finalizado' and not info.valoracion %}
+                  <form method="post" action="{% url 'valorar_cita' info.cita.id_cita %}">
+                    {% csrf_token %}
+                    <label class="form-label text-white">Valoración:</label>
+                    <div class="rating">
+                      {% for i in "54321" %}
+                        <input type="radio" name="valoracion" value="{{ i }}" id="estrella{{ i }}-{{ info.cita.id_cita }}">
+                        <label for="estrella{{ i }}-{{ info.cita.id_cita }}">★</label>
+                      {% endfor %}
+                    </div>
+
+                    <label class="form-label text-white mt-2">Observaciones:</label>
+                    {% for obs in observaciones_disponibles %}
+                      <div class="form-check text-white">
+                        <input class="form-check-input" type="checkbox" name="observaciones" value="{{ obs.id_observacion }}">
+                        <label class="form-check-label">{{ obs.nombre_observacion }}</label>
+                      </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-sm btn-outline-light mt-2">Enviar valoración</button>
+                  </form>
+                {% elif info.valoracion %}
+                  <p><strong>Valoración:</strong> <span class="estrellas">{% for i in "12345" %}
+                    {% if forloop.counter <= info.valoracion %}★{% else %}<span class="text-muted">★</span>{% endif %}
+                  {% endfor %}</span></p>
+                  <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
+                {% endif %}
+              {% else %}
+                {% if info.cita.id_estado_cita.estado_cita == "En progreso" %}
+                  <div class="d-flex gap-2 flex-wrap">
+                    <a href="{% url 'finalizar_cita' info.cita.id_cita %}" class="btn btn-outline-success btn-sm">Finalizar</a>
+                    <a href="{% url 'cancelar_cita' info.cita.id_cita %}" class="btn btn-outline-warning btn-sm">Cancelar</a>
+                    <a href="https://wa.me/56{{ info.cita.id_cliente.telefono }}" target="_blank" class="btn btn-outline-success btn-sm">
+                      <i class="bi bi-whatsapp"></i> Contactar Cliente por WhatsApp
+                    </a>
+                  </div>
+                {% elif info.cita.id_estado_cita.estado_cita == "Finalizado" and not info.pago_realizado %}
+                  <a href="{% url 'registrar_pago' %}?cita_id={{ info.cita.id_cita }}" class="btn btn-outline-primary btn-sm mt-2">Registrar pago</a>
+                {% endif %}
+                {% if info.valoracion %}
+                  <p><strong>Valoración:</strong> 
+                    <span class="estrellas">{% for i in "12345" %}
+                      {% if forloop.counter <= info.valoracion %}★{% else %}<span class="text-muted">★</span>{% endif %}
+                    {% endfor %}</span>
+                  </p>
+                  <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        {% endwith %}
+      {% endfor %}
+      </div>
     </div>
-  </div>
-{% include 'gestion3/footer.html' %}
+  </main>
+
+  {% include 'gestion3/footer.html' %}
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const boton = document.getElementById('btnTogglePerfil');
-    const perfil = document.getElementById('perfil');
+    document.addEventListener("DOMContentLoaded", function () {
+      const boton = document.getElementById('btnTogglePerfil');
+      const perfil = document.getElementById('perfil');
 
-    boton.addEventListener('click', function () {
-      if (perfil.classList.contains('d-none')) {
-        perfil.classList.remove('d-none');
-        perfil.classList.add('d-flex', 'justify-content-center');
-      } else {
-        perfil.classList.add('d-none');
-        perfil.classList.remove('d-flex', 'justify-content-center');
-      }
+      boton.addEventListener('click', function () {
+        if (perfil.classList.contains('d-none')) {
+          perfil.classList.remove('d-none');
+          perfil.classList.add('d-flex', 'justify-content-center');
+        } else {
+          perfil.classList.add('d-none');
+          perfil.classList.remove('d-flex', 'justify-content-center');
+        }
+      });
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>
