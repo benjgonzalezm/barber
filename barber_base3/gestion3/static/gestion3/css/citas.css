@@ -1,103 +1,48 @@
-
-body, h1, h2, p, ul, li, a, form, input, textarea, button {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background: linear-gradient(135deg, #0f172a, #334155);
-  background-attachment: fixed;
+  min-height: 100vh;
+  background: linear-gradient(rgba(30,30,30,0.7), rgba(30,30,30,0.7)),
+    url("/static/gestion3/images/fondo-main.jpeg") no-repeat center center fixed;
   background-size: cover;
-  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  padding-top: 70px;
+
 }
-
-
-.container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 40px 20px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
 
 .cita {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  padding: 16px;
+  padding: 20px;
+  color: white;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: transform 0.3s;
+}
+
+.cita:hover {
+  transform: scale(1.01);
+}
+
+.cita.finalizado {
+  border-left: 4px solid #4caf50;
+}
+
+.cita.enprogreso {
+  border-left: 4px solid #2196f3;
+}
+
+.cita.cancelado {
+  border-left: 4px solid #f44336;
+}
+
+.perfil-caja {
+  background-color: rgba(0,0,0,0.5);
+  padding: 20px 30px;
+  border-radius: 12px;
+  max-width: 900px;
   margin-bottom: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  color: #333;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
-
-.cita h3 {
-  margin: 0 0 0.5rem;
-  font-size: 20px;
-  color: #111;
-}
-
-.cita p {
-  margin-bottom: 0.5rem;
-  font-size: 16px;
-  line-height: 1.4;
-}
-
-.espaciado2 {
-  display: flex;
-  flex-direction: column; 
-}
-
-
-/* Estrellas (si usas) */
-.estrella {
-  font-size: 24px;
-}
-
-
-.btn-registrar {
-  display: inline-block;
-  margin-top: 10px;
-  margin-right: 8px;
-  padding: 8px 12px;
-  background-color: #007bff; 
-  color: white;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  border: none;
-}
-
-.btn-registrar:hover {
-  opacity: 0.85;
-}
-
-.btn-toggle-perfil {
-  margin: 20px auto;
-  display: block;
-  padding: 10px 20px;
-  background-color: #444;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.btn-toggle-perfil:hover {
-  background-color: #222;
-}
-
 
 .perfil-imagen {
   width: 80px;
@@ -107,107 +52,69 @@ body {
   border: 2px solid white;
 }
 
-.datos-principales {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 8px;
-  min-width: 180px;
-}
-
-.dato-linea {
-  display: flex;
-  justify-content: flex-start;
-  gap: 8px;
-  font-weight: bold;
-  color: white;
-}
-
-.etiqueta {
-  min-width: 90px;
-  font-weight: normal;
+.datos-principales .etiqueta {
   color: #ddd;
+  font-weight: bold;
 }
 
-.valor {
+.datos-principales .valor {
+  color: #fff;
+}
+
+.btn-toggle-perfil {
   font-weight: bold;
+  border-radius: 20px;
+  background: transparent;
   color: white;
+  border: 2px solid white;
+  padding: 8px 20px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.btn-toggle-perfil:hover {
+  background: white;
+  color: #222;
+}
+
+.rating {
+  direction: rtl;
+  display: inline-flex;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  font-size: 1.6em;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+  color: gold;
 }
 
 .estrellas {
+  font-size: 1.4em;
   color: gold;
-  font-size: 1.2em;
-  font-weight: normal;
 }
-
-.perfil-caja {
-  background-color: #555;
-  padding: 20px 30px;
-  border-radius: 12px;
-  max-width: 900px;
-  margin: 20px auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.perfil-row {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 30px;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
 
 @media (max-width: 768px) {
-  .perfil-row {
+  .cita {
+    font-size: 0.95rem;
+  }
+
+  .perfil-caja {
     flex-direction: column;
     align-items: center;
-  }
-
-  .descripcion-box {
     text-align: center;
   }
+
+  .perfil-imagen {
+    margin-bottom: 10px;
+  }
 }
-
-
-.form-select, .form-check-input, .form-check-label {
-  margin-bottom: 0.5rem;
-}
-
-
-.text-center {
-  text-align: center;
-}
-
-.my-3 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.my-4 {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
-.mb-3 {
-  margin-bottom: 1rem;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
-}
-
-.mt-4 {
-  margin-top: 1.5rem;
-}
-
-.ms-3 {
-  margin-left: 1rem;
-}
-
-

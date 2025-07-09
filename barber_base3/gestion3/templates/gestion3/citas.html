@@ -4,160 +4,131 @@
 <head>
   <meta charset="UTF-8">
   <title>Historial de citas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link 
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
-    rel="stylesheet" 
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
-    crossorigin="anonymous"
-  />
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}">
   <link rel="stylesheet" href="{% static 'gestion3/css/citas.css' %}">
-  <style>
-    .cita.finalizado {
-      background-color: #ffeb3b; 
-      color: #000000; 
-    }
-
-    .cita.enprogreso {
-      background-color: #4caf50; 
-      color: #000000; 
-    }
-
-    .cita.cancelado {
-      background-color: #ff9800; 
-      color: #000000; 
-    }
-
-    .cita.finalizado a,
-    .cita.cancelado a,
-    .cita.enprogreso a {
-      color: #000000;
-      font-weight: bold;
-    }
-  </style>
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body data-tipo-usuario="{{ tipo_usuario }}">
 
   {% include 'gestion3/nav.html' %}
 
-  <div class="text-center my-3 espaciado">
-    <button id="btnTogglePerfil" class="btn btn-primary btn-toggle-perfil">Abrir/Cerrar Perfil</button>
+  <!-- Botón para mostrar/ocultar perfil -->
+  <div class="text-center mt-5 mb-3">
+    <button id="btnTogglePerfil" class="btn btn-outline-light btn-toggle-perfil">Abrir/Cerrar Perfil</button>
   </div>
 
-  <!-- Perfil Unificado -->
-  <nav id="perfil" style="display: none; flex-direction: column; align-items: center;">
-    <div class="perfil-caja p-3 border rounded shadow-sm d-flex align-items-center">
-      <div>
-        {% if usuario.imagen %}
-          <img src="{{ usuario.imagen.url }}" alt="Perfil" class="perfil-imagen img-thumbnail" style="max-width:120px;">
-        {% else %}
-          <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Perfil por defecto" class="perfil-imagen img-thumbnail" style="max-width:120px;">
-        {% endif %}
-      </div>
-      <div class="datos-principales ms-3">
-        <div class="dato-linea">
-          <span class="etiqueta fw-bold">Nombre:</span>
-          <span class="valor">{{ usuario.nombre }}</span> 
+  <!-- Perfil -->
+  <nav id="perfil" class="d-none">
+
+    <div class="perfil-caja">
+      <div class="d-flex align-items-center">
+        <div>
+          {% if usuario.imagen %}
+            <img src="{{ usuario.imagen.url }}" alt="Perfil" class="perfil-imagen img-thumbnail">
+          {% else %}
+            <img src="{% static 'gestion3/images/barberos/barberjo-mujer.avif' %}" alt="Perfil por defecto" class="perfil-imagen img-thumbnail">
+          {% endif %}
         </div>
-        <div class="dato-linea">
-          <span class="etiqueta fw-bold">Apellido:</span>
-          <span class="valor">{{ usuario.apellido }}</span>
-        </div>
-        <div class="dato-linea">
-          <span class="etiqueta fw-bold">Tipo usuario:</span>
-          <span class="valor">{{ tipo_usuario }}</span>
+        <div class="ms-3 datos-principales">
+          <div><span class="etiqueta">Nombre:</span> <span class="valor">{{ usuario.nombre }}</span></div>
+          <div><span class="etiqueta">Apellido:</span> <span class="valor">{{ usuario.apellido }}</span></div>
+          <div><span class="etiqueta">Tipo usuario:</span> <span class="valor">{{ tipo_usuario }}</span></div>
         </div>
       </div>
     </div>
   </nav>
 
-  <h2 class="etiqueta perfil-caja mt-4 text-center">A continuación podrá ver el estado de sus citas</h2>
+  <h2 class="text-center text-white mt-4">A continuación podrá ver el estado de sus citas</h2>
 
-  <div class="container my-4">
+  <div class="container mt-4">
 
-    {% if tipo_usuario == "Cliente" %}
-      
-      {% for info in citas_info %}
-        {% with clase_estado=info.cita.id_estado_cita.estado_cita|lower|cut:" " %}
-          <div class="cita border rounded p-3 mb-4 shadow-sm {{ clase_estado }}">
-            <p><strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
-            <p><strong>Barbero:</strong> {{ info.cita.id_servicio.id_usuario.nombre }}</p>
-            <p><strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
-
-            {% if info.cita.id_estado_cita.estado_cita == 'Finalizado' and not info.valoracion %}
-              <form method="post" action="{% url 'valorar_cita' info.cita.id_cita %}">
-                {% csrf_token %}
-                <label class="form-label">Valoración (1 a 5):</label>
-                <select name="valoracion" required class="form-select mb-2">
-                  {% for i in "12345" %}
-                    <option value="{{ i }}">{{ i }}</option>
-                  {% endfor %}
-                </select>
-
-                <label class="form-label">Observaciones:</label>
-                {% for obs in observaciones_disponibles %}
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="observaciones" value="{{ obs.id_observacion }}">
-                    <label class="form-check-label">{{ obs.nombre_observacion }}</label>
-                  </div>
-                {% endfor %}
-
-                <button type="submit" class="btn btn-primary mt-2">Enviar valoración</button>
-              </form>
-            {% elif info.valoracion %}
-              <p><strong>Valoración:</strong> {{ info.valoracion }}</p>
-              <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
-            {% endif %}
-          </div>
-        {% endwith %}
-      {% endfor %}
-
-    {% elif tipo_usuario == "Barbero" %}
-      {% for info in citas_info %}
-        {% with clase_estado=info.cita.id_estado_cita.estado_cita|lower|cut:" " %}
-          <div class="cita border rounded p-3 mb-4 shadow-sm {{ clase_estado }}"
-               data-finalizar="{% url 'finalizar_cita' info.cita.id_cita %}"
-               data-cancelar="{% url 'cancelar_cita' info.cita.id_cita %}">
-            <p><strong>Cliente:</strong> {{ info.cita.id_cliente.nombre }}</p>
-            <p><strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
-            <p><strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
-
-            <div class="botones mt-2">
-              {% if info.cita.id_estado_cita.estado_cita == "En progreso" %}
-                <!-- Botones serán agregados por JS -->
-              {% elif info.cita.id_estado_cita.estado_cita == "Finalizado" and not info.pago_realizado %}
-                <a href="{% url 'registrar_pago' %}?cita_id={{ info.cita.id_cita }}" class="btn btn-registrar">Registrar</a>
+    <div class="row g-4 justify-content-center">
+    {% for info in citas_info %}
+      {% with clase_estado=info.cita.id_estado_cita.estado_cita|lower|cut:" " %}
+        <div class="col-md-6 col-lg-4">
+          <div class="cita shadow-sm {{ clase_estado }}">
+            <p><i class="bi bi-calendar-event"></i> <strong>Fecha:</strong> {{ info.cita.fecha_cita }} {{ info.cita.hora_cita }}</p>
+            <p><i class="bi bi-person-fill"></i> <strong>{% if tipo_usuario == "Cliente" %}Barbero{% else %}Cliente{% endif %}:</strong> 
+              {% if tipo_usuario == "Cliente" %}
+                {{ info.cita.id_servicio.id_usuario.nombre }}
+              {% else %}
+                {{ info.cita.id_cliente.nombre }}
               {% endif %}
-            </div>
+            </p>
+            <p><i class="bi bi-info-circle-fill"></i> <strong>Estado:</strong> {{ info.cita.id_estado_cita.estado_cita }}</p>
 
-            {% if info.valoracion %}
-              <p><strong>Valoración:</strong> {{ info.valoracion }}</p>
-              <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
-              <p><strong>Cliente:</strong> {{ info.cita.id_cliente.nombre }}</p>
+            {% if tipo_usuario == "Cliente" %}
+              {% if info.cita.id_estado_cita.estado_cita == 'Finalizado' and not info.valoracion %}
+                <form method="post" action="{% url 'valorar_cita' info.cita.id_cita %}">
+                  {% csrf_token %}
+                  <label class="form-label text-white">Valoración:</label>
+                  <div class="rating">
+                    {% for i in "54321" %}
+                      <input type="radio" name="valoracion" value="{{ i }}" id="estrella{{ i }}-{{ info.cita.id_cita }}">
+                      <label for="estrella{{ i }}-{{ info.cita.id_cita }}">★</label>
+                    {% endfor %}
+                  </div>
+
+                  <label class="form-label text-white mt-2">Observaciones:</label>
+                  {% for obs in observaciones_disponibles %}
+                    <div class="form-check text-white">
+                      <input class="form-check-input" type="checkbox" name="observaciones" value="{{ obs.id_observacion }}">
+                      <label class="form-check-label">{{ obs.nombre_observacion }}</label>
+                    </div>
+                  {% endfor %}
+                  <button type="submit" class="btn btn-sm btn-outline-light mt-2">Enviar valoración</button>
+                </form>
+              {% elif info.valoracion %}
+                <p><strong>Valoración:</strong> <span class="estrellas">{% for i in "12345" %}
+                  {% if forloop.counter <= info.valoracion %}★{% else %}<span class="text-muted">★</span>{% endif %}
+                {% endfor %}</span></p>
+                <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
+              {% endif %}
+            {% else %}
+              {% if info.cita.id_estado_cita.estado_cita == "En progreso" %}
+                <div class="d-flex gap-2">
+                  <a href="{% url 'finalizar_cita' info.cita.id_cita %}" class="btn btn-outline-success btn-sm">Finalizar</a>
+                  <a href="{% url 'cancelar_cita' info.cita.id_cita %}" class="btn btn-outline-warning btn-sm">Cancelar</a>
+                </div>
+              {% elif info.cita.id_estado_cita.estado_cita == "Finalizado" and not info.pago_realizado %}
+                <a href="{% url 'registrar_pago' %}?cita_id={{ info.cita.id_cita }}" class="btn btn-outline-primary btn-sm mt-2">Registrar pago</a>
+              {% endif %}
+              {% if info.valoracion %}
+                <p><strong>Valoración:</strong> 
+                  <span class="estrellas">{% for i in "12345" %}
+                    {% if forloop.counter <= info.valoracion %}★{% else %}<span class="text-muted">★</span>{% endif %}
+                  {% endfor %}</span>
+                </p>
+                <p><strong>Observaciones:</strong> {{ info.observaciones|join:", " }}</p>
+              {% endif %}
             {% endif %}
           </div>
-        {% endwith %}
-      {% endfor %}
-    {% endif %}
-
+        </div>
+      {% endwith %}
+    {% endfor %}
+    </div>
   </div>
 
-  <script 
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
-    crossorigin="anonymous"
-  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const boton = document.getElementById('btnTogglePerfil');
+    const perfil = document.getElementById('perfil');
 
-  <script src="{% static 'gestion3/js/cita.js' %}"></script>
+    boton.addEventListener('click', function () {
+      if (perfil.classList.contains('d-none')) {
+        perfil.classList.remove('d-none');
+        perfil.classList.add('d-flex', 'justify-content-center');
+      } else {
+        perfil.classList.add('d-none');
+        perfil.classList.remove('d-flex', 'justify-content-center');
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-

@@ -1,113 +1,74 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elegir barbero</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elegir Barbero - Elite Barber</title>
 
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-    crossorigin="anonymous"
-  />
-
-  <link rel="stylesheet" href="{% static 'gestion3/css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'gestion3/css/nosotros.css' %}">
+  <!-- Bootstrap + Estilos base -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}" />
+  <link rel="stylesheet" href="{% static 'gestion3/css/barberos.css' %}" />
 </head>
 <body>
 
+  <!-- 🔁 Usa el mismo nav que el home -->
   {% include 'gestion3/nav.html' %}
 
-  <main class="container my-5">
-
-
-    <div class="mt-3">
-{% if messages %}
-  <div class="d-flex justify-content-center">
-    <div class="w-100" style="max-width: 600px;">
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center shadow" role="alert">
-          <strong>{{ message }}</strong>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-        </div>
-      {% endfor %}
-    </div>
+  <main class="main-content pt-5">
+    <section class="hero position-relative d-flex align-items-center justify-content-center text-white text-center">
+  <div class="overlay"></div>
+  <div class="container position-relative z-1">
+    <h1 class="display-5 fw-bold">Elige tu Barbero</h1>
+    <p class="lead">Reserva fácilmente con el profesional que más confianza te dé.</p>
   </div>
-{% endif %}
+</section>
 
-</div>
-
-    <h2 class="mb-4 text-center">Barberos para {{ subservicio.nombre_servicio }}</h2>
-
-    <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
-      {% for servicio_barbero in barberos_con_servicio %}
-        <div class="col d-flex justify-content-center">
-          <div class="card shadow rounded-4 text-center" style="width: 100%; max-width: 340px;">
-            {% if servicio_barbero.id_usuario.imagen %}
-              <img src="{{ servicio_barbero.id_usuario.imagen.url }}"
-                   class="card-img-top"
+    <section class="container py-5">
+      <div class="row justify-content-center">
+        {% for servicio_barbero in barberos_con_servicio %}
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow rounded-4 text-center h-100">
+              <img src="{% if servicio_barbero.id_usuario.imagen %}{{ servicio_barbero.id_usuario.imagen.url }}{% else %}{% static 'gestion3/images/nosotross.jpeg' %}{% endif %}"
+                   class="card-img-top rounded-top"
                    alt="{{ servicio_barbero.id_usuario.nombre }} {{ servicio_barbero.id_usuario.apellido }}"
-                   style="height:400px; object-fit:cover; object-position: top; border-top-left-radius:1rem; border-top-right-radius:1rem;">
-            {% else %}
-              <img src="{% static 'gestion3/images/nosotross.jpeg' %}"
-                   class="card-img-top"
-                   alt="Imagen por defecto"
-                   style="height:400px; object-fit:cover; object-position: top; border-top-left-radius:1rem; border-top-right-radius:1rem;">
-            {% endif %}
-            <div class="card-body d-flex flex-column justify-content-between">
-              <h5 class="card-title mb-2">{{ servicio_barbero.id_usuario.nombre }} {{ servicio_barbero.id_usuario.apellido }}</h5>
-              <p class="card-text mb-2">Descripción del barbero: {{ servicio_barbero.id_usuario.descripcion_usuario }}</p>
-              <p class="card-text fw-bold text-primary mb-2">Precio del servicio: ${{ servicio_barbero.precio }}</p>
-              <p class="card-text mb-2">Descripción del servicio: {{ servicio_barbero.descripcion }}</p>
-              <p class="card-text mb-2">Tiempo estimado: {{ servicio_barbero.duracion_minutos }} Minutos</p>
-            </div>
-            <div class="card-footer d-flex flex-column align-items-center gap-2 bg-light border-0">
-              <h6 class="mb-2">Reservar cita con {{ servicio_barbero.id_usuario.nombre }}</h6>
-              
-              {% if servicio_barbero.id_servicio and servicio_barbero.id_usuario and servicio_barbero.id_usuario.id_usuario %}
-                <form method="post" action="{% url 'reservar' servicio_barbero.id_servicio servicio_barbero.id_usuario.id_usuario %}" class="w-100 px-3">
+                   style="height:350px; object-fit:cover;">
+
+              <div class="card-body">
+                <h5 class="card-title">{{ servicio_barbero.id_usuario.nombre }} {{ servicio_barbero.id_usuario.apellido }}</h5>
+                <p class="card-text">{{ servicio_barbero.id_usuario.descripcion_usuario }}</p>
+                <p><strong>Servicio:</strong> {{ servicio_barbero.descripcion }}</p>
+                <p><strong>Duración:</strong> {{ servicio_barbero.duracion_minutos }} min</p>
+                <p class="text-danger fw-bold">Precio: ${{ servicio_barbero.precio }}</p>
+              </div>
+
+              <div class="card-footer bg-light">
+                <form method="post" action="{% url 'reservar' servicio_barbero.id_servicio servicio_barbero.id_usuario.id_usuario %}" class="text-start px-3">
                   {% csrf_token %}
-                  <div class="mb-2 text-start">
+                  <div class="mb-2">
                     <label class="form-label">Fecha:</label>
                     <input type="date" name="fecha" class="form-control" required min="{{ fecha_minima }}">
                   </div>
-                  <div class="mb-2 text-start">
+                  <div class="mb-2">
                     <label class="form-label">Hora:</label>
                     <input type="time" name="hora" class="form-control" required min="07:00" max="20:00">
                   </div>
-                  <button type="submit" class="btn btn-success w-100">Confirmar reserva</button>
+                  <button type="submit" class="btn btn-success w-100">Reservar</button>
                 </form>
-              {% else %}
-                <p class="text-danger">Este barbero no está disponible para reservas.</p>
-              {% endif %}
-
+              </div>
             </div>
           </div>
-        </div>
-      {% empty %}
-        <div class="col-12 text-center my-5">
-          <h3 class="text-muted display-4">De momento no tenemos servicios relacionados a esto</h3>
-        </div>
-      {% endfor %}
-
-      
-    </div>
-
-
-
+        {% empty %}
+          <div class="col-12 text-center mt-5">
+            <h2 class="text-muted">No hay barberos disponibles por ahora.</h2>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
   </main>
 
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-    crossorigin="anonymous"
-  ></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
