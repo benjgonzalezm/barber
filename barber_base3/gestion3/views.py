@@ -226,7 +226,11 @@ def reservar(request, servicio_id, barbero_id):
         )
 
         messages.success(request, 'Cita reservada correctamente.')
-        return redirect(reverse('agradecimiento') + f"?servicio={subservicio.nombre_servicio}&fecha={fecha}&hora={hora}")
+        return redirect(
+    reverse('agradecimiento') +
+    f"?servicio={subservicio.nombre_servicio}&fecha={fecha}&hora={hora}&barbero={barbero.nombre} {barbero.apellido}"
+)
+
 
     return render(request, 'gestion3/reservar.html', {
         'servicio': servicio,
@@ -612,7 +616,6 @@ def agradecimiento(request):
     fecha_str = request.GET.get('fecha')
     hora = request.GET.get('hora')
 
-    # Convertir formato fecha [día] de [nombre mes] del [año]
     try:
         fecha_obj = datetime.strptime(fecha_str, "%Y-%m-%d").date()
         meses = {
@@ -624,9 +627,25 @@ def agradecimiento(request):
     except:
         fecha_formateada = fecha_str
 
+    # Obtener la cita más reciente del cliente logueado
+    usuario_id = request.session.get('usuario_id')
+    barbero_nombre = ""
+    barbero_imagen = None
+
+    if usuario_id:
+        from .models import Cita
+        ultima_cita = Cita.objects.filter(id_cliente__id_usuario=usuario_id).order_by('-id_cita').first()
+        if ultima_cita:
+            barbero = ultima_cita.id_servicio.id_usuario
+            barbero_nombre = f"{barbero.nombre} {barbero.apellido}"
+            
+
     contexto = {
         'servicio': servicio,
         'fecha': fecha_formateada,
-        'hora': hora
+        'hora': hora,
+        'barbero': barbero_nombre,
+        
     }
+
     return render(request, 'gestion3/agradecimiento.html', contexto)
