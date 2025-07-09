@@ -14,17 +14,15 @@
 </head>
 <body>
 
-  <!-- 🔁 Usa el mismo nav que el home -->
   {% include 'gestion3/nav.html' %}
 
   <main class="main-content pt-5">
-    <section class="hero position-relative d-flex align-items-center justify-content-center text-white text-center">
-  <div class="overlay"></div>
-  <div class="container position-relative z-1">
-    <h1 class="display-5 fw-bold">Elige tu Barbero</h1>
-    <p class="lead">Reserva fácilmente con el profesional que más confianza te dé.</p>
-  </div>
-</section>
+    <section class="hero text-white text-center">
+      <div class="container z-1">
+        <h1 class="display-5 fw-bold">Elige tu Barbero</h1>
+        <p class="lead">Reserva fácilmente con el profesional que más confianza te dé.</p>
+      </div>
+    </section>
 
     <section class="container py-5">
       <div class="row justify-content-center">
@@ -34,7 +32,7 @@
               <img src="{% if servicio_barbero.id_usuario.imagen %}{{ servicio_barbero.id_usuario.imagen.url }}{% else %}{% static 'gestion3/images/nosotross.jpeg' %}{% endif %}"
                    class="card-img-top rounded-top"
                    alt="{{ servicio_barbero.id_usuario.nombre }} {{ servicio_barbero.id_usuario.apellido }}"
-                   style="height:350px; object-fit:cover;">
+                   style="object-fit:cover;">
 
               <div class="card-body">
                 <h5 class="card-title">{{ servicio_barbero.id_usuario.nombre }} {{ servicio_barbero.id_usuario.apellido }}</h5>
@@ -68,6 +66,24 @@
       </div>
     </section>
   </main>
+
+  <!-- Footer -->
+  <footer class="text-center p-4 bg-light mt-5">
+    <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
+    <div class="footer-links mb-2">
+      <a href="https://www.facebook.com" target="_blank">Facebook</a> |
+      <a href="https://www.instagram.com" target="_blank">Instagram</a> |
+      <a href="https://www.twitter.com" target="_blank">Twitter</a>
+    </div>
+    <nav>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="{% url 'menu' %}">Inicio</a></li>
+        <li class="list-inline-item"><a href="{% url 'nosotros' %}">Nosotros</a></li>
+        <li class="list-inline-item"><a href="{% url 'servicios' %}">Servicios</a></li>
+        <li class="list-inline-item"><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

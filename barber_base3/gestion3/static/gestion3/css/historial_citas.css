@@ -1,0 +1,83 @@
+body {
+  background: #1a1a1a;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-citas {
+  position: relative;
+  height: 60vh;
+  background: url('/static/gestion3/images/fondo-main.jpeg') center center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 1px 1px 4px #000;
+}
+
+.hero-citas .overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 0;
+}
+
+.hero-citas .container {
+  position: relative;
+  z-index: 1;
+}
+
+.card.cita-card {
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  color: white;
+  min-height: 350px;
+}
+
+.card.cita-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+}
+
+/* Estados */
+.finalizada {
+  border-left: 5px solid #4caf50;
+}
+.rechazada {
+  border-left: 5px solid #f44336;
+}
+.activa {
+  border-left: 5px solid #2196f3;
+}
+
+/* Estrellas */
+.estrellas {
+  font-size: 1.2rem;
+}
+
+.estrella {
+  margin-right: 3px;
+}
+
+.estrella.llena {
+  color: #ffcc00;
+}
+
+.estrella.vacia {
+  color: #999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-citas h1 {
+    font-size: 2rem;
+  }
+  .card.cita-card {
+    min-height: auto;
+  }
+}

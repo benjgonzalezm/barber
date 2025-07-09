@@ -5,74 +5,51 @@
   <meta charset="UTF-8" />
   <title>Bloquear Usuario</title>
 
-
-<link 
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
-  rel="stylesheet" 
-  integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
-  crossorigin="anonymous"
-/>
-
-
-
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}" />
   <link rel="stylesheet" href="{% static 'gestion3/css/bloquear_usuario.css' %}" />
 </head>
 <body>
 
-<header class="menu-global">
-  
   {% include 'gestion3/nav.html' %}
-</header>
 
-<div class="container espaciados1 mt-4">
-  {% for usuario in usuarios %}
-    <div class="usuario border rounded p-3 mb-3 shadow-sm">
-      <div class="info-usuario d-flex align-items-center">
-        <div class="foto me-3">
-          {% if usuario.imagen %}
-            <img src="{{ usuario.imagen.url }}" alt="Foto de {{ usuario.nombre }}" class="img-thumbnail" />
-          {% else %}
-            <img src="{% static 'gestion3/images/default-user.png' %}" alt="Foto por defecto" class="img-thumbnail" />
-          {% endif %}
+  <main class="container py-5">
+    <h1 class="text-white text-center mb-5">Administración de Usuarios</h1>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      {% for usuario in usuarios %}
+        <div class="col">
+          <div class="card user-card text-white bg-dark h-100">
+            <div class="card-body text-center">
+              <div class="user-photo mb-3">
+                {% if usuario.imagen %}
+                  <img src="{{ usuario.imagen.url }}" alt="Foto de {{ usuario.nombre }}" class="rounded-circle shadow" />
+                {% else %}
+                  <img src="{% static 'gestion3/images/default-user.png' %}" alt="Foto por defecto" class="rounded-circle shadow" />
+                {% endif %}
+              </div>
+              <h5 class="card-title text-warning">{{ usuario.nombre }} {{ usuario.apellido }}</h5>
+              <p class="mb-1"><strong>Tipo:</strong> {{ usuario.id_tipo_usuario.tipo }}</p>
+              <p class="mb-1"><strong>Estado:</strong> {{ usuario.id_estado_usuario.estado_usuario }}</p>
+              <p class="mb-1"><strong>Correo:</strong> {{ usuario.correo }}</p>
+              <p class="mb-3"><strong>Celular:</strong> {{ usuario.telefono }}</p>
+            </div>
+            <div class="card-footer d-flex justify-content-around">
+              {% if usuario.id_estado_usuario.estado_usuario == "Activo" %}
+                <button class="btn btn-warning btn-sm boton-bloquear" data-id="{{ usuario.id_usuario }}">Bloquear</button>
+              {% else %}
+                <button class="btn btn-success btn-sm boton-activar" data-id="{{ usuario.id_usuario }}">Activar</button>
+              {% endif %}
+              <button class="btn btn-danger btn-sm boton-eliminar" data-id="{{ usuario.id_usuario }}">Eliminar</button>
+            </div>
+          </div>
         </div>
-        <div class="detalles">
-          <span class="nombre fw-bold">{{ usuario.nombre }} {{ usuario.apellido }}</span><br />
-          <span class="tipo-usuario">Tipo: {{ usuario.id_tipo_usuario.tipo }}</span><br />
-          <span class="estado-usuario">Estado: {{ usuario.id_estado_usuario.estado_usuario }}</span><br />
-          <span class="estado-usuario">Correo: {{ usuario.correo }}</span><br />
-          <span class="estado-usuario">Celular: {{ usuario.telefono }}</span>
-        </div>
-      </div>
-      <div class="acciones mt-3">
-        {% if usuario.id_estado_usuario.estado_usuario == "Activo" %}
-          <button class="boton-bloquear btn btn-warning me-2" data-id="{{ usuario.id_usuario }}">Bloquear</button>
-        {% else %}
-          <button class="boton-activar btn btn-success me-2" data-id="{{ usuario.id_usuario }}">Activar</button>
-        {% endif %}
-        <button class="boton-eliminar btn btn-danger" data-id="{{ usuario.id_usuario }}">Eliminar</button>
-      </div>
+      {% empty %}
+        <p class="text-muted text-center">No hay usuarios registrados.</p>
+      {% endfor %}
     </div>
-  {% empty %}
-    <p class="text-muted">No hay usuarios registrados.</p>
-  {% endfor %}
-</div>
+  </main>
 
-
-<script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-  crossorigin="anonymous"
-></script>
-
-
-
-<script src="{% static 'gestion3/js/estados.js' %}"></script>
-
+  <script src="{% static 'gestion3/js/estados.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
-
-

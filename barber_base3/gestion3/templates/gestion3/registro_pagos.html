@@ -6,117 +6,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Registrar Pago</title>
 
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-    crossorigin="anonymous"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}">
   <link rel="stylesheet" href="{% static 'gestion3/css/estilos_pagos.css' %}" />
 </head>
 <body>
 
 {% include 'gestion3/nav.html' %}
 
-<main class="container my-5">
-  <div class="registro-container mx-auto" style="max-width: 700px;">
-    <form id="formPago" method="post" action="{% url 'guardar_pago' %}">
-      {% csrf_token %}
-      <h2 class="mb-4">Registrar Pago</h2>
+<div class="pago-background">
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="registro-formulario p-4 p-md-5 rounded-4 shadow-lg text-white w-100" style="max-width: 720px;">
+      <form id="formPago" method="post" action="{% url 'guardar_pago' %}">
+        {% csrf_token %}
+        <h2 class="text-center mb-4">Registrar Pago</h2>
 
-    
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Cliente</label>
-          <input type="text" class="form-control" value="{{ cliente.nombre }} {{ cliente.apellido }}" readonly />
-          <input type="hidden" name="cliente" value="{{ cliente.id_usuario }}" />
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Cliente</label>
+            <input type="text" class="form-control" value="{{ cliente.nombre }} {{ cliente.apellido }}" readonly />
+            <input type="hidden" name="cliente" value="{{ cliente.id_usuario }}" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Barbero</label>
+            <input type="text" class="form-control" value="{{ barbero.nombre }} {{ barbero.apellido }}" readonly />
+            <input type="hidden" name="barbero" value="{{ barbero.id_usuario }}" />
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <label class="form-label">Barbero</label>
-          <input type="text" class="form-control" value="{{ barbero.nombre }} {{ barbero.apellido }}" readonly />
-          <input type="hidden" name="barbero" value="{{ barbero.id_usuario }}" />
-        </div>
-      </div>
-
-    
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Servicio</label>
-          <input type="text" class="form-control" value="{{ servicio.nombre_servicio }}" readonly />
-          <input type="hidden" name="servicio" value="{{ servicio.id_subservicio }}" />
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Servicio</label>
+            <input type="text" class="form-control" value="{{ servicio.nombre_servicio }}" readonly />
+            <input type="hidden" name="servicio" value="{{ servicio.id_subservicio }}" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Cita</label>
+            <input type="text" class="form-control" value="Cita {{ cita.id_cita }}" readonly />
+            <input type="hidden" name="cita" value="{{ cita.id_cita }}" />
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <label class="form-label">Cita</label>
-          <input type="text" class="form-control" value="Cita {{ cita.id_cita }}" readonly />
-          <input type="hidden" name="cita" value="{{ cita.id_cita }}" />
-        </div>
-      </div>
-
- 
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Fecha de Pago</label>
-          <input type="date" name="fecha_pago" class="form-control" value="{{ fecha_pago|date:'Y-m-d' }}" readonly />
-        </div>
-
-        <div class="col-md-6">
-          <label for="forma_pago" class="form-label">Forma de Pago</label>
-          <select id="forma_pago" name="forma_pago" class="form-select" required>
-            <option value="">Seleccione...</option>
-            {% for forma in formas_pago %}
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Fecha de Pago</label>
+            <input type="date" name="fecha_pago" class="form-control" value="{{ fecha_pago|date:'Y-m-d' }}" readonly />
+          </div>
+          <div class="col-md-6">
+            <label for="forma_pago" class="form-label">Forma de Pago</label>
+            <select id="forma_pago" name="forma_pago" class="form-select" required>
+              <option value="">Seleccione...</option>
+              {% for forma in formas_pago %}
               <option value="{{ forma.id_forma_pago }}">{{ forma.nombre_forma_pago }}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-
-
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Monto Efectivo</label>
-          <input type="number" id="monto" name="monto_efectivo" class="form-control" value="{{ monto_original }}" step="0.01" readonly />
+              {% endfor %}
+            </select>
+          </div>
         </div>
 
-        <div class="col-md-6">
-          <label for="descuento" class="form-label">Descuento (%)</label>
-          <input type="number" id="descuento" name="descuento" class="form-control" step="0.01" min="0" max="100" value="0" />
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Monto Efectivo</label>
+            <input type="number" id="monto" name="monto_efectivo" class="form-control" value="{{ monto_original }}" step="0.01" readonly />
+          </div>
+          <div class="col-md-6">
+            <label for="descuento" class="form-label">Descuento (%)</label>
+            <input type="number" id="descuento" name="descuento" class="form-control" step="0.01" min="0" max="100" value="0" />
+          </div>
         </div>
-      </div>
 
-     
-      <div class="mb-3">
-        <label class="form-label">Total Pagado</label>
-        <input type="number" id="total" name="total_pagado" class="form-control" value="{{ monto_original }}" step="0.01" readonly />
-      </div>
+        <div class="mb-4">
+          <label class="form-label">Total Pagado</label>
+          <input type="number" id="total" name="total_pagado" class="form-control" value="{{ monto_original }}" step="0.01" readonly />
+        </div>
 
-      <div class="d-flex justify-content-between">
-        <button type="reset" class="btn btn-secondary">Limpiar</button>
-        <button type="submit" class="btn btn-primary">Registrar Pago</button>
-      </div>
-    </form>
+        <div class="d-flex justify-content-between">
+          <button type="reset" class="btn btn-secondary">Limpiar</button>
+          <button type="submit" class="btn btn-primary">Registrar Pago</button>
+        </div>
+      </form>
+    </div>
   </div>
-</main>
+</div>
 
 <script>
   window.pagoData = {
     montoOriginal: "{{ monto_original }}"
   };
 </script>
-
-
 <script src="{% static 'gestion3/js/registrar_pago.js' %}"></script>
-
-<script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-  crossorigin="anonymous"
-></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
-

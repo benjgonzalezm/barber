@@ -11,6 +11,8 @@ from django.contrib.auth.hashers import check_password
 from datetime import datetime,date, timedelta,time
 from django.db.models import Count, Sum, Avg
 from django.db.models.functions import ExtractMonth
+from django.contrib.auth.decorators import login_required
+
 import locale
 import calendar
 

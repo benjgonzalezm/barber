@@ -2,67 +2,69 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nosotros - Elite Barber</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}">
   <link rel="stylesheet" href="{% static 'gestion3/css/nosotros.css' %}">
 </head>
 <body>
 
   {% include 'gestion3/nav.html' %}
 
-  <header class="nosotros-header">
-    <div class="nosotros-header-content">
+  <header class="nosotros-header d-flex align-items-center justify-content-center">
+    <div class="nosotros-header-content text-center text-white">
       <h1>Nuestro Personal</h1>
-      <p>
-        En Elite Barber, nos apasiona el arte del buen corte y el cuidado personal. Nuestro equipo está formado por barberos profesionales con años de experiencia, dedicados a brindar el mejor servicio y atención a cada cliente. ¡Conócenos!
-      </p>
+      <p>En Elite Barber, nos apasiona el arte del buen corte y el cuidado personal. Nuestro equipo está formado por barberos profesionales con años de experiencia, dedicados a brindar el mejor servicio y atención a cada cliente. ¡Conócenos!</p>
     </div>
+    <div class="overlay"></div>
   </header>
 
- <section class="barberos">
-  {% for barbero in barberos_info %}
-    <div class="barbero-card">
-  <div class="barbero-img-wrapper">
-    {% if barbero.imagen %}
-      <img src="{{ barbero.imagen }}" alt="Foto de {{ barbero.nombre }}">
-    {% else %}
-      <img src="{% static 'gestion3/images/default_barbero.jpg' %}" alt="Sin imagen">
-    {% endif %}
-  </div>
-  <h2>{{ barbero.nombre }} {{ barbero.apellido }}</h2>
-  <p><strong>Rol:</strong> {{ barbero.tipo_usuario }}</p>
-  <p>Especialidades:
-    {% if barbero.especialidades %}
-      {{ barbero.especialidades|join:", " }}
-    {% else %}
-      Dueño de la barberia
-    {% endif %}
-  </p>
-</div>
+  <section class="barberos py-5 container">
+    <div class="row justify-content-center">
+      {% for barbero in barberos_info %}
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="barbero-card text-center p-4 bg-light rounded-4 shadow">
+            <div class="barbero-img-wrapper mb-3">
+              {% if barbero.imagen %}
+                <img src="{{ barbero.imagen }}" alt="Foto de {{ barbero.nombre }}">
+              {% else %}
+                <img src="{% static 'gestion3/images/default_barbero.jpg' %}" alt="Sin imagen">
+              {% endif %}
+            </div>
+            <h2>{{ barbero.nombre }} {{ barbero.apellido }}</h2>
+            <p><strong>Rol:</strong> {{ barbero.tipo_usuario }}</p>
+            <p>Especialidades:
+              {% if barbero.especialidades %}
+                {{ barbero.especialidades|join:", " }}
+              {% else %}
+                Dueño de la barbería
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
 
-  {% endfor %}
-</section>
-
-
-   <footer class="text-center p-4 bg-light mt-5">
+  <footer class="text-center p-4 bg-dark text-white">
     <p>&copy; 2025 Elite Barber. Todos los derechos reservados.</p>
     <div class="footer-links mb-2">
-      <a href="https://www.facebook.com" target="_blank">Facebook</a> |
-      <a href="https://www.instagram.com" target="_blank">Instagram</a> |
-      <a href="https://www.twitter.com" target="_blank">Twitter</a>
+      <a href="https://www.facebook.com" target="_blank" class="text-white">Facebook</a> |
+      <a href="https://www.instagram.com" target="_blank" class="text-white">Instagram</a> |
+      <a href="https://www.twitter.com" target="_blank" class="text-white">Twitter</a>
     </div>
     <nav>
       <ul class="list-inline">
-        <li class="list-inline-item"><a href="{% url 'menu' %}">Inicio</a></li>
-        <li class="list-inline-item"><a href="{% url 'nosotros' %}">Nosotros</a></li>
-        <li class="list-inline-item"><a href="{% url 'servicios' %}">Servicios</a></li>
-        <li class="list-inline-item"><a href="#contacto">Contacto</a></li>
+        <li class="list-inline-item"><a href="{% url 'menu' %}" class="text-white">Inicio</a></li>
+        <li class="list-inline-item"><a href="{% url 'nosotros' %}" class="text-white">Nosotros</a></li>
+        <li class="list-inline-item"><a href="{% url 'servicios' %}" class="text-white">Servicios</a></li>
+        <li class="list-inline-item"><a href="#contacto" class="text-white">Contacto</a></li>
       </ul>
     </nav>
   </footer>
 
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
