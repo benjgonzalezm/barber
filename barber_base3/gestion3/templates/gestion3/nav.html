@@ -3,156 +3,67 @@
 <html lang="es">
 <head>
   <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
 
 <header>                          
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top custom-navbar">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="{% url 'menu' %}">
-      <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" class="logo_menu me-2" style="height:48px;">
-      
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-      <ul class="navbar-nav align-items-center gap-2">
-        <li class="nav-item">
-          <a class="nav-link{% if request.resolver_match.url_name == 'menu' %} active{% endif %}" href="{% url 'menu' %}">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link{% if request.resolver_match.url_name == 'servicios' %} active{% endif %}" href="{% url 'servicios' %}">Servicios</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link{% if request.resolver_match.url_name == 'nosotros' %} active{% endif %}" href="{% url 'nosotros' %}">Nosotros</a>
-        </li>
-        
-        {% if request.session.usuario_id %}
-          {% if tipo_usuario == "Barbería" %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-              Datos
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="{% url 'listar_usuarios' %}">Ver usuarios</a></li>
-              <li><a class="dropdown-item" href="{% url 'registro_citas' %}">Registro citas</a></li>
-              <li><a class="dropdown-item" href="{% url 'ver_pagos' %}">Ver Pagos</a></li>
-              <li><a class="dropdown-item" href="{% url 'registro_barbero' %}">Registrar barbero</a></li>
-              <li><a class="dropdown-item" href="{% url 'agregar_subservicio' %}">Agregar subservicio</a></li>
-            </ul>
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'menu' %}">
+        <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" class="logo_menu me-2">
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+
+        <!-- CENTRO: Enlaces de navegación -->
+        <ul class="navbar-nav mx-auto gap-3">
+          <li class="nav-item">
+            <a class="nav-link{% if request.resolver_match.url_name == 'menu' %} active{% endif %}" href="{% url 'menu' %}">Inicio</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link{% if request.resolver_match.url_name == 'servicios' %} active{% endif %}" href="{% url 'servicios' %}">Servicios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{% if request.resolver_match.url_name == 'nosotros' %} active{% endif %}" href="{% url 'nosotros' %}">Nosotros</a>
+          </li>
+        </ul>
+
+        <!-- DERECHA: Login / Registro / WhatsApp -->
+        <ul class="navbar-nav align-items-center gap-3 ms-auto">
+
+          {% if request.session.usuario_id %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'perfil' %}">Perfil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'registrate' %}">Registro</a>
+            </li>
           {% endif %}
-           {% if tipo_usuario == "Barbero" %}
-           <li><a class="dropdown-item" href="{% url 'agregar_servicios' %}">Agregar</a></li>
-           <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a> </li>
-          {% endif %}
 
-  {% if tipo_usuario == "Cliente" %}
-  <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a> </li>
+          <!-- WhatsApp -->
+          <li class="nav-item">
+            <a class="nav-link whatsapp-link" href="https://wa.me/56979459711" target="_blank">
+              <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+          </li>
+        </ul>
 
-  {% endif %}
-
-<li>  <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a> </li>
-  
-
-
-{% else %}
-<li> <a class="dropdown-item" href="{% url 'login' %}">Login</a> </li>
-<li><a class="dropdown-item" href="{% url 'registrate' %}">Registro</a> </li>
- 
-  
-
-{% endif %}
-      </ul>
+      </div>
     </div>
-  </div>
-</nav>
-</header> 
-
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}" />
-</head>
-<body>
-
-<header>                          
-  <nav>
-    <a href="{% url 'menu' %}">
-      <img src="{% static 'gestion3/images/logo.png' %}" alt="Elite Barber Logo" style="height:80px;">
-    </a>
-    <ul>                   
-      <li><a href="{% url 'menu' %}">Inicio</a></li>
-      <li><a href="{% url 'servicios' %}">Servicios</a></li>
-      <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
-      <li><a href="{% url 'testimonios' %}">Testimonios</a></li>
-
-    {% if request.session.usuario_id %}
-
-  {% if tipo_usuario == "Barbería" %}
-   <li><a href="{% url 'listar_usuarios' %}">Ver usuarios</a> </li> 
-   <li><a href="{% url 'registro_citas' %}">Registro citas</a> </li>
-   <li><a href="{% url 'ver_pagos' %}">Ver Pagos</a> </li>
-   <li><a href="{% url 'registro_barbero' %}">Registrar barbero</a> </li>
-  {% endif %}
-
-
-  {% if tipo_usuario == "Barbero" %}
-  <li><a href="{% url 'perfil' %}">Perfil</a> </li>
-
-  {% endif %}
-
-  {% if tipo_usuario == "Cliente" %}
-  <li><a href="{% url 'perfil' %}">Perfil</a> </li>
-
-  {% endif %}
-
-<li>  <a href="{% url 'logout' %}">Cerrar sesión</a> </li>
-  
-
-
-{% else %}
-<li> <a href="{% url 'login' %}">Login</a> </li>
-<li><a href="{% url 'registrate' %}">Registro</a> </li>
- 
-  
-
-{% endif %}
-    </ul>
   </nav>
-</header> 
-
+</header>
 
 </body>
 </html>
-
- -->
