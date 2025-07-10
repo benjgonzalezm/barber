@@ -7,19 +7,20 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'gestion3/css/ver_pagos.css' %}">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
 {% include 'gestion3/nav.html' %}
 
-<div class="container my-5 registro-container">
+<main class="container my-5 flex-grow-1 registro-container">
   <h2 class="mb-4">
     <div class="mb-3">
       <a href="{% url 'reporte' %}" class="btn btn-success">Ver Reporte</a> 
     </div>
     Registros de Pagos
-    </h2>
+  </h2>
+  
   <div class="table-responsive">
-    <table class="table table-striped tabla-registros"> <!-- ver como arreglar la tabla para que se vea todo el contenido sin la barra de scroll horizontal -->
+    <table class="table table-striped tabla-registros">
       <thead class="table-dark">
         <tr>
           <th>ID Pago</th>
@@ -38,9 +39,7 @@
       <tbody>
         {% for pago in pagos %}
           <tr>
-      
             <td>{{ pago.pk }}</td>
-
             <td>{{ pago.id_cita.id_cliente.nombre }} {{ pago.id_cita.id_cliente.apellido }}</td>
             <td>{{ pago.id_cita.id_servicio.id_usuario.nombre }} {{ pago.id_cita.id_servicio.id_usuario.apellido }}</td>
             <td>{{ pago.id_cita.id_servicio.id_subservicio.nombre_servicio }}</td>
@@ -60,19 +59,16 @@
           </tr>
         {% empty %}
           <tr>
-            <td colspan="10" class="text-center">No hay pagos registrados.</td>
+            <td colspan="11" class="text-center">No hay pagos registrados.</td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-</div>
+</main>
+
 {% include 'gestion3/footer.html' %}
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
-
-

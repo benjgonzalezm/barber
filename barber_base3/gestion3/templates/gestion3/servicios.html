@@ -7,43 +7,67 @@
     <title>Servicios - Elite Barber</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'gestion3/css/nav.css' %}" />
     <link rel="stylesheet" href="{% static 'gestion3/css/servicios.css' %}" />
-    
+    <style>
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(rgba(15,15,15,0.85), rgba(15,15,15,0.85)),
+                    url('/static/gestion3/images/wallpaper.jpeg') no-repeat center center fixed;
+        background-size: cover;
+      }
+      main {
+        flex: 1;
+      }
+      .card {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        border: none;
+        color: #fff;
+        backdrop-filter: blur(6px);
+      }
+      .card-title {
+        color: #fff;
+      }
+      .card-body p {
+        color: #ddd;
+      }
+    </style>
 </head>
 <body>
 
     {% include 'gestion3/nav.html' %}
 
-<main class="container my-5">
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 servicios-container">
-    {% for subservicio in subservicios %}
-    <div class="col servicio">
-      <div class="card h-100 text-center">
-        {% if subservicio.imagenes %}
-          <img src="{{ subservicio.imagenes.url }}" class="card-img-top" alt="{{ subservicio.nombre_servicio }}" />
-        {% else %}
-          <img src="{% static 'gestion3/images/afeitados.jpg' %}" class="card-img-top" alt="Imagen por defecto" />
-        {% endif %}
-        <div class="card-body">
-          <h5 class="card-title">{{ subservicio.nombre_servicio }}</h5>
-          <a href="{% url 'barbero' subservicio.id_subservicio %}" class="btn btn-primary">Ver opciones</a>
+    <main class="container my-5">
+      {% if subservicios %}
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 servicios-container">
+        {% for subservicio in subservicios %}
+        <div class="col servicio">
+          <div class="card h-100 text-center shadow">
+            {% if subservicio.imagenes %}
+              <img src="{{ subservicio.imagenes.url }}" class="card-img-top" alt="{{ subservicio.nombre_servicio }}" />
+            {% else %}
+              <img src="{% static 'gestion3/images/afeitados.jpg' %}" class="card-img-top" alt="Imagen por defecto" />
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ subservicio.nombre_servicio }}</h5>
+              <a href="{% url 'barbero' subservicio.id_subservicio %}" class="btn btn-primary">Ver opciones</a>
+            </div>
+          </div>
         </div>
+        {% endfor %}
       </div>
-    </div>
-    {% endfor %}
-  </div>
-</main>
+      {% else %}
+      <div class="text-center text-white my-5">
+        <h3>No hay servicios disponibles en este momento.</h3>
+        <p>Estamos trabajando para agregar nuevas opciones pronto.</p>
+      </div>
+      {% endif %}
+    </main>
 
+    {% include 'gestion3/footer.html' %}
 
-
-     {% include 'gestion3/footer.html' %}
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-

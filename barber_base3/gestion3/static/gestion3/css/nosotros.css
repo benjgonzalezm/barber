@@ -43,23 +43,26 @@ body {
 
 /* Barbero Cards */
 .barbero-card {
-  background: rgba(61, 44, 44, 0.9);
-  color: #222;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  color: #fff;
   border-radius: 1rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .barbero-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(255, 249, 249, 0.6);
 }
 
 .barbero-img-wrapper img {
   width: 140px;
-  height: 180px;
+  height: 140px;
   object-fit: cover;
-  border-radius: 1rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  border-radius: 50%;
+  border: 3px solid #f4a261;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   transition: transform 0.3s;
 }
 
@@ -68,12 +71,13 @@ body {
 }
 
 .barbero-card h2 {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   margin: 0.8rem 0 0.4rem;
 }
 
 .barbero-card p {
   font-size: 0.95rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Footer enlaces */

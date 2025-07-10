@@ -24,8 +24,9 @@
   <section class="barberos py-5 container">
     <div class="row justify-content-center">
       {% for barbero in barberos_info %}
+        {% if barbero.tipo_usuario == "Barbero" %}
         <div class="col-md-6 col-lg-4 mb-4">
-          <div class="barbero-card text-center p-4 bg-light rounded-4 shadow">
+          <div class="barbero-card text-center p-4">
             <div class="barbero-img-wrapper mb-3">
               {% if barbero.imagen %}
                 <img src="{{ barbero.imagen }}" alt="Foto de {{ barbero.nombre }}">
@@ -33,17 +34,18 @@
                 <img src="{% static 'gestion3/images/default_barbero.jpg' %}" alt="Sin imagen">
               {% endif %}
             </div>
-            <h2>{{ barbero.nombre }} {{ barbero.apellido }}</h2>
-            <p><strong>Rol:</strong> {{ barbero.tipo_usuario }}</p>
-            <p>Especialidades:
+            <h2 class="text-white">{{ barbero.nombre }} {{ barbero.apellido }}</h2>
+            <p class="text-white"><strong>Rol:</strong> {{ barbero.tipo_usuario }}</p>
+            <p class="text-white"><strong>Especialidades:</strong>
               {% if barbero.especialidades %}
                 {{ barbero.especialidades|join:", " }}
               {% else %}
-                Dueño de la barbería
+                Sin especialidades registradas
               {% endif %}
             </p>
           </div>
         </div>
+        {% endif %}
       {% endfor %}
     </div>
   </section>

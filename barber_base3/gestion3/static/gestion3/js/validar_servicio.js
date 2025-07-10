@@ -8,8 +8,8 @@ $(document).ready(function () {
       errores += "La descripción no puede superar los 200 caracteres.<br>";
     }
 
-    if (isNaN(duracion) || duracion < 1 || duracion > 60) {
-      errores += "La duración debe estar entre 1 y 60 minutos.<br>";
+    if (isNaN(duracion) || duracion < 1 || duracion > 500) {
+      errores += "La duración debe estar entre 1 y 500 minutos.<br>";
     }
 
     if (errores) {

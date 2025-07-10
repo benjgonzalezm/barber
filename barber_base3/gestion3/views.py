@@ -356,7 +356,7 @@ def registro_barbero(request):
         )
 
         messages.success(request, 'Barbero registrado correctamente.')
-        return redirect('login')  
+        return redirect('listar_usuarios')  
 
     return render(request, 'gestion3/registrobarbero.html')
 
