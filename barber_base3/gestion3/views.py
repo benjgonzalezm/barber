@@ -136,7 +136,7 @@ def servicios(request):
     return render(request, 'gestion3/servicios.html', {'subservicios': subservicios})
 
 
-@tipo_usuario_requerido(['Cliente','Barbero'])
+#@tipo_usuario_requerido(['Cliente','Barbero'])
 def barbero(request, subservicio_id):
     subservicio = get_object_or_404(SubServicio, id_subservicio=subservicio_id)
 
@@ -164,13 +164,7 @@ def barbero(request, subservicio_id):
         'horarios': horarios_disponibles
     })
 
-
-
-
-from django.http import JsonResponse
-from datetime import datetime, time, timedelta
-
-@tipo_usuario_requerido(['Cliente','Barbero'])
+#@tipo_usuario_requerido(['Cliente','Barbero'])
 def reservar(request, servicio_id, barbero_id):
     servicio = get_object_or_404(Servicio, id_servicio=servicio_id)
     subservicio = servicio.id_subservicio
@@ -620,7 +614,7 @@ def agregar_subservicio(request):
             imagenes=imagen
         )
         messages.success(request, "Subservicio agregado correctamente.")
-        return redirect('perfil')  # O adonde quieras volver
+        return redirect('servicios')  # O adonde quieras volver
 
     return render(request, 'gestion3/agregar_subservicio.html')
 
