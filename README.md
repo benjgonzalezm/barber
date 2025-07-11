@@ -18,6 +18,7 @@ Página web de la barberia "Elite Barber", donde las características son las si
      - Observación (Barbero, Servicio, Trato, Puntualidad)
   - Barbero:
     * Definir estado de la cita (Finalizado o Cancelado)
+    * Registrar el pago realizado
 - Reporte de pagos realizados
 - Panel de estadísticas generales de pagos
 
