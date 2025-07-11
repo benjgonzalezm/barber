@@ -1,0 +1,5 @@
+admin: admin / Admin.123
+Barberia dueño: admin@admin.cl / Juan.123
+Barbero 1: marco@elite.cl / Marco.123
+Barbero 2. juan@elite.cl / Juan.123
+Cliente 1: benjamin@gmail.com / Benjamin.123
