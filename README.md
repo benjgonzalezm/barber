@@ -11,7 +11,7 @@ Página web de la barberia "Elite Barber", donde las características son las si
 - Registrar subservicio (Nombre del servicio en general)
 - Registrar barbero
 - Perfil
-  - Usuario:
+  - Cliente:
     * Ver el estado de la cita.
     * Valorar cita
      - Estrellas (1 a 5)
@@ -19,6 +19,7 @@ Página web de la barberia "Elite Barber", donde las características son las si
   - Barbero:
     * Definir estado de la cita (Finalizado o Cancelado)
     * Registrar el pago realizado
+  - Contactarse mediante Whatsapp del usuario (cliente o barbero)
 - Reporte de pagos realizados
 - Panel de estadísticas generales de pagos
 
